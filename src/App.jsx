@@ -59,10 +59,10 @@ const subjectMetadata = {
     name: "SQL Database",
     icon: Database,
     colorClass: "cyan",
-    bgClass: "bg-cyan-55 dark:bg-cyan-500/10",
+    bgClass: "bg-cyan-50 dark:bg-cyan-500/10",
     borderClass: "border-cyan-200 dark:border-cyan-500/20",
     textClass: "text-cyan-800 dark:text-cyan-400",
-    filledClass: "bg-cyan-600 dark:bg-cyan-500 text-white dark:text-slate-950 border-cyan-650 dark:border-cyan-500 hover:bg-cyan-750 dark:hover:bg-cyan-400",
+    filledClass: "bg-cyan-600 dark:bg-cyan-500 text-white dark:text-slate-950 border-cyan-600 dark:border-cyan-500 hover:bg-cyan-700 dark:hover:bg-cyan-400",
     accentColor: "#0891b2",
     darkAccentColor: "#06b6d4"
   },
@@ -70,10 +70,10 @@ const subjectMetadata = {
     name: "DSA Algorithms",
     icon: Binary,
     colorClass: "violet",
-    bgClass: "bg-violet-55 dark:bg-violet-500/10",
+    bgClass: "bg-violet-50 dark:bg-violet-500/10",
     borderClass: "border-violet-200 dark:border-violet-500/20",
-    textClass: "text-violet-850 dark:text-violet-400",
-    filledClass: "bg-violet-600 dark:bg-violet-500 text-white dark:text-slate-950 border-violet-650 dark:border-violet-500 hover:bg-violet-750 dark:hover:bg-violet-400",
+    textClass: "text-violet-800 dark:text-violet-400",
+    filledClass: "bg-violet-600 dark:bg-violet-500 text-white dark:text-slate-950 border-violet-600 dark:border-violet-500 hover:bg-violet-700 dark:hover:bg-violet-400",
     accentColor: "#7c3aed",
     darkAccentColor: "#8b5cf6"
   },
@@ -92,10 +92,10 @@ const subjectMetadata = {
     name: "Extra Tech Skill",
     icon: GitBranch,
     colorClass: "amber",
-    bgClass: "bg-amber-55 dark:bg-amber-500/10",
+    bgClass: "bg-amber-50 dark:bg-amber-500/10",
     borderClass: "border-amber-200 dark:border-amber-500/20",
-    textClass: "text-amber-850 dark:text-amber-400",
-    filledClass: "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 border-amber-650 dark:border-amber-500 hover:bg-amber-700 dark:hover:bg-amber-400",
+    textClass: "text-amber-800 dark:text-amber-400",
+    filledClass: "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 border-amber-600 dark:border-amber-500 hover:bg-amber-700 dark:hover:bg-amber-400",
     accentColor: "#d97706",
     darkAccentColor: "#f59e0b"
   },
@@ -103,10 +103,10 @@ const subjectMetadata = {
     name: "GenAI / RAG",
     icon: SparklesIcon,
     colorClass: "fuchsia",
-    bgClass: "bg-fuchsia-55 dark:bg-fuchsia-500/10",
+    bgClass: "bg-fuchsia-50 dark:bg-fuchsia-500/10",
     borderClass: "border-fuchsia-200 dark:border-fuchsia-500/20",
-    textClass: "text-fuchsia-850 dark:text-fuchsia-400",
-    filledClass: "bg-fuchsia-600 dark:bg-fuchsia-500 text-white dark:text-slate-950 border-fuchsia-650 dark:border-fuchsia-500 hover:bg-fuchsia-750 dark:hover:bg-fuchsia-400",
+    textClass: "text-fuchsia-800 dark:text-fuchsia-400",
+    filledClass: "bg-fuchsia-600 dark:bg-fuchsia-500 text-white dark:text-slate-950 border-fuchsia-600 dark:border-fuchsia-500 hover:bg-fuchsia-700 dark:hover:bg-fuchsia-400",
     accentColor: "#c026d3",
     darkAccentColor: "#d946ef"
   },
@@ -114,10 +114,10 @@ const subjectMetadata = {
     name: "CS Fundamentals",
     icon: BookOpen,
     colorClass: "emerald",
-    bgClass: "bg-emerald-55 dark:bg-emerald-500/10",
+    bgClass: "bg-emerald-50 dark:bg-emerald-500/10",
     borderClass: "border-emerald-200 dark:border-emerald-500/20",
     textClass: "text-emerald-800 dark:text-emerald-400",
-    filledClass: "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-slate-950 border-emerald-650 dark:border-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-400",
+    filledClass: "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-slate-950 border-emerald-600 dark:border-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-400",
     accentColor: "#059669",
     darkAccentColor: "#10b981"
   },
@@ -125,10 +125,10 @@ const subjectMetadata = {
     name: "Aptitude Prep",
     icon: Award,
     colorClass: "rose",
-    bgClass: "bg-rose-55 dark:bg-rose-500/10",
+    bgClass: "bg-rose-50 dark:bg-rose-500/10",
     borderClass: "border-rose-200 dark:border-rose-500/20",
     textClass: "text-rose-800 dark:text-rose-400",
-    filledClass: "bg-rose-600 dark:bg-rose-500 text-white dark:text-slate-950 border-rose-650 dark:border-rose-500 hover:bg-rose-700 dark:hover:bg-rose-400",
+    filledClass: "bg-rose-600 dark:bg-rose-500 text-white dark:text-slate-950 border-rose-600 dark:border-rose-500 hover:bg-rose-700 dark:hover:bg-rose-400",
     accentColor: "#e11d48",
     darkAccentColor: "#f43f5e"
   },
@@ -149,8 +149,8 @@ const subjectMetadata = {
     colorClass: "slate",
     bgClass: "bg-slate-100 dark:bg-slate-800/20",
     borderClass: "border-slate-200 dark:border-slate-800",
-    textClass: "text-slate-700 dark:text-slate-355",
-    filledClass: "bg-slate-600 dark:bg-slate-500 text-white dark:text-slate-950 border-slate-650 dark:border-slate-505 hover:bg-slate-700 dark:hover:bg-slate-400",
+    textClass: "text-slate-700 dark:text-slate-300",
+    filledClass: "bg-slate-600 dark:bg-slate-500 text-white dark:text-slate-950 border-slate-600 dark:border-slate-500 hover:bg-slate-700 dark:hover:bg-slate-400",
     accentColor: "#475569",
     darkAccentColor: "#94a3b8"
   }
@@ -1012,7 +1012,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-transparent text-slate-800 dark:text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-250 relative overflow-hidden transition-colors duration-300">
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-800 dark:text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200 relative overflow-hidden transition-colors duration-300">
       
       {/* 3D PART B — WEBGL SPARKLING DRIFTING BACKGROUND */}
       {webGLSupported && !isFlipAnimating && isTabVisible && (
@@ -1075,7 +1075,7 @@ export default function App() {
               {/* Branding and streak */}
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-650 dark:text-emerald-400 border border-emerald-500/25">
+                  <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
                     <Calendar className="w-5 h-5" />
                   </span>
                   <div>
@@ -1092,7 +1092,7 @@ export default function App() {
                       <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">Placement Timetable Dashboard</p>
                       <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                       
-                      <div className="flex items-center gap-1 bg-amber-500/10 text-amber-700 dark:text-amber-450 border border-amber-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                      <div className="flex items-center gap-1 bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                         {daysRemaining > 0 ? `${daysRemaining} Days Remaining` : "Timeline Ended"}
                       </div>
                     </div>
@@ -1106,7 +1106,7 @@ export default function App() {
                 {/* Search Quick Jump trigger */}
                 <button 
                   onClick={() => setIsSearchOpen(true)}
-                  className="p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shrink-0 flex items-center gap-1.5 text-xs font-bold shadow-sm"
+                  className="p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-900 transition-all shrink-0 flex items-center gap-1.5 text-xs font-bold shadow-sm"
                   title="Search timetable (Ctrl+K)"
                 >
                   <Search className="w-4 h-4" />
@@ -1123,7 +1123,7 @@ export default function App() {
                     style={tiltSlotsCard.style}
                     className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm"
                   >
-                    <CheckCircle className="w-4 h-4 text-emerald-650 dark:text-emerald-400 shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Slots Done</div>
                       <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
@@ -1141,7 +1141,7 @@ export default function App() {
                     style={tiltDaysCard.style}
                     className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm"
                   >
-                    <Calendar className="w-4 h-4 text-indigo-650 dark:text-indigo-400 shrink-0" />
+                    <Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
                     <div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Days Done</div>
                       <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
@@ -1213,7 +1213,7 @@ export default function App() {
                     <button
                       onClick={() => setDarkMode(!darkMode)}
                       title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-900 transition-all shadow-sm"
                     >
                       {darkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
                     </button>
@@ -1221,7 +1221,7 @@ export default function App() {
                     <button
                       onClick={requestNotificationPermission}
                       title="Enable Daily reminders"
-                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-900 transition-all shadow-sm"
                     >
                       <Bell className="w-3.5 h-3.5" />
                     </button>
@@ -1231,7 +1231,7 @@ export default function App() {
                     <button
                       onClick={handleShareCard}
                       title="Share progress card image"
-                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-900 transition-all shadow-sm"
                     >
                       <Share2 className="w-3.5 h-3.5" />
                     </button>
@@ -1239,7 +1239,7 @@ export default function App() {
                     <button
                       onClick={handleExportJSON}
                       title="Export backup JSON"
-                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-650 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-900 transition-all shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
                     </button>
@@ -1248,7 +1248,7 @@ export default function App() {
                   <button 
                     onClick={handleResetProgress}
                     title="Reset progress data"
-                    className="w-full py-1 text-[9px] uppercase tracking-wider font-extrabold text-slate-400 hover:text-rose-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                    className="w-full py-1 text-[9px] uppercase tracking-wider font-extrabold text-slate-400 hover:text-rose-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-900 transition-all shadow-sm"
                   >
                     Reset
                   </button>
@@ -1264,23 +1264,23 @@ export default function App() {
               <div className="flex items-center justify-between mb-4 px-1.5">
                 <h2 className="text-xs uppercase tracking-wider font-extrabold text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <span>Timeline strip</span>
-                  <span className="text-[10px] bg-slate-200/60 dark:bg-slate-900 border border-slate-300 dark:border-slate-850 text-slate-600 dark:text-slate-350 px-2 py-0.5 rounded-full font-bold">1–30 SEP</span>
+                  <span className="text-[10px] bg-slate-200/60 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-full font-bold">1–30 SEP</span>
                 </h2>
-                <div className="flex gap-4 text-[10px] text-slate-450 dark:text-slate-400 font-bold uppercase tracking-wider hidden sm:flex">
+                <div className="flex gap-4 text-[10px] text-slate-400 dark:text-slate-400 font-bold uppercase tracking-wider hidden sm:flex">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-850"></span>
+                    <span className="w-2 h-2 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"></span>
                     <span>Study</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-indigo-105 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30"></span>
+                    <span className="w-2 h-2 rounded-md bg-indigo-100 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30"></span>
                     <span>Rest</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-amber-105 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30"></span>
+                    <span className="w-2 h-2 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30"></span>
                     <span>Revision</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-rose-105 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30"></span>
+                    <span className="w-2 h-2 rounded-md bg-rose-100 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30"></span>
                     <span>Final Mock</span>
                   </div>
                 </div>
@@ -1307,16 +1307,16 @@ export default function App() {
                   if (day.type === "study") {
                     typeStyles = isSelected 
                       ? "border-emerald-500 bg-white dark:bg-slate-900 shadow-[0_0_12px_rgba(16,185,129,0.2)] text-slate-900 dark:text-white font-bold" 
-                      : "border-slate-200 dark:border-slate-850 bg-white/70 dark:bg-slate-900/30 text-slate-700 dark:text-slate-355 hover:border-slate-400 dark:hover:border-slate-750 hover:bg-white dark:hover:bg-slate-900/50";
+                      : "border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/30 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-900/50";
                   } else if (day.type === "rest") {
                     typeStyles = isSelected
                       ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950/45 shadow-[0_0_12px_rgba(129,140,248,0.3)] text-indigo-900 dark:text-indigo-100 font-bold"
-                      : "border-indigo-200 dark:border-indigo-950 bg-indigo-50/50 dark:bg-indigo-950/15 text-indigo-900 dark:text-slate-350 hover:border-indigo-400 dark:hover:border-indigo-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/30";
+                      : "border-indigo-200 dark:border-indigo-950 bg-indigo-50/50 dark:bg-indigo-950/15 text-indigo-900 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/30";
                     ChipIcon = Coffee;
                   } else if (day.type === "revision") {
                     typeStyles = isSelected
-                      ? "border-amber-500 bg-amber-55 dark:bg-amber-950/45 shadow-[0_0_12px_rgba(245,158,11,0.3)] text-amber-900 dark:text-amber-100 font-bold"
-                      : "border-amber-200 dark:border-amber-950 bg-amber-50/50 dark:bg-amber-950/15 text-amber-900 dark:text-slate-350 hover:border-amber-400 dark:hover:border-amber-900 hover:bg-amber-50 dark:hover:bg-amber-950/30";
+                      ? "border-amber-500 bg-amber-50 dark:bg-amber-950/45 shadow-[0_0_12px_rgba(245,158,11,0.3)] text-amber-900 dark:text-amber-100 font-bold"
+                      : "border-amber-200 dark:border-amber-950 bg-amber-50/50 dark:bg-amber-950/15 text-amber-900 dark:text-slate-300 hover:border-amber-400 dark:hover:border-amber-900 hover:bg-amber-50 dark:hover:bg-amber-950/30";
                     ChipIcon = BookOpen;
                   } else if (day.type === "final") {
                     typeStyles = isSelected
@@ -1351,9 +1351,9 @@ export default function App() {
 
                       <div className="relative w-5 h-5 flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 22 22">
-                          <circle className="text-slate-200 dark:text-slate-850" strokeWidth="2.5" stroke="currentColor" fill="transparent" r={radius} cx="11" cy="11" />
+                          <circle className="text-slate-200 dark:text-slate-800" strokeWidth="2.5" stroke="currentColor" fill="transparent" r={radius} cx="11" cy="11" />
                           <circle 
-                            className={`${percentage === 100 ? "text-emerald-400" : "text-emerald-505 dark:text-emerald-500"} transition-all duration-300`} 
+                            className={`${percentage === 100 ? "text-emerald-400" : "text-emerald-500 dark:text-emerald-500"} transition-all duration-300`} 
                             strokeWidth="2.5" 
                             strokeDasharray={circ} 
                             strokeDashoffset={strokeOffset} 
@@ -1383,7 +1383,7 @@ export default function App() {
 
                 {/* PART B — WEBGL DAY FLIP TRANSITION OVERLAY */}
                 {webGLSupported && isFlipAnimating && isTabVisible && (
-                  <div className="absolute inset-0 z-30 pointer-events-none rounded-2xl overflow-hidden min-h-[300px] border border-slate-250 dark:border-slate-850">
+                  <div className="absolute inset-0 z-30 pointer-events-none rounded-2xl overflow-hidden min-h-[300px] border border-slate-200 dark:border-slate-800">
                     <Canvas gl={{ antialias: false, pixelRatio: 1 }} camera={{ position: [0, 0, 3] }}>
                       <ambientLight intensity={1.2} />
                       <DayFlipMesh 
@@ -1408,7 +1408,7 @@ export default function App() {
                     
                     <div className="flex-1">
                       <div className="flex items-center flex-wrap gap-2">
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-350">
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-300">
                           Day {parseInt(selectedDate.split("-")[2])} / 30
                         </span>
                         {currentDayData.week && (
@@ -1432,12 +1432,12 @@ export default function App() {
                       
                       <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-xl border ${
                         currentDayData.type === "study" 
-                          ? "bg-slate-100 dark:bg-slate-900 text-slate-650 dark:text-slate-355 border-slate-200 dark:border-slate-850" 
+                          ? "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800" 
                           : currentDayData.type === "rest"
-                          ? "bg-indigo-500/10 text-indigo-700 dark:text-indigo-405 border-indigo-500/20"
+                          ? "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/20"
                           : currentDayData.type === "revision"
-                          ? "bg-amber-500/10 text-amber-700 dark:text-amber-405 border-amber-500/20"
-                          : "bg-rose-500/10 text-rose-700 dark:text-rose-455 border-rose-500/20"
+                          ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20"
+                          : "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20"
                       }`}>
                         {currentDayData.type === "study" ? "Study Day" : currentDayData.type === "rest" ? "Rest & Mock" : currentDayData.type === "revision" ? "Full Revision" : "Final Mock Round"}
                       </span>
@@ -1476,7 +1476,7 @@ export default function App() {
                   {currentDayData.type === "study" && (
                     <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-900">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-555 dark:text-slate-400 flex items-center gap-1.5 shrink-0">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 shrink-0">
                           <Filter className="w-3.5 h-3.5" />
                           <span>Subject Focus</span>
                         </span>
@@ -1512,7 +1512,7 @@ export default function App() {
                           {subjectFilter && (
                             <button
                               onClick={() => setSubjectFilter(null)}
-                              className="text-[10px] font-extrabold uppercase tracking-wider text-rose-600 dark:text-rose-455 hover:text-rose-500 dark:hover:text-rose-300 hover:underline px-2.5 py-1.5"
+                              className="text-[10px] font-extrabold uppercase tracking-wider text-rose-600 dark:text-rose-400 hover:text-rose-500 dark:hover:text-rose-300 hover:underline px-2.5 py-1.5"
                             >
                               Clear
                             </button>
@@ -1526,13 +1526,13 @@ export default function App() {
                           <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 px-2">Mode:</span>
                           <button 
                             onClick={() => setFilterMode("highlight")}
-                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "highlight" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-850 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-805 dark:hover:text-slate-350"}`}
+                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "highlight" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-800 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-300"}`}
                           >
                             Highlight Focus
                           </button>
                           <button 
                             onClick={() => setFilterMode("isolate")}
-                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "isolate" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-850 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-805 dark:hover:text-slate-350"}`}
+                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "isolate" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-800 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-300"}`}
                           >
                             Isolate Focus
                           </button>
@@ -1620,7 +1620,7 @@ export default function App() {
                         name: slot.label, 
                         bgClass: "bg-slate-100 dark:bg-slate-900",
                         borderClass: "border-slate-200 dark:border-slate-800",
-                        textClass: "text-slate-655 dark:text-slate-300",
+                        textClass: "text-slate-600 dark:text-slate-300",
                         colorClass: "slate",
                         icon: BookOpen,
                         accentColor: "#94a3b8",
@@ -1636,13 +1636,13 @@ export default function App() {
                           key={index} 
                           className={`relative group bg-white/70 dark:bg-slate-900/30 border rounded-2xl p-4 flex flex-col gap-4 transition-all duration-300 ${
                             isBreak 
-                              ? "bg-slate-100/50 dark:bg-slate-950/20 text-slate-555 dark:text-slate-500 border-slate-200/80 dark:border-slate-900/50 border-dashed" 
+                              ? "bg-slate-100/50 dark:bg-slate-950/20 text-slate-500 dark:text-slate-500 border-slate-200/80 dark:border-slate-900/50 border-dashed" 
                               : isChecked 
                               ? "bg-emerald-50/20 dark:bg-emerald-950/5 border-emerald-200/40 dark:border-emerald-950/15 opacity-55" 
-                              : "border-slate-200 dark:border-slate-900 hover:bg-white dark:hover:bg-slate-900/55 hover:border-slate-350 dark:hover:border-slate-855 shadow-sm"
+                              : "border-slate-200 dark:border-slate-900 hover:bg-white dark:hover:bg-slate-900/55 hover:border-slate-300 dark:hover:border-slate-800 shadow-sm"
                           } ${
                             isMatch && filterMode === "highlight"
-                              ? "ring-1 ring-emerald-500/25 border-emerald-500/20 bg-emerald-50/10 dark:bg-emerald-955/5" 
+                              ? "ring-1 ring-emerald-500/25 border-emerald-500/20 bg-emerald-50/10 dark:bg-emerald-950/5" 
                               : ""
                           } ${
                             shouldDim && filterMode === "highlight"
@@ -1662,12 +1662,12 @@ export default function App() {
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
                             {/* Time & Badges */}
                             <div className="flex items-center justify-between md:justify-start gap-4 pl-2 shrink-0">
-                              <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-355 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-650" : ""}`}>
+                              <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-300 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-600" : ""}`}>
                                 {slot.time}
                               </span>
 
                               {isBreak ? (
-                                <div className="flex items-center gap-1.5 text-slate-450 dark:text-slate-505 select-none">
+                                <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 select-none">
                                   <Coffee className="w-3.5 h-3.5" />
                                   <span className="text-[10px] font-extrabold uppercase tracking-wider">{slot.label}</span>
                                 </div>
@@ -1681,7 +1681,7 @@ export default function App() {
                                     <span>{slot.label}</span>
                                   </div>
                                   {slot.subject === "genai" && (
-                                    <div className="text-[9px] font-black uppercase tracking-wider py-1 px-2.5 rounded-xl bg-fuchsia-500/10 text-fuchsia-655 dark:text-fuchsia-400 border border-fuchsia-500/25 shrink-0 select-none shadow-sm dark:shadow-none">
+                                    <div className="text-[9px] font-black uppercase tracking-wider py-1 px-2.5 rounded-xl bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400 border border-fuchsia-500/25 shrink-0 select-none shadow-sm dark:shadow-none">
                                       {parseInt(selectedDate.split("-")[2]) <= 5 ? "Foundations" :
                                        parseInt(selectedDate.split("-")[2]) <= 12 ? "Prompt Eng." :
                                        parseInt(selectedDate.split("-")[2]) <= 19 ? "RAG Arch." : "Build"}
@@ -1703,18 +1703,18 @@ export default function App() {
                                       if (e.key === "Enter") saveCustomTopic(slot.subject);
                                       if (e.key === "Escape") setEditingSlotIndex(null);
                                     }}
-                                    className="flex-1 bg-slate-100 dark:bg-slate-955 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
+                                    className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
                                     autoFocus
                                   />
                                   <button 
                                     onClick={() => saveCustomTopic(slot.subject)}
-                                    className="px-3.5 py-1.5 text-xs bg-emerald-555 hover:bg-emerald-500 text-slate-950 font-extrabold rounded-xl border border-emerald-500 transition-all"
+                                    className="px-3.5 py-1.5 text-xs bg-emerald-505 hover:bg-emerald-500 text-slate-950 font-extrabold rounded-xl border border-emerald-500 transition-all"
                                   >
                                     Save
                                   </button>
                                   <button 
                                     onClick={() => setEditingSlotIndex(null)}
-                                    className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-405 font-extrabold rounded-xl transition-all"
+                                    className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
                                   >
                                     Cancel
                                   </button>
@@ -1723,17 +1723,17 @@ export default function App() {
                                 <>
                                   <p className={`text-sm leading-relaxed flex-1 ${
                                     isChecked 
-                                      ? "line-through text-slate-455 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
+                                      ? "line-through text-slate-400 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
                                       : isBreak 
                                       ? "text-slate-500 dark:text-slate-500 italic text-[11px]" 
-                                      : "text-slate-805 dark:text-slate-200 font-medium"
+                                      : "text-slate-800 dark:text-slate-200 font-medium"
                                   }`}>
                                     {focusTopicText}
                                   </p>
                                   {details && (
                                     <button
                                       onClick={() => toggleRowExpand(index)}
-                                      className="p-1 text-slate-405 hover:text-emerald-550 transition-colors shrink-0"
+                                      className="p-1 text-slate-400 hover:text-emerald-500 transition-colors shrink-0"
                                       title="Toggle study details"
                                     >
                                       <ChevronDown className={`w-4 h-4 transform transition-transform duration-355 ${expandedRows[index] ? "rotate-180" : ""}`} />
@@ -1742,7 +1742,7 @@ export default function App() {
                                   {!isBreak && (
                                     <button
                                       onClick={() => startEditing(index, focusTopicText)}
-                                      className="p-1.5 text-slate-455 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                                      className="p-1.5 text-slate-400 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                                       title="Edit custom topic"
                                     >
                                       <Edit2 className="w-3.5 h-3.5" />
@@ -1759,8 +1759,8 @@ export default function App() {
                                   onClick={() => toggleCompletion(selectedDate, completionKey)}
                                   className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
                                     isChecked
-                                      ? "bg-emerald-500 border-emerald-550 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
-                                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-955 text-transparent hover:border-slate-455 dark:hover:border-slate-500 scale-100 shadow-sm"
+                                      ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
+                                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent hover:border-slate-400 dark:hover:border-slate-500 scale-100 shadow-sm"
                                   }`}
                                 >
                                   <Check className={`w-4 h-4 stroke-[3.5] transition-all duration-300 ${isChecked ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
@@ -1772,7 +1772,7 @@ export default function App() {
                           {/* Collapsible Details Drawer */}
                           {details && expandedRows[index] && (
                             <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 w-full animate-fadeIn">
-                              <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-355 flex flex-col gap-2 font-semibold leading-relaxed">
+                              <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-300 flex flex-col gap-2 font-semibold leading-relaxed">
                                 {details.map((bullet, bIdx) => (
                                   <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
                                 ))}
@@ -1786,14 +1786,14 @@ export default function App() {
                                     href={resource.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-xs text-indigo-650 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
+                                    className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
                                     title={resource.note}
                                   >
-                                    <span className="bg-red-500/10 text-red-505 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
+                                    <span className="bg-red-500/10 text-red-500 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
                                       {resource.platform}
                                     </span>
                                     <span>{resource.channel}</span>
-                                    <span className="text-slate-400 dark:text-slate-550 font-bold">({resource.note})</span>
+                                    <span className="text-slate-400 dark:text-slate-500 font-bold">({resource.note})</span>
                                   </a>
                                 </div>
                               )}
@@ -1809,10 +1809,10 @@ export default function App() {
                       <div className="flex flex-col md:flex-row gap-6 items-start">
                         <span className={`p-4 rounded-2xl border shrink-0 ${
                           currentDayData.type === "rest"
-                            ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-650 dark:text-indigo-405 border-indigo-200 dark:border-indigo-500/25"
+                            ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/25"
                             : currentDayData.type === "revision"
-                            ? "bg-amber-55 dark:bg-amber-500/10 text-amber-600 dark:text-amber-405 border-amber-200 dark:border-amber-500/25"
-                            : "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-455 border-rose-200 dark:border-rose-500/25"
+                            ? "bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-500/25"
+                            : "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-500/25"
                         }`}>
                           {currentDayData.type === "rest" ? (
                             <Coffee className="w-8 h-8" />
@@ -1838,7 +1838,7 @@ export default function App() {
 
                       {/* Checklist */}
                       <div className="border-t border-slate-200 dark:border-slate-900/60 pt-6">
-                        <h4 className="text-[10px] uppercase tracking-wider font-extrabold text-slate-500 dark:text-slate-450 mb-4">
+                        <h4 className="text-[10px] uppercase tracking-wider font-extrabold text-slate-500 dark:text-slate-400 mb-4">
                           Day Agenda Checklist
                         </h4>
                         
@@ -1846,9 +1846,9 @@ export default function App() {
                           {getDayChecklistKeys(currentDayData).map((item) => {
                             const isChecked = !!(completions[selectedDate]?.[item.key]);
                             const meta = subjectMetadata[item.subject] || { 
-                              bgClass: "bg-slate-100 dark:bg-slate-905",
-                              borderClass: "border-slate-200 dark:border-slate-805",
-                              textClass: "text-slate-700 dark:text-slate-350",
+                              bgClass: "bg-slate-100 dark:bg-slate-900",
+                              borderClass: "border-slate-200 dark:border-slate-800",
+                              textClass: "text-slate-700 dark:text-slate-300",
                               icon: BookOpen
                             };
                             const IconComp = meta.icon;
@@ -1860,7 +1860,7 @@ export default function App() {
                                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-4 ${
                                   isChecked
                                     ? "bg-emerald-50/15 dark:bg-emerald-950/5 border-emerald-200/40 dark:border-emerald-950/15 opacity-55 text-slate-500"
-                                    : "bg-white dark:bg-slate-950/50 border-slate-200 dark:border-slate-900 hover:border-slate-350 dark:hover:border-slate-800 hover:bg-white dark:hover:bg-slate-900/30 shadow-sm"
+                                    : "bg-white dark:bg-slate-950/50 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800 hover:bg-white dark:hover:bg-slate-900/30 shadow-sm"
                                 }`}
                               >
                                 <div className="flex items-center gap-3">
@@ -1875,7 +1875,7 @@ export default function App() {
                                 <button
                                   className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300 ${
                                     isChecked
-                                      ? "bg-emerald-500 border-emerald-555 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
+                                      ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
                                       : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent scale-100 shadow-sm"
                                   }`}
                                 >
@@ -1897,13 +1897,13 @@ export default function App() {
                     >
                       <button
                         onClick={() => setIsPracticeOpen(!isPracticeOpen)}
-                        className="w-full flex items-center justify-between font-bold text-slate-905 dark:text-white"
+                        className="w-full flex items-center justify-between font-bold text-slate-900 dark:text-white"
                       >
                         <div className="flex items-center gap-2 flex-wrap">
-                          <Award className="w-5 h-5 text-emerald-505 dark:text-emerald-400" />
+                          <Award className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
                           <span className="text-sm uppercase tracking-wider">Practice Problems</span>
                           {practiceProblemsData[selectedDate] && (
-                            <span className="text-[10px] bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-855 px-2 py-0.5 rounded-full font-bold text-slate-500 dark:text-slate-400">
+                            <span className="text-[10px] bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-2 py-0.5 rounded-full font-bold text-slate-500 dark:text-slate-400">
                               {practiceProblemsData[selectedDate].filter(p => solvedProblems[selectedDate]?.[p.title] === true).length}/{practiceProblemsData[selectedDate].length} Solved
                             </span>
                           )}
@@ -1915,10 +1915,10 @@ export default function App() {
                         <div className="mt-5 pt-4 border-t border-slate-200 dark:border-slate-900/60 flex flex-col gap-3">
                           {selectedDate === "2026-09-23" || selectedDate === "2026-09-24" ? (
                             <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/15 border border-indigo-200/80 dark:border-indigo-950/20">
-                              <p className="text-xs font-semibold text-slate-705 dark:text-slate-300 leading-relaxed">
+                              <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 leading-relaxed">
                                 💡 <strong>Company-Wise Prep Focus</strong>: Today is dedicated to targeted company prep. Revisit well-established sets to benchmark your timing:
                               </p>
-                              <ul className="mt-3 flex flex-col gap-2 text-xs font-bold text-indigo-705 dark:text-indigo-400">
+                              <ul className="mt-3 flex flex-col gap-2 text-xs font-bold text-indigo-700 dark:text-indigo-400">
                                 <li>
                                   <a href="https://neetcode.io/practice" target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1.5">
                                     🚀 NeetCode 150 Practice Roadmap
@@ -1940,11 +1940,11 @@ export default function App() {
                             practiceProblemsData[selectedDate].map((prob, idx) => {
                               const isSolved = !!(solvedProblems[selectedDate]?.[prob.title]);
                               
-                              let diffColor = "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-450 border-emerald-200/50 dark:border-emerald-950/10";
+                              let diffColor = "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-950/10";
                               if (prob.difficulty === "Medium") {
-                                diffColor = "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-455 border-amber-200/50 dark:border-amber-950/10";
+                                diffColor = "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-950/10";
                               } else if (prob.difficulty === "Hard") {
-                                diffColor = "bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-455 border-rose-200/50 dark:border-rose-950/10";
+                                diffColor = "bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border-rose-200/50 dark:border-rose-950/10";
                               }
 
                               const link = getProblemLink(prob);
@@ -1954,8 +1954,8 @@ export default function App() {
                                   key={idx}
                                   className={`p-3.5 rounded-xl border flex items-center justify-between gap-4 transition-all ${
                                     isSolved 
-                                      ? "bg-emerald-50/10 dark:bg-emerald-950/5 border-emerald-250/20 dark:border-emerald-950/10 opacity-60" 
-                                      : "bg-white dark:bg-slate-950/30 border-slate-200 dark:border-slate-900 hover:border-slate-350 dark:hover:border-slate-800"
+                                      ? "bg-emerald-50/10 dark:bg-emerald-950/5 border-emerald-200/20 dark:border-emerald-950/10 opacity-60" 
+                                      : "bg-white dark:bg-slate-950/30 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800"
                                   }`}
                                 >
                                   <div className="flex items-center gap-3 flex-wrap">
@@ -1964,7 +1964,7 @@ export default function App() {
                                       {prob.difficulty}
                                     </span>
                                     {/* Title & Number */}
-                                    <span className={`text-xs font-semibold leading-snug ${isSolved ? "line-through text-slate-450 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
+                                    <span className={`text-xs font-semibold leading-snug ${isSolved ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
                                       {prob.id ? `${prob.id} — ` : ""}{prob.title}
                                     </span>
                                   </div>
@@ -1975,7 +1975,7 @@ export default function App() {
                                       href={link} 
                                       target="_blank" 
                                       rel="noopener noreferrer" 
-                                      className="p-1 text-slate-405 hover:text-emerald-500 hover:scale-108 transition-all"
+                                      className="p-1 text-slate-400 hover:text-emerald-500 hover:scale-108 transition-all"
                                       title={`Open ${prob.title} on ${prob.platform.toUpperCase()}`}
                                     >
                                       <Globe className="w-3.5 h-3.5" />
@@ -1986,8 +1986,8 @@ export default function App() {
                                       onClick={() => toggleProblemSolve(selectedDate, prob.title)}
                                       className={`w-6.5 h-6.5 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300 ${
                                         isSolved
-                                          ? "bg-emerald-505 border-emerald-555 text-slate-950 scale-108 shadow-sm"
-                                          : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-955 text-transparent scale-100"
+                                          ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-sm"
+                                          : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent scale-100"
                                       }`}
                                     >
                                       <Check className={`w-3.5 h-3.5 stroke-[3.5] transition-all duration-300 ${isSolved ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
@@ -2017,8 +2017,8 @@ export default function App() {
                   className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>September Heatmap</span>
                     </h3>
                     <span className="text-[10px] text-slate-500 font-bold uppercase">30 Cells</span>
@@ -2039,8 +2039,8 @@ export default function App() {
                       
                       let bgFill = "bg-slate-200 dark:bg-slate-900 border-slate-300 dark:border-slate-950";
                       if (done > 0) {
-                        if (percentage === 100) bgFill = "bg-emerald-505 border-emerald-505 dark:bg-emerald-500 dark:border-emerald-450";
-                        else if (percentage >= 60) bgFill = "bg-emerald-350 dark:bg-emerald-600/70 border-emerald-400 dark:border-emerald-700/30";
+                        if (percentage === 100) bgFill = "bg-emerald-500 border-emerald-500 dark:bg-emerald-500 dark:border-emerald-400";
+                        else if (percentage >= 60) bgFill = "bg-emerald-300 dark:bg-emerald-600/70 border-emerald-400 dark:border-emerald-700/30";
                         else if (percentage >= 30) bgFill = "bg-emerald-200 dark:bg-emerald-800/40 border-emerald-300 dark:border-emerald-800/20";
                         else bgFill = "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-100 dark:border-emerald-950/15";
                       }
@@ -2059,12 +2059,12 @@ export default function App() {
                           </button>
 
                           <div className="absolute bottom-[115%] left-1/2 transform -translate-x-1/2 hidden group-hover/cell:flex flex-col items-center z-50 pointer-events-none min-w-[150px]">
-                            <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-850 p-2 rounded-xl text-center shadow-xl">
+                            <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2 rounded-xl text-center shadow-xl">
                               <div className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{day.day}, Sept {dayNum}</div>
-                              <div className="text-xs font-black text-slate-805 dark:text-white mt-1">{done} / {total} tasks</div>
-                              <div className="text-[10px] text-emerald-605 dark:text-emerald-400 font-bold mt-0.5">({percentage}% complete)</div>
+                              <div className="text-xs font-black text-slate-800 dark:text-white mt-1">{done} / {total} tasks</div>
+                              <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold mt-0.5">({percentage}% complete)</div>
                             </div>
-                            <div className="w-2.5 h-2.5 bg-white dark:bg-slate-950 border-r border-b border-slate-200 dark:border-slate-850 transform rotate-45 -mt-1.5" />
+                            <div className="w-2.5 h-2.5 bg-white dark:bg-slate-950 border-r border-b border-slate-200 dark:border-slate-800 transform rotate-45 -mt-1.5" />
                           </div>
                         </div>
                       );
@@ -2082,11 +2082,11 @@ export default function App() {
                     className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                   >
                     <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                      <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                        <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                      <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                         <span>3D Analytics Chart</span>
                       </h3>
-                      <span className="text-[10px] text-slate-550 font-bold uppercase">WebGL Rendering</span>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase">WebGL Rendering</span>
                     </div>
 
                     <Suspense fallback={<div className="h-56 flex items-center justify-center text-xs font-semibold text-slate-400">Loading 3D Visualizer...</div>}>
@@ -2107,8 +2107,8 @@ export default function App() {
                       })}
                       {/* Problems Solved count */}
                       <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-900/60 flex items-center justify-between text-[10px] font-extrabold uppercase">
-                        <span className="text-slate-500 dark:text-slate-450 font-bold">Problems Solved</span>
-                        <span className="text-emerald-605 dark:text-emerald-400 flex items-center gap-1">
+                        <span className="text-slate-500 dark:text-slate-400 font-bold">Problems Solved</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                           🔥 {totalProblemsSolved} Solved
                         </span>
                       </div>
@@ -2163,8 +2163,8 @@ export default function App() {
                       })}
                       {/* Problems Solved count */}
                       <div className="mt-2 pt-3.5 border-t border-slate-200 dark:border-slate-900/60 flex items-center justify-between text-[10px] font-extrabold uppercase">
-                        <span className="text-slate-500 dark:text-slate-450 font-bold">Problems Solved</span>
-                        <span className="text-emerald-600 dark:text-emerald-450 flex items-center gap-1">
+                        <span className="text-slate-500 dark:text-slate-400 font-bold">Problems Solved</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                           🔥 {totalProblemsSolved} Solved
                         </span>
                       </div>
@@ -2177,8 +2177,8 @@ export default function App() {
                   className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>Analytics Trend Curve</span>
                     </h3>
                     <span className="text-[10px] text-slate-500 font-bold uppercase">Daily Curve</span>
@@ -2230,7 +2230,7 @@ export default function App() {
                       <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>Weekly Summary</span>
                     </h3>
-                    <span className="text-[10px] text-slate-505 font-bold uppercase">4 Phases</span>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase">4 Phases</span>
                   </div>
                   
                   <div className="flex flex-col gap-3">
@@ -2247,7 +2247,7 @@ export default function App() {
                           className={`p-4 rounded-2xl border transition-all ${
                             isCurrentWeek
                               ? "bg-slate-100/50 dark:bg-slate-900/80 border-emerald-500/35 ring-1 ring-emerald-500/10 shadow-sm"
-                              : "bg-white/40 dark:bg-slate-950/40 border-slate-150 dark:border-slate-900 opacity-70 hover:opacity-100"
+                              : "bg-white/40 dark:bg-slate-950/40 border-slate-100 dark:border-slate-900 opacity-70 hover:opacity-100"
                           }`}
                         >
                           <div className="flex items-center justify-between gap-2">
@@ -2255,12 +2255,12 @@ export default function App() {
                               {isFullyCompleted && (
                                 <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                               )}
-                              <span className={`text-xs font-bold ${isCurrentWeek ? "text-emerald-600 dark:text-emerald-400 text-[13px]" : "text-slate-700 dark:text-slate-355"}`}>
+                              <span className={`text-xs font-bold ${isCurrentWeek ? "text-emerald-600 dark:text-emerald-400 text-[13px]" : "text-slate-700 dark:text-slate-300"}`}>
                                 {theme.title}
                               </span>
                             </div>
                             {isCurrentWeek ? (
-                              <span className="text-[8px] uppercase tracking-wider font-black bg-emerald-500/10 text-emerald-605 dark:text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-md">
+                              <span className="text-[8px] uppercase tracking-wider font-black bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-md">
                                 Current Week
                               </span>
                             ) : isFullyCompleted ? (
@@ -2275,13 +2275,13 @@ export default function App() {
                           </p>
 
                           <div className="mt-3.5 pt-3 border-t border-slate-200 dark:border-slate-900/60">
-                            <div className="flex justify-between items-center text-[10px] text-slate-450 dark:text-slate-400 mb-1.5 font-extrabold uppercase">
+                            <div className="flex justify-between items-center text-[10px] text-slate-400 dark:text-slate-400 mb-1.5 font-extrabold uppercase">
                               <span>Progress</span>
-                              <span className={`${isFullyCompleted ? "text-emerald-605 dark:text-emerald-400" : isCurrentWeek ? "text-slate-700 dark:text-slate-250" : ""}`}>{stats.percentage}%</span>
+                              <span className={`${isFullyCompleted ? "text-emerald-600 dark:text-emerald-400" : isCurrentWeek ? "text-slate-700 dark:text-slate-200" : ""}`}>{stats.percentage}%</span>
                             </div>
                             <div className="w-full bg-slate-200 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-300 dark:border-slate-900">
                               <div 
-                                className={`h-full rounded-full transition-all duration-500 ${isFullyCompleted ? "bg-emerald-400" : "bg-emerald-505 dark:bg-emerald-500"}`}
+                                className={`h-full rounded-full transition-all duration-500 ${isFullyCompleted ? "bg-emerald-400" : "bg-emerald-500 dark:bg-emerald-500"}`}
                                 style={{ width: `${stats.percentage}%` }}
                               ></div>
                             </div>
@@ -2301,13 +2301,13 @@ export default function App() {
                   className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
                       <Info className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>Interview Q&A Prep</span>
                     </h3>
                     <button
                       onClick={() => setIsInterviewOpen(!isInterviewOpen)}
-                      className="text-xs font-bold text-emerald-605 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
+                      className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
                     >
                       <span>{isInterviewOpen ? "Hide" : "Show Prep"}</span>
                       <ChevronDown className={`w-3.5 h-3.5 transform transition-transform ${isInterviewOpen ? "rotate-180" : ""}`} />
@@ -2327,7 +2327,7 @@ export default function App() {
                   ) : (
                     <div className="flex flex-col gap-4">
                       {/* Technical/HR Tabs */}
-                      <div className="flex bg-slate-100 dark:bg-slate-955 rounded-xl p-1 border border-slate-200 dark:border-slate-900">
+                      <div className="flex bg-slate-100 dark:bg-slate-950 rounded-xl p-1 border border-slate-200 dark:border-slate-900">
                         <button
                           onClick={() => {
                             setExpandedInterviewSection("technical");
@@ -2335,8 +2335,8 @@ export default function App() {
                           }}
                           className={`flex-1 text-xs py-1.5 rounded-lg font-semibold transition-all ${
                             expandedInterviewSection === "technical" 
-                              ? "bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-850 text-slate-900 dark:text-white shadow-sm" 
-                              : "text-slate-550 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-355"
+                              ? "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-sm" 
+                              : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-300"
                           }`}
                         >
                           Technical
@@ -2348,8 +2348,8 @@ export default function App() {
                           }}
                           className={`flex-1 text-xs py-1.5 rounded-lg font-semibold transition-all ${
                             expandedInterviewSection === "hr" 
-                              ? "bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-850 text-slate-900 dark:text-white shadow-sm" 
-                              : "text-slate-550 dark:text-slate-450 hover:text-slate-855 dark:hover:text-slate-350"
+                              ? "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-sm" 
+                              : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-300"
                           }`}
                         >
                           HR / Behavioral
@@ -2363,13 +2363,13 @@ export default function App() {
                           value={qaSearchQuery}
                           onChange={(e) => setQaSearchQuery(e.target.value)}
                           placeholder="Search questions or categories..."
-                          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 dark:text-white outline-none focus:border-emerald-500"
+                          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 dark:text-white outline-none focus:border-emerald-500"
                         />
-                        <Search className="w-3.5 h-3.5 text-slate-450 absolute left-2.5 top-1/2 transform -translate-y-1/2" />
+                        <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 transform -translate-y-1/2" />
                         {qaSearchQuery && (
                           <button
                             onClick={() => setQaSearchQuery("")}
-                            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-slate-450 hover:text-slate-800 dark:hover:text-white text-[10px] font-extrabold"
+                            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-800 dark:hover:text-white text-[10px] font-extrabold"
                           >
                             Clear
                           </button>
@@ -2396,9 +2396,9 @@ export default function App() {
                         
                         return (
                           <div className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 p-3 rounded-xl shadow-inner">
-                            <div className="flex justify-between items-center text-[10px] text-slate-555 dark:text-slate-450 mb-1.5 font-extrabold uppercase">
+                            <div className="flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-400 mb-1.5 font-extrabold uppercase">
                               <span>Readiness ({practicedQ}/{totalQ} Practiced)</span>
-                              <span className="text-emerald-600 dark:text-emerald-450">{readinessPct}%</span>
+                              <span className="text-emerald-600 dark:text-emerald-400">{readinessPct}%</span>
                             </div>
                             <div className="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-1.5 overflow-hidden">
                               <div 
@@ -2412,8 +2412,8 @@ export default function App() {
 
                       {/* STAR Method Guide pinned at the top of HR tab */}
                       {expandedInterviewSection === "hr" && (
-                        <div className="bg-indigo-50/50 dark:bg-indigo-950/10 border border-indigo-200/50 dark:border-indigo-950/20 p-3.5 rounded-xl text-[11px] text-slate-655 dark:text-slate-355 leading-relaxed font-semibold">
-                          <div className="text-[9px] uppercase font-black tracking-wider text-indigo-650 dark:text-indigo-400 mb-1.5 flex items-center gap-1.5 select-none">
+                        <div className="bg-indigo-50/50 dark:bg-indigo-950/10 border border-indigo-200/50 dark:border-indigo-950/20 p-3.5 rounded-xl text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">
+                          <div className="text-[9px] uppercase font-black tracking-wider text-indigo-600 dark:text-indigo-400 mb-1.5 flex items-center gap-1.5 select-none">
                             <Star className="w-3.5 h-3.5" />
                             <span>STAR Interview Method Template</span>
                           </div>
@@ -2464,11 +2464,11 @@ export default function App() {
                               <div key={catKey} className="flex flex-col">
                                 <button 
                                   onClick={() => toggleCategoryExpand(catKey)}
-                                  className="w-full flex items-center justify-between p-2 bg-slate-100/50 dark:bg-slate-950/20 border border-slate-205 dark:border-slate-900 rounded-xl hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-all text-left"
+                                  className="w-full flex items-center justify-between p-2 bg-slate-100/50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-xl hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-all text-left"
                                 >
                                   <div className="flex items-center gap-2">
-                                    <span className="text-xs font-bold text-slate-850 dark:text-slate-200">{catName}</span>
-                                    <span className="text-[8px] font-black uppercase text-slate-455 dark:text-slate-500 bg-slate-200/50 dark:bg-slate-900/60 border border-slate-300/30 dark:border-slate-800/40 px-1.5 py-0.5 rounded">
+                                    <span className="text-xs font-bold text-slate-800 dark:text-slate-200">{catName}</span>
+                                    <span className="text-[8px] font-black uppercase text-slate-400 dark:text-slate-500 bg-slate-200/50 dark:bg-slate-900/60 border border-slate-300/30 dark:border-slate-800/40 px-1.5 py-0.5 rounded">
                                       {catPracticed}/{catTotal}
                                     </span>
                                   </div>
@@ -2485,7 +2485,7 @@ export default function App() {
                                           <div className="flex items-start justify-between gap-3">
                                             <button 
                                               onClick={() => toggleQAExpand(q.id)}
-                                              className="flex-1 text-left text-xs text-slate-700 dark:text-slate-250 leading-relaxed font-semibold hover:text-emerald-500 dark:hover:text-emerald-455"
+                                              className="flex-1 text-left text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-semibold hover:text-emerald-500 dark:hover:text-emerald-400"
                                             >
                                               {q.q}
                                             </button>
@@ -2494,7 +2494,7 @@ export default function App() {
                                               className={`text-[8px] font-black uppercase px-2 py-0.5 rounded border shrink-0 transition-all ${
                                                 isPracticed 
                                                   ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
-                                                  : "bg-slate-100 dark:bg-slate-900 text-slate-455 dark:text-slate-550 border-slate-300 dark:border-slate-800 hover:border-slate-455"
+                                                  : "bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-500 border-slate-300 dark:border-slate-800 hover:border-slate-400"
                                               }`}
                                             >
                                               {isPracticed ? "Practiced ✓" : "Mark"}
@@ -2503,21 +2503,21 @@ export default function App() {
                                           
                                           {isQAExpanded && (
                                             <div className="pt-2 border-t border-slate-200/50 dark:border-slate-900/50 flex flex-col gap-3 animate-fadeIn">
-                                              <div className="text-[9px] uppercase tracking-wider font-extrabold text-slate-405 dark:text-slate-550 select-none">Suggested Answer Outline:</div>
-                                              <ul className="list-disc pl-4.5 text-[11px] text-slate-650 dark:text-slate-355 flex flex-col gap-1.5 font-semibold leading-relaxed">
+                                              <div className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">Suggested Answer Outline:</div>
+                                              <ul className="list-disc pl-4.5 text-[11px] text-slate-600 dark:text-slate-300 flex flex-col gap-1.5 font-semibold leading-relaxed">
                                                 {q.outline.map((bullet, bIdx) => (
                                                   <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
                                                 ))}
                                               </ul>
                                               
                                               <div className="flex flex-col gap-1.5 mt-1">
-                                                <div className="text-[9px] uppercase tracking-wider font-extrabold text-slate-405 dark:text-slate-505 select-none">Your Draft Answer:</div>
+                                                <div className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">Your Draft Answer:</div>
                                                 <textarea
                                                   value={interviewDrafts[q.id] || ""}
                                                   onChange={(e) => saveInterviewDraft(q.id, e.target.value)}
                                                   placeholder="Type notes or STAR bullet points here... Saved automatically."
                                                   rows={3}
-                                                  className="w-full bg-white dark:bg-slate-950 border border-slate-250 dark:border-slate-850 rounded-xl p-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 outline-none focus:border-emerald-500 font-medium resize-none shadow-sm dark:shadow-none"
+                                                  className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 outline-none focus:border-emerald-500 font-medium resize-none shadow-sm dark:shadow-none"
                                                 />
                                               </div>
                                             </div>
@@ -2541,13 +2541,13 @@ export default function App() {
                   className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-850 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
                       <Globe className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>Quick Reference Library</span>
                     </h3>
                     <button
                       onClick={() => setIsResourcesOpen(!isResourcesOpen)}
-                      className="text-xs font-bold text-emerald-605 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
+                      className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
                     >
                       <span>{isResourcesOpen ? "Hide" : "Show Library"}</span>
                       <ChevronDown className={`w-3.5 h-3.5 transform transition-transform ${isResourcesOpen ? "rotate-180" : ""}`} />
@@ -2588,7 +2588,7 @@ export default function App() {
                         }
                       ].map((grp, gIdx) => (
                         <div key={gIdx} className="flex flex-col gap-2">
-                          <span className="text-[9px] uppercase tracking-wider font-black text-slate-455 dark:text-slate-500 select-none">
+                          <span className="text-[9px] uppercase tracking-wider font-black text-slate-400 dark:text-slate-500 select-none">
                             {grp.category}
                           </span>
                           <div className="flex flex-col gap-2">
@@ -2598,15 +2598,15 @@ export default function App() {
                                 href={res.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-3 bg-slate-50 dark:bg-slate-955/50 hover:bg-emerald-500/5 border border-slate-205 dark:border-slate-900 hover:border-emerald-500/20 rounded-xl transition-all flex flex-col gap-1 shadow-sm dark:shadow-none"
+                                className="p-3 bg-slate-50 dark:bg-slate-950/50 hover:bg-emerald-500/5 border border-slate-200 dark:border-slate-900 hover:border-emerald-500/20 rounded-xl transition-all flex flex-col gap-1 shadow-sm dark:shadow-none"
                               >
-                                <div className="flex items-center justify-between text-xs font-bold text-slate-850 dark:text-slate-200">
+                                <div className="flex items-center justify-between text-xs font-bold text-slate-800 dark:text-slate-200">
                                   <span>{res.channel}</span>
-                                  <span className="text-[8px] bg-red-500/10 text-red-550 px-1.5 py-0.5 rounded border border-red-500/20 font-black">
+                                  <span className="text-[8px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded border border-red-500/20 font-black">
                                     {res.topic}
                                   </span>
                                 </div>
-                                <span className="text-[10px] text-slate-500 dark:text-slate-450 leading-relaxed font-semibold">
+                                <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                                   {res.note}
                                 </span>
                               </a>
@@ -2636,15 +2636,15 @@ export default function App() {
                 }}
               />
               
-              <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 rounded-2xl shadow-2xl flex flex-col max-h-[70vh] overflow-hidden z-10 animate-fadeIn">
-                <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 dark:border-slate-850">
+              <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col max-h-[70vh] overflow-hidden z-10 animate-fadeIn">
+                <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 dark:border-slate-800">
                   <Search className="w-5 h-5 text-slate-400" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by topic, subject, or date..."
-                    className="flex-1 bg-transparent border-none outline-none text-slate-805 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm"
+                    className="flex-1 bg-transparent border-none outline-none text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm"
                     autoFocus
                   />
                   <button 
@@ -2652,7 +2652,7 @@ export default function App() {
                       setIsSearchOpen(false);
                       setSearchQuery("");
                     }}
-                    className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 hover:bg-slate-100 dark:hover:bg-slate-850 rounded-lg"
+                    className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -2660,11 +2660,11 @@ export default function App() {
                 
                 <div className="flex-1 overflow-y-auto p-2.5 max-h-[50vh] scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-800">
                   {searchQuery.trim() === "" ? (
-                    <div className="text-center py-8 text-slate-450 dark:text-slate-500 text-xs font-semibold">
+                    <div className="text-center py-8 text-slate-400 dark:text-slate-500 text-xs font-semibold">
                       Type something to search across subjects, topics, dates, and week themes.
                     </div>
                   ) : searchResults.length === 0 ? (
-                    <div className="text-center py-8 text-slate-450 dark:text-slate-500 text-xs font-semibold">
+                    <div className="text-center py-8 text-slate-400 dark:text-slate-500 text-xs font-semibold">
                       No results found for "{searchQuery}"
                     </div>
                   ) : (
@@ -2679,11 +2679,11 @@ export default function App() {
                               setIsSearchOpen(false);
                               setSearchQuery("");
                             }}
-                            className="w-full text-left p-3.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-850 border border-transparent hover:border-slate-200 dark:hover:border-slate-800/80 cursor-pointer flex items-center justify-between gap-4 transition-all"
+                            className="w-full text-left p-3.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-800/80 cursor-pointer flex items-center justify-between gap-4 transition-all"
                           >
                             <div className="flex-1">
                               <div className="text-xs font-black text-slate-900 dark:text-white">{res.title}</div>
-                              <div className="text-[11px] text-slate-550 dark:text-slate-400 mt-1 leading-relaxed">{res.subtitle}</div>
+                              <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{res.subtitle}</div>
                             </div>
                             {matchMeta && (
                               <span className={`text-[8px] font-extrabold uppercase tracking-wider py-1 px-2.5 rounded-md border shrink-0 ${matchMeta.bgClass} ${matchMeta.borderClass} ${matchMeta.textClass}`}>
@@ -2697,7 +2697,7 @@ export default function App() {
                   )}
                 </div>
                 
-                <div className="bg-slate-50 dark:bg-slate-950 px-4 py-2 border-t border-slate-200 dark:border-slate-850 text-slate-450 dark:text-slate-500 text-[10px] font-bold flex justify-between uppercase tracking-wider">
+                <div className="bg-slate-50 dark:bg-slate-950 px-4 py-2 border-t border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500 text-[10px] font-bold flex justify-between uppercase tracking-wider">
                   <span>Use ↑↓ to navigate (Click to select)</span>
                   <span>Esc to close</span>
                 </div>
@@ -2706,13 +2706,13 @@ export default function App() {
           )}
 
           {/* 5. FOOTER */}
-          <footer className="mt-auto border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-6 px-4 text-center text-slate-555 dark:text-slate-400 text-xs font-semibold transition-colors duration-300">
+          <footer className="mt-auto border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-6 px-4 text-center text-slate-500 dark:text-slate-400 text-xs font-semibold transition-colors duration-300">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
               <p>© 2026 Placement Prep Hub. All rights reserved.</p>
               <div className="flex gap-4">
                 <span className="text-emerald-600 dark:text-emerald-500/90 font-bold hover:underline cursor-default">Keep Learning</span>
                 <span className="text-slate-300 dark:text-slate-800">|</span>
-                <span className="hover:text-slate-705 dark:hover:text-slate-350 cursor-default">Structured Timeline</span>
+                <span className="hover:text-slate-700 dark:hover:text-slate-300 cursor-default">Structured Timeline</span>
               </div>
             </div>
           </footer>
@@ -2779,7 +2779,7 @@ function SubjectBar3D({ stats, darkMode }) {
           autoRotateSpeed={0.65} 
         />
       </Canvas>
-      <div className="absolute top-2 left-3 text-[9px] uppercase tracking-wider font-black text-slate-450 dark:text-slate-505 pointer-events-none">
+      <div className="absolute top-2 left-3 text-[9px] uppercase tracking-wider font-black text-slate-400 dark:text-slate-500 pointer-events-none">
         Drag to rotate 3D bars
       </div>
     </div>
