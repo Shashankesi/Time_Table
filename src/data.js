@@ -19,7 +19,7 @@ export const days = [
     dsa: "Arrays: full revision + timed practice set (prefix sum, rotation, subarray problems)",
     webdev: "Advanced JS: closures, scope & hoisting",
     extratech: "Git: init, commit, push",
-    genai: "LLM basics: tokens, context window",
+    genai: "PHASE 1 — Foundations: AI vs ML vs DL vs NLP landscape; why GenAI matters for placements right now",
     csfund: "OOPs: Class & Object" },
 
   { date: "2026-09-02", day: "Wed", type: "study", week: 1,
@@ -27,7 +27,7 @@ export const days = [
     dsa: "Strings: full revision + timed practice set (pattern matching, anagrams, substrings)",
     webdev: "Advanced JS: promises & async/await",
     extratech: "Git branching",
-    genai: "Prompt basics: zero-shot vs few-shot",
+    genai: "What is an LLM? Transformer intuition — attention explained without the math",
     csfund: "OOPs: Inheritance" },
 
   { date: "2026-09-03", day: "Thu", type: "study", week: 1,
@@ -35,7 +35,7 @@ export const days = [
     dsa: "Two-pointer & sliding window: revision + medium/hard practice set",
     webdev: "Advanced JS: event loop, call stack, microtasks vs macrotasks",
     extratech: "Git merge & conflicts",
-    genai: "Prompt basics continued: instructions vs context",
+    genai: "Tokens, context window, temperature & sampling — experiment with 3 prompts, observe output changes",
     csfund: "OOPs: Polymorphism" },
 
   { date: "2026-09-04", day: "Fri", type: "study", week: 1,
@@ -43,7 +43,7 @@ export const days = [
     dsa: "Hashing/HashMap: revision + practice (frequency counting, grouping, subarray-sum problems)",
     webdev: "DOM APIs + Fetch API — build an interactive UI without a framework",
     extratech: "GitHub PR workflow",
-    genai: "System vs user vs assistant roles",
+    genai: "How LLMs are trained: pretraining, fine-tuning, RLHF (high-level, no math required)",
     csfund: "OOPs: Encapsulation, Abstraction" },
 
   { date: "2026-09-05", day: "Sat", type: "study", week: 1,
@@ -51,18 +51,18 @@ export const days = [
     dsa: "Recursion & basic backtracking: revision + timed practice set",
     webdev: "Mini vanilla-JS project (Fetch-based app) + JS fundamentals recap",
     extratech: "Weekly recap: Git workflow end-to-end",
-    genai: "LLM + Prompt basics full recap",
+    genai: "Phase 1 recap: explain 'what is an LLM' out loud in your own words, no notes",
     csfund: "OOPs full revision + mock questions" },
 
   { date: "2026-09-06", day: "Sun", type: "rest",
-    note: "Full mock test — Week 1 (SQL, DSA: arrays/strings/two-pointer/hashing/recursion, Advanced JS)." },
+    note: "Full mock test — Week 1 (SQL, DSA arrays/strings/hashing/recursion, Advanced JS). GenAI: no test, just make sure you can explain tokens/context window/temperature simply." },
 
   { date: "2026-09-07", day: "Mon", type: "study", week: 2,
     sql: "Subqueries",
     dsa: "Linked List: full revision + practice (reverse, merge, cycle detection, intersection)",
     webdev: "React: setup + JSX",
     extratech: "Vector embeddings intro",
-    genai: "How embeddings power semantic search",
+    genai: "PHASE 2 — Prompt Engineering: zero-shot vs few-shot prompting, hands-on comparison",
     csfund: "DBMS: Normalization (1NF–3NF)" },
 
   { date: "2026-09-08", day: "Tue", type: "study", week: 2,
@@ -70,7 +70,7 @@ export const days = [
     dsa: "Stack: revision + practice (monotonic stack problems, next greater/smaller element)",
     webdev: "React: components & props",
     extratech: "Vector DB overview (Pinecone/FAISS)",
-    genai: "Comparing vector DB options",
+    genai: "System vs user vs assistant roles; instructions vs context in a prompt",
     csfund: "DBMS: Keys (primary/foreign/candidate)" },
 
   { date: "2026-09-09", day: "Wed", type: "study", week: 2,
@@ -78,7 +78,7 @@ export const days = [
     dsa: "Queue & Deque: revision + practice (sliding window max, circular queue problems)",
     webdev: "React: state & useState",
     extratech: "Chunking strategies for documents",
-    genai: "Chunk size / overlap trade-offs",
+    genai: "Chain-of-Thought (CoT) prompting — when and why it improves reasoning tasks",
     csfund: "DBMS: ACID properties" },
 
   { date: "2026-09-10", day: "Thu", type: "study", week: 2,
@@ -86,7 +86,7 @@ export const days = [
     dsa: "Binary Trees: revision + practice (traversals, views, diameter, LCA)",
     webdev: "React: useEffect, hooks",
     extratech: "RAG architecture overview",
-    genai: "Retriever + generator pipeline design",
+    genai: "Self-consistency & the ReAct pattern (reason + act) — build a small example",
     csfund: "DBMS: Transactions & concurrency" },
 
   { date: "2026-09-11", day: "Fri", type: "study", week: 2,
@@ -94,7 +94,7 @@ export const days = [
     dsa: "BST + balanced trees: revision + practice (validate BST, insert/delete, AVL basics)",
     webdev: "React: forms & events",
     extratech: "Docker: images vs containers",
-    genai: "Prep: what a mini RAG demo needs",
+    genai: "Structured outputs: JSON mode and function/tool calling basics",
     csfund: "DBMS: Indexing" },
 
   { date: "2026-09-12", day: "Sat", type: "study", week: 2,
@@ -102,18 +102,18 @@ export const days = [
     dsa: "Graphs (BFS/DFS): revision + practice set (connected components, cycle detection)",
     webdev: "React mini project",
     extratech: "Docker: Dockerfile basics",
-    genai: "Weekly recap: embeddings + RAG architecture",
+    genai: "Build a personal 'prompt library' — 10 reusable prompt templates you've tested yourself",
     csfund: "DBMS revision + mock questions" },
 
   { date: "2026-09-13", day: "Sun", type: "rest",
-    note: "Full mock test — Week 2 (SQL, DSA: linked list/stack/queue/trees/graphs, React basics)." },
+    note: "Full mock test — Week 2 (SQL, DSA: linked list/stack/queue/trees/graphs, React basics). GenAI: review your prompt library, refine 3 weakest entries." },
 
   { date: "2026-09-14", day: "Mon", type: "study", week: 3,
     sql: "Query optimization basics",
     dsa: "Heaps & Priority Queue: revision + practice (k-th largest, merge k lists, top-k problems)",
     webdev: "Node.js basics",
     extratech: "AWS: EC2 intro",
-    genai: "RAG project: setup skeleton",
+    genai: "PHASE 3 — Embeddings: what they encode, how semantic search actually works",
     csfund: "OS: Process vs Thread" },
 
   { date: "2026-09-15", day: "Tue", type: "study", week: 3,
@@ -121,7 +121,7 @@ export const days = [
     dsa: "Graphs: Union-Find & Minimum Spanning Tree — revision + practice",
     webdev: "Express.js setup",
     extratech: "AWS: S3 basics",
-    genai: "RAG project: document ingestion",
+    genai: "Vector databases overview: Pinecone vs FAISS vs Chroma — pick one to use for your project",
     csfund: "OS: Scheduling algorithms" },
 
   { date: "2026-09-16", day: "Wed", type: "study", week: 3,
@@ -129,7 +129,7 @@ export const days = [
     dsa: "Graphs: Dijkstra & shortest-path algorithms — revision + practice",
     webdev: "REST API design principles",
     extratech: "System Design: LLD intro",
-    genai: "RAG project: embedding + storage",
+    genai: "Chunking strategies: fixed-size vs semantic chunking, overlap trade-offs",
     csfund: "OS: Memory management" },
 
   { date: "2026-09-17", day: "Thu", type: "study", week: 3,
@@ -137,7 +137,7 @@ export const days = [
     dsa: "DP (1D): revision + practice (climbing stairs, house robber, coin change)",
     webdev: "Building REST APIs (CRUD)",
     extratech: "System Design: caching basics",
-    genai: "RAG project: retrieval logic",
+    genai: "RAG architecture: retriever + generator pipeline, end-to-end diagram",
     csfund: "OS: Deadlocks" },
 
   { date: "2026-09-18", day: "Fri", type: "study", week: 3,
@@ -145,7 +145,7 @@ export const days = [
     dsa: "DP (2D / Knapsack): revision + practice (0/1 knapsack, unbounded knapsack, grid DP)",
     webdev: "Connecting frontend to backend API",
     extratech: "CI/CD: GitHub Actions basics",
-    genai: "RAG project: connect LLM for generation",
+    genai: "Hybrid search & re-ranking: combining keyword (BM25) + vector search",
     csfund: "OS: Paging & segmentation" },
 
   { date: "2026-09-19", day: "Sat", type: "study", week: 3,
@@ -153,18 +153,18 @@ export const days = [
     dsa: "DP (LCS, LIS, string DP): revision + practice",
     webdev: "Auth basics (JWT) in API",
     extratech: "Weekly recap: cloud + system design LLD",
-    genai: "Finish end-to-end mini RAG demo",
+    genai: "RAG evaluation basics: faithfulness, relevance, and reducing hallucination",
     csfund: "OS revision + mock questions" },
 
   { date: "2026-09-20", day: "Sun", type: "rest",
-    note: "Full mock test — Week 3 (SQL, DSA: heaps/graphs advanced/DP, Node/Express/REST APIs)." },
+    note: "Full mock test — Week 3 (SQL, DSA: heaps/graphs advanced/DP, Node/Express/REST APIs). GenAI: if Phase 2/3 feels shaky, use today to patch gaps before starting the build week." },
 
   { date: "2026-09-21", day: "Mon", type: "study", week: 4,
     sql: "Full SQL revision",
     dsa: "Greedy algorithms: revision + practice (interval scheduling, activity selection)",
     webdev: "MERN: connect MongoDB",
     extratech: "System Design: HLD basics",
-    genai: "Polish RAG project structure",
+    genai: "PHASE 4 — Build: choose your stack (LangChain or LlamaIndex + a free LLM API + Chroma/FAISS), set up project skeleton",
     csfund: "CN: OSI model" },
 
   { date: "2026-09-22", day: "Tue", type: "study", week: 4,
@@ -172,7 +172,7 @@ export const days = [
     dsa: "Backtracking (advanced): N-Queens, permutations, subsets, Sudoku solver — practice",
     webdev: "MERN: full CRUD app",
     extratech: "System Design: load balancing",
-    genai: "Advanced prompting: Chain-of-Thought",
+    genai: "Build document ingestion + chunking + embedding pipeline",
     csfund: "CN: TCP/IP model" },
 
   { date: "2026-09-23", day: "Wed", type: "study", week: 4,
@@ -180,7 +180,7 @@ export const days = [
     dsa: "Company-wise practice set 1 (top Amazon/Google problems, timed)",
     webdev: "Deploy backend (Render/Railway)",
     extratech: "Finish + test RAG project",
-    genai: "Advanced prompting: ReAct pattern",
+    genai: "Build retrieval logic + connect retrieved context to the LLM for generation",
     csfund: "CN: HTTP/HTTPS, status codes" },
 
   { date: "2026-09-24", day: "Thu", type: "study", week: 4,
@@ -188,7 +188,7 @@ export const days = [
     dsa: "Company-wise practice set 2 (top Microsoft/Flipkart problems, timed)",
     webdev: "Deploy frontend (Vercel/Netlify)",
     extratech: "Advanced prompting: structured outputs",
-    genai: "Write up RAG project for resume/portfolio",
+    genai: "Add a minimal UI (Streamlit or a simple web page) so the RAG demo is actually clickable",
     csfund: "CN: DNS, load balancing basics" },
 
   { date: "2026-09-25", day: "Fri", type: "study", week: 4,
@@ -196,7 +196,7 @@ export const days = [
     dsa: "Weak-topic focused revision — pick your 2-3 shakiest topics from the month and drill them",
     webdev: "Polish full-stack project (README, demo)",
     extratech: "System Design: HLD basics recap",
-    genai: "Practice explaining RAG project out loud",
+    genai: "Test & debug: handle no-answer cases, check for hallucination, tune chunk size/top-k",
     csfund: "System Design: HLD basics" },
 
   { date: "2026-09-26", day: "Sat", type: "study", week: 4,
@@ -204,20 +204,20 @@ export const days = [
     dsa: "Full-syllabus timed mock (2 hrs, mixed difficulty, simulate real coding round)",
     webdev: "Project walkthrough practice",
     extratech: "Polish RAG project for resume",
-    genai: "Final GenAI/RAG revision",
+    genai: "Polish project, write a clear README, prepare a 2-minute spoken walkthrough of the architecture",
     csfund: "Mock technical interview (mixed)" },
 
   { date: "2026-09-27", day: "Sun", type: "rest",
-    note: "Full mock test — Week 4 (SQL, DSA: greedy/backtracking/company sets, MERN deployment)." },
+    note: "Full mock test — Week 4 (SQL, DSA greedy/backtracking/company sets, MERN deployment). GenAI: run through your RAG project demo end-to-end once, unscripted." },
 
   { date: "2026-09-28", day: "Mon", type: "revision",
     note: "Full revision day — SQL + DSA. For DSA: targeted practice on your weakest 2-3 topics only, not a full re-do." },
 
   { date: "2026-09-29", day: "Tue", type: "revision",
-    note: "Full revision day — Web Dev (React/Node/MERN) + GenAI/RAG + CS Fundamentals. Also polish resume & LinkedIn." },
+    note: "Full revision day — Web Dev + GenAI/RAG + CS Fundamentals. GenAI: rehearse explaining your RAG project and answering 'why RAG over fine-tuning' and 'how would you reduce hallucination' out loud." },
 
   { date: "2026-09-30", day: "Wed", type: "final",
-    note: "Full mock interview day — 1 SQL round, 1 DSA round (2 timed problems, explain approach + complexity), 1 project/web-dev round, 1 HR round." }
+    note: "Full mock interview day — SQL round, DSA round, project/web-dev round (be ready to walk through your RAG project specifically), HR round." }
 ];
 
 export const interviewQuestions = {
@@ -241,19 +241,19 @@ export const interviewQuestions = {
 export const weekThemes = {
   week1: {
     title: "Week 1: Foundations",
-    desc: "Foundations — SQL joins/aggregates, DSA arrays/strings/hashing (revision + practice), Advanced JS, Git, OOPs"
+    desc: "Foundations — SQL joins/aggregates, DSA arrays/strings/hashing (revision + practice), Advanced JS, Git, OOPs | GenAI/RAG: Foundations — what LLMs are, tokens, context window, how they're trained"
   },
   week2: {
     title: "Week 2: Building Depth",
-    desc: "Building Depth — SQL subqueries/window functions, DSA linked list/stack/queue/trees/graphs (revision + practice), React, Docker/Cloud, DBMS"
+    desc: "Building Depth — SQL subqueries/window functions, DSA linked list/stack/queue/trees/graphs (revision + practice), React, Docker/Cloud, DBMS | GenAI/RAG: Prompt Engineering — zero/few-shot, roles, CoT, ReAct, structured outputs"
   },
   week3: {
     title: "Week 3: Applying Skills",
-    desc: "Applying Skills — SQL optimization, DSA heaps/graphs-advanced/DP (revision + practice), Node/Express APIs, System Design LLD, OS"
+    desc: "Applying Skills — SQL optimization, DSA heaps/graphs-advanced/DP (revision + practice), Node/Express APIs, System Design LLD, OS | GenAI/RAG: Embeddings & RAG Architecture — vector DBs, chunking, retriever+generator pipeline, evaluation"
   },
   week4: {
     title: "Week 4: Interview-Ready",
-    desc: "Interview-Ready — DSA company-wise sets + full mocks, SQL/Web Dev revision, MERN deployment, System Design HLD, CN, mock interviews"
+    desc: "Interview-Ready — DSA company-wise sets + full mocks, SQL/Web Dev revision, MERN deployment, System Design HLD, CN, mock interviews | GenAI/RAG: Build & Ship — a working RAG project, tested, documented, interview-ready"
   }
 };
 

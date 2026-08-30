@@ -1607,12 +1607,21 @@ export default function App() {
                                 <span className="text-[10px] font-extrabold uppercase tracking-wider">{slot.label}</span>
                               </div>
                             ) : (
-                              <div 
-                                style={embossedStyle}
-                                className={`text-[10px] font-extrabold uppercase tracking-wider py-1.5 px-3 rounded-xl border flex items-center gap-1.5 ${meta.bgClass} ${meta.borderClass} ${meta.textClass} ${isChecked ? "grayscale opacity-50 shadow-none" : ""}`}
-                              >
-                                <IconComp className="w-3.5 h-3.5" />
-                                <span>{slot.label}</span>
+                              <div className="flex items-center gap-2">
+                                <div 
+                                  style={embossedStyle}
+                                  className={`text-[10px] font-extrabold uppercase tracking-wider py-1.5 px-3 rounded-xl border flex items-center gap-1.5 ${meta.bgClass} ${meta.borderClass} ${meta.textClass} ${isChecked ? "grayscale opacity-50 shadow-none" : ""}`}
+                                >
+                                  <IconComp className="w-3.5 h-3.5" />
+                                  <span>{slot.label}</span>
+                                </div>
+                                {slot.subject === "genai" && (
+                                  <div className="text-[9px] font-black uppercase tracking-wider py-1 px-2.5 rounded-xl bg-fuchsia-500/10 text-fuchsia-655 dark:text-fuchsia-400 border border-fuchsia-500/25 shrink-0 select-none shadow-sm dark:shadow-none">
+                                    {parseInt(selectedDate.split("-")[2]) <= 5 ? "Foundations" :
+                                     parseInt(selectedDate.split("-")[2]) <= 12 ? "Prompt Eng." :
+                                     parseInt(selectedDate.split("-")[2]) <= 19 ? "RAG Arch." : "Build"}
+                                  </div>
+                                )}
                               </div>
                             )}
                           </div>
