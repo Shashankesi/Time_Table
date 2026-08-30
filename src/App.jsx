@@ -363,6 +363,7 @@ export default function App() {
   // CS Fundamentals & Accenture Prep states (v11)
   const [isCsFundPrepOpen, setIsCsFundPrepOpen] = useState(true);
   const [isAccenturePrepOpen, setIsAccenturePrepOpen] = useState(false);
+  const [isGeneralPrepOpen, setIsGeneralPrepOpen] = useState(false);
   const [quickFireStates, setQuickFireStates] = useState(() => getCachedValue("quickFireStates", {}));
   
   // Theme state
@@ -1915,7 +1916,216 @@ export default function App() {
 
                   {/* PRACTICE PROBLEMS COLLAPSIBLE PANEL */}
 
-                  {/* CS FUNDAMENTALS & COMPANY-SPECIFIC PREP PANEL (v11) */}
+                  {/* CS FUNDAMENTALS & COMPANY-SPECIFIC PREP PANEL (v12) */}
+                  {currentDayData.type === "study" && currentDayData.csfund && (
+                    <section 
+                      className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md transition-all duration-300"
+                    >
+                      <button
+                        onClick={() => setIsCsFundPrepOpen(!isCsFundPrepOpen)}
+                        className="w-full flex items-center justify-between font-bold text-slate-900 dark:text-white"
+                      >
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+                          <span className="text-sm uppercase tracking-wider">CS Fundamentals & Company-Specific Prep</span>
+                        </div>
+                        <ChevronDown className={`w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isCsFundPrepOpen ? "rotate-180" : ""}`} />
+                      </button>
+
+                      {isCsFundPrepOpen && (
+                        <div className="flex flex-col gap-4 mt-5">
+                          {/* Sub-section A — Quick-Fire CS Fundamentals */}
+                          <div className="flex flex-col gap-3">
+                            <div className="text-[10px] uppercase font-black tracking-wider text-slate-405 dark:text-slate-505 select-none">
+                              Sub-section A — Quick-Fire CS Fundamentals
+                            </div>
+                            
+                            {(() => {
+                              const csFundData = currentDayData.csfund;
+                              const mostAskedQuestions = csFundData && typeof csFundData === "object" && csFundData.details
+                                ? csFundData.details.filter(d => d.includes("MOST ASKED:") || d.includes("Also common:") || d.includes("Timed self-test:"))
+                                : [];
+                                
+                              if (mostAskedQuestions.length === 0) {
+                                return (
+                                  <div className="text-xs text-slate-500 dark:text-slate-400 font-semibold italic">
+                                    No quick-fire questions for today's topic.
+                                  </div>
+                                );
+                              }
+                              
+                              return (
+                                <div className="flex flex-col gap-2.5">
+                                  {mostAskedQuestions.map((qText, qIdx) => {
+                                    const qKey = `${selectedDate}_q_${qIdx}`;
+                                    const status = quickFireStates[qKey] || null;
+                                    
+                                    return (
+                                      <div key={qIdx} className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
+                                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-250 leading-relaxed">
+                                          {qText.replace("MOST ASKED:", "").replace("Also common:", "").replace("Timed self-test:", "").replace(/['"]/g, "").trim()}
+                                        </span>
+                                        <div className="flex items-center gap-2 shrink-0">
+                                          <button
+                                            onClick={() => toggleQuickFire(qKey, "confident")}
+                                            className={`text-[9px] font-black uppercase px-2.5 py-1 rounded-md border transition-all ${
+                                              status === "confident"
+                                                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 font-extrabold"
+                                                : "bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-550 border-slate-200 dark:border-slate-800 hover:border-slate-450"
+                                            }`}
+                                          >
+                                            Confident ✓
+                                          </button>
+                                          <button
+                                            onClick={() => toggleQuickFire(qKey, "revisit")}
+                                            className={`text-[9px] font-black uppercase px-2.5 py-1 rounded-md border transition-all ${
+                                              status === "revisit"
+                                                ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 font-extrabold"
+                                                : "bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-550 border-slate-200 dark:border-slate-800 hover:border-slate-455"
+                                            }`}
+                                          >
+                                            Revisit ↻
+                                          </button>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              );
+                            })()}
+                          </div>
+
+                          {/* Sub-section B — Accenture Technical Round Prep */}
+                          <div className="border-t border-slate-200 dark:border-slate-800/80 pt-4">
+                            <button
+                              onClick={() => setIsAccenturePrepOpen(!isAccenturePrepOpen)}
+                              className="w-full flex items-center justify-between text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-3 select-none"
+                            >
+                              <div className="flex items-center gap-1.5">
+                                <Terminal className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                                <span>Sub-section B — Accenture Technical Round Prep</span>
+                              </div>
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isAccenturePrepOpen ? "rotate-180" : ""}`} />
+                            </button>
+                            
+                            {isAccenturePrepOpen && (
+                              <div className="flex flex-col gap-4 animate-fadeIn pl-0.5 text-xs text-slate-655 dark:text-slate-350 font-semibold leading-relaxed">
+                                {/* Cognitive Assessment */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-450">
+                                    Cognitive Assessment (Aptitude & Logic)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>Verbal Ability:</strong> Reading comprehension, sentence correction.</li>
+                                    <li><strong>Critical Reasoning:</strong> Pseudo-code output prediction — practice reading language-agnostic code loops, conditionals, recursion, and string/array manipulation BY HAND without compiler assistance.</li>
+                                    <li><strong>Abstract Reasoning:</strong> Figure series, pattern completion families.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Technical Assessment */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-450">
+                                    Technical Assessment (MCQ-based: ~45 Questions / 45 Minutes)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>OOPs One-Liners:</strong> 4 pillars (abstraction, encapsulation, polymorphism, inheritance), function overloading vs overriding.</li>
+                                    <li><strong>DBMS One-Liners:</strong> Normalization keys (1NF, 2NF, 3NF), candidate/primary keys, ACID properties.</li>
+                                    <li><strong>Networking Fundamentals:</strong> OSI/TCP-IP models, common protocols, IP addressing classes & subnetting.</li>
+                                    <li><strong>Programming Output Prediction:</strong> Line-by-line tracing of dry-run snippets (C/Java/Python).</li>
+                                    <li>💡 <strong>Prep Tip:</strong> Tracing code logic on paper line-by-line is the single highest-leverage skill for this MCQ round.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Coding Round */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400">
+                                    Coding Round (2 Problems / ~45 Minutes)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>Common Patterns:</strong> String/array reversal, palindrome checking, two-sum, missing number search, anagram check, simple search algorithms, pattern printing.</li>
+                                    <li>💡 <strong>Prep Tip:</strong> Overlaps heavily with practice problems on **Sep 1**, **Sep 2**, and **Sep 4**. Practice those specific days' code templates.</li>
+                                    <li>💡 <strong>Partial Credit Tip:</strong> Accenture compilers grade test cases incrementally. Prioritize delivering a functional brute-force solution over getting stuck finding the absolute optimal code.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Communication Assessment */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400">
+                                    Communication Assessment (AI-Graded Spoken/Written English)
+                                  </div>
+                                  <p className="pl-1">
+                                    Standard automated round checking spoken pronunciation, reading/listening comprehension, and sentence construction. Not a core technical prep round, but review flow templates so there are no surprises on drive day.
+                                  </p>
+                                </div>
+                                
+                                {/* Disclaimer */}
+                                <div className="text-[9px] text-slate-450 dark:text-slate-500 italic mt-1 pl-1">
+                                  * Company patterns can shift between hiring cycles — this reflects recent (2026) campus placement reports, verify specifics closer to your actual drive.
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Sub-section C — General Coding & Interview Questions */}
+                          <div className="border-t border-slate-200 dark:border-slate-800/80 pt-4">
+                            <button
+                              onClick={() => setIsGeneralPrepOpen(!isGeneralPrepOpen)}
+                              className="w-full flex items-center justify-between text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-3 select-none"
+                            >
+                              <div className="flex items-center gap-1.5">
+                                <Terminal className="w-4 h-4 text-emerald-500 dark:text-emerald-450" />
+                                <span>Sub-section C — General Coding & Interview Questions</span>
+                              </div>
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isGeneralPrepOpen ? "rotate-180" : ""}`} />
+                            </button>
+                            
+                            {isGeneralPrepOpen && (
+                              <div className="flex flex-col gap-4 animate-fadeIn pl-0.5 text-xs text-slate-600 dark:text-slate-350 font-semibold leading-relaxed">
+                                {/* General Coding Round Patterns */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-450">
+                                    General Coding Round Patterns (All Companies)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>Reverse String / Array / Linked List:</strong> Basic pointer manipulation.</li>
+                                    <li><strong>Palindrome Check:</strong> Checking both strings and number inputs.</li>
+                                    <li><strong>FizzBuzz:</strong> Standard division conditionals.</li>
+                                    <li><strong>Prime Number Check:</strong> Optimization checks up to O(√N).</li>
+                                    <li><strong>Fibonacci Sequence:</strong> Recursive stack logic vs iterative state caching.</li>
+                                    <li><strong>Find Duplicates:</strong> Hashing vs sorting vs binary search.</li>
+                                    <li><strong>Balanced Parentheses:</strong> Stack data structure utilization.</li>
+                                    <li><strong>Basic Sorting Algorithms:</strong> Bubble, selection, and insertion sort mechanics.</li>
+                                    <li>💡 <strong>Practice Reference:</strong> These coding patterns overlap with practice problems on **Sep 1, 2, 4, and 5**. Please practice those days' templates to prevent redundant work.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* General Technical Interview Questions */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-450">
+                                    General Technical Interview Questions
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>"Walk me through your resume/a project":</strong> Always the opening question. State your tech stack, key features, and one performance benchmark metric.</li>
+                                    <li><strong>"What is the difference between an array and a linked list?":</strong> Classic DSA check on contiguous memory vs heap pointer links.</li>
+                                    <li><strong>"How would you optimize this code?":</strong> Tests dry-running unfamiliar code to identify time/space bottlenecks.</li>
+                                    <li><strong>"What is a time you had to debug something tricky?":</strong> Behavioral integration. Frame your narrative using the STAR template in the HR Q&A tab.</li>
+                                    <li>💡 <strong>Ref Round Integration:</strong> These questions map directly to categories inside the **Interview Q&A Prep** panel in the right sidebar. Refer there for outlines and personal drafts.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Distinguishing note */}
+                                <div className="text-[9px] text-slate-450 dark:text-slate-500 italic mt-1 pl-1">
+                                  * Sub-section B covers what Accenture specifically asks. This section covers what's common across most companies, useful prep no matter who you interview with.
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </section>
+                  )}
+
+                  
                   {currentDayData.type === "study" && currentDayData.csfund && (
                     <section 
                       className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md transition-all duration-300"

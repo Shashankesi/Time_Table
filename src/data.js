@@ -31,9 +31,11 @@ export const days = [
     csfund: {
       topic: "OOPs: Class & Object",
       details: [
-        "Class vs object analogy; constructors; access modifiers (public/private/protected)",
-        "Practice: model 2 real objects as classes in your language of choice"
-      ],
+      "Class vs object analogy; constructors; access modifiers (public/private/protected)",
+      "Practice: model 2 real objects as classes in your language of choice",
+      "MOST ASKED: 'What is the difference between a class and an object?'",
+      "Also common: 'Why do we need constructors — can't we just set values directly?'"
+    ],
       resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist — clean, code-first explanations", url: "https://www.youtube.com/@KunalKushwaha" }
     },
     aptitude: {
@@ -63,9 +65,11 @@ export const days = [
     csfund: {
       topic: "OOPs: Inheritance",
       details: [
-        "Single/multiple/multilevel inheritance; super/extends keywords",
-        "When inheritance is the wrong tool (favor composition)"
-      ],
+      "Single/multiple/multilevel inheritance; super/extends keywords",
+      "When inheritance is the wrong tool (favor composition)",
+      "MOST ASKED: 'Difference between single and multiple inheritance'",
+      "Also common: 'Why doesn't Java support multiple inheritance through classes?'"
+    ],
       resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
     },
     aptitude: {
@@ -95,9 +99,11 @@ export const days = [
     csfund: {
       topic: "OOPs: Polymorphism",
       details: [
-        "Compile-time (overloading) vs runtime (overriding)",
-        "Write one code example of each to explain in interviews"
-      ],
+      "Compile-time (overloading) vs runtime (overriding)",
+      "Write one code example of each to explain in interviews",
+      "MOST ASKED: 'Difference between method overloading and method overriding'",
+      "Also common: 'What is runtime polymorphism vs compile-time polymorphism?'"
+    ],
       resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
     },
     aptitude: {
@@ -127,9 +133,11 @@ export const days = [
     csfund: {
       topic: "OOPs: Encapsulation & Abstraction",
       details: [
-        "Getters/setters and why; abstract classes vs interfaces",
-        "Real interview trap: difference between abstraction and encapsulation"
-      ],
+      "Getters/setters and why; abstract classes vs interfaces",
+      "Real interview trap: difference between abstraction and encapsulation",
+      "MOST ASKED: 'Difference between abstraction and encapsulation' — the classic trap question, most candidates blur these together",
+      "Also common: 'Abstract class vs interface ─ when would you use each?'"
+    ],
       resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
     },
     aptitude: {
@@ -159,9 +167,10 @@ export const days = [
     csfund: {
       topic: "OOPs: Full Revision",
       details: [
-        "Redo all 4 pillars from memory with your own code examples, no notes",
-        "Attempt 5 OOPs interview questions timed"
-      ],
+      "Redo all 4 pillars from memory with your own code examples, no notes",
+      "Attempt 5 OOPs interview questions timed",
+      "Timed self-test: explain all 4 OOPs pillars with one original example each, under 5 minutes, no notes"
+    ],
       resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
     },
     aptitude: {
@@ -193,9 +202,11 @@ export const days = [
     csfund: {
       topic: "DBMS: Normalization (1NF–3NF)",
       details: [
-        "Why normalize; anomalies it prevents",
-        "Normalize one sample messy table by hand"
-      ],
+      "Why normalize; anomalies it prevents",
+      "Normalize one sample messy table by hand",
+      "MOST ASKED: 'What is normalization and why do we need it?'",
+      "Also common: 'Difference between 2NF and 3NF' — know it precisely, not just vaguely"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS Normalization tutorials", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -224,9 +235,11 @@ export const days = [
     csfund: {
       topic: "DBMS: Keys",
       details: [
-        "Primary, foreign, candidate, composite, super key",
-        "Key differences with examples"
-      ],
+      "Primary, foreign, candidate, composite, super key",
+      "Key differences with examples",
+      "MOST ASKED: 'Difference between primary key and unique key'",
+      "Also common: 'What is a composite key, give an example'"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -255,9 +268,10 @@ export const days = [
     csfund: {
       topic: "DBMS: ACID properties",
       details: [
-        "Atomicity, Consistency, Isolation, Durability",
-        "One real-world failure example per property"
-      ],
+      "Atomicity, Consistency, Isolation, Durability",
+      "One real-world failure example per property",
+      "MOST ASKED: 'Explain ACID properties, one real example per property'"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -286,9 +300,11 @@ export const days = [
     csfund: {
       topic: "DBMS: Transactions & concurrency",
       details: [
-        "Isolation levels, dirty reads, phantom reads",
-        "Know these by name for interviews"
-      ],
+      "Isolation levels, dirty reads, phantom reads",
+      "Know these by name for interviews",
+      "MOST ASKED: 'What is a dirty read?'",
+      "Also common: name the isolation levels in order, weakest to strongest"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -317,9 +333,10 @@ export const days = [
     csfund: {
       topic: "DBMS: Indexing",
       details: [
-        "Clustered vs non-clustered indexes",
-        "When an index helps vs hurts write performance"
-      ],
+      "Clustered vs non-clustered indexes",
+      "When an index helps vs hurts write performance",
+      "MOST ASKED: 'When would adding an index actually slow performance down?' — tests real understanding, not memorization"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -348,8 +365,9 @@ export const days = [
     csfund: {
       topic: "DBMS: Full Revision",
       details: [
-        "Timed mock: 10 DBMS interview questions, no lookup"
-      ],
+      "Timed mock: 10 DBMS interview questions, no lookup",
+      "Timed self-test: explain normalization + ACID + indexing in under 3 minutes total, no notes"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -698,9 +716,11 @@ export const days = [
     csfund: {
       topic: "HLD basics",
       details: [
-        "Horizontal vs vertical scaling, caching, load balancers, CAP theorem — enough to survive a fresher-level HLD question",
-        "Identify single point of failures (SPOF)"
-      ],
+      "Horizontal vs vertical scaling, caching, load balancers, CAP theorem — enough to survive a fresher-level HLD question",
+      "Identify single point of failures (SPOF)",
+      "MOST ASKED: 'Horizontal vs vertical scaling — trade-offs of each'",
+      "Also common: give one real example of a CAP theorem trade-off"
+    ],
       resource: { platform: "YouTube", channel: "Gaurav Sen", note: "System design basics for freshers", url: "https://www.youtube.com/c/GauravSensei/videos" }
     },
     aptitude: {
