@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import { 
   Check, 
   Copy, 
@@ -14,7 +14,7 @@ import {
   GitBranch,
   Terminal,
   Clock,
-  Sparkles,
+  Sparkles as SparklesIcon,
   CheckCircle,
   Binary,
   Code2,
@@ -24,17 +24,42 @@ import {
   Search,
   X,
   Sun,
-  Moon
+  Moon,
+  Edit2,
+  Download,
+  Share2,
+  Bell
 } from "lucide-react";
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip as ChartTooltip, 
+  ResponsiveContainer 
+} from "recharts";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { RoundedBox, ContactShadows, OrbitControls, Sparkles } from "@react-three/drei";
 import { timeSlots, days, interviewQuestions, weekThemes } from "./data";
 
-// 1. SUBJECT CONFIGURATIONS WITH DYNAMIC CONTRAST-AA COMPATIBLE THEME CLASSES
+// WebGL support detector
+const checkWebGLSupport = () => {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(window.WebGLRenderingContext && (canvas.getContext("webgl") || canvas.getContext("experimental-webgl")));
+  } catch (e) {
+    return false;
+  }
+};
+
+// 1. SUBJECT CONFIGURATIONS
 const subjectMetadata = {
   sql: {
     name: "SQL Database",
     icon: Database,
     colorClass: "cyan",
-    bgClass: "bg-cyan-50 dark:bg-cyan-500/10",
+    bgClass: "bg-cyan-55 dark:bg-cyan-500/10",
     borderClass: "border-cyan-200 dark:border-cyan-500/20",
     textClass: "text-cyan-800 dark:text-cyan-400",
     filledClass: "bg-cyan-600 dark:bg-cyan-500 text-white dark:text-slate-950 border-cyan-650 dark:border-cyan-500 hover:bg-cyan-750 dark:hover:bg-cyan-400",
@@ -45,7 +70,7 @@ const subjectMetadata = {
     name: "DSA Algorithms",
     icon: Binary,
     colorClass: "violet",
-    bgClass: "bg-violet-50 dark:bg-violet-500/10",
+    bgClass: "bg-violet-55 dark:bg-violet-500/10",
     borderClass: "border-violet-200 dark:border-violet-500/20",
     textClass: "text-violet-850 dark:text-violet-400",
     filledClass: "bg-violet-600 dark:bg-violet-500 text-white dark:text-slate-950 border-violet-650 dark:border-violet-500 hover:bg-violet-750 dark:hover:bg-violet-400",
@@ -56,7 +81,7 @@ const subjectMetadata = {
     name: "Web Development",
     icon: Code2,
     colorClass: "blue",
-    bgClass: "bg-blue-50 dark:bg-blue-500/10",
+    bgClass: "bg-blue-55 dark:bg-blue-500/10",
     borderClass: "border-blue-200 dark:border-blue-500/20",
     textClass: "text-blue-800 dark:text-blue-400",
     filledClass: "bg-blue-600 dark:bg-blue-500 text-white dark:text-slate-950 border-blue-650 dark:border-blue-500 hover:bg-blue-750 dark:hover:bg-blue-400",
@@ -67,7 +92,7 @@ const subjectMetadata = {
     name: "Extra Tech Skill",
     icon: GitBranch,
     colorClass: "amber",
-    bgClass: "bg-amber-50 dark:bg-amber-500/10",
+    bgClass: "bg-amber-55 dark:bg-amber-500/10",
     borderClass: "border-amber-200 dark:border-amber-500/20",
     textClass: "text-amber-850 dark:text-amber-400",
     filledClass: "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 border-amber-650 dark:border-amber-500 hover:bg-amber-700 dark:hover:bg-amber-400",
@@ -76,9 +101,9 @@ const subjectMetadata = {
   },
   genai: {
     name: "GenAI / RAG",
-    icon: Sparkles,
+    icon: SparklesIcon,
     colorClass: "fuchsia",
-    bgClass: "bg-fuchsia-50 dark:bg-fuchsia-500/10",
+    bgClass: "bg-fuchsia-55 dark:bg-fuchsia-500/10",
     borderClass: "border-fuchsia-200 dark:border-fuchsia-500/20",
     textClass: "text-fuchsia-850 dark:text-fuchsia-400",
     filledClass: "bg-fuchsia-600 dark:bg-fuchsia-500 text-white dark:text-slate-950 border-fuchsia-650 dark:border-fuchsia-500 hover:bg-fuchsia-750 dark:hover:bg-fuchsia-400",
@@ -89,7 +114,7 @@ const subjectMetadata = {
     name: "CS Fundamentals",
     icon: BookOpen,
     colorClass: "emerald",
-    bgClass: "bg-emerald-50 dark:bg-emerald-500/10",
+    bgClass: "bg-emerald-55 dark:bg-emerald-500/10",
     borderClass: "border-emerald-200 dark:border-emerald-500/20",
     textClass: "text-emerald-800 dark:text-emerald-400",
     filledClass: "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-slate-950 border-emerald-650 dark:border-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-400",
@@ -100,7 +125,7 @@ const subjectMetadata = {
     name: "Aptitude Prep",
     icon: Award,
     colorClass: "rose",
-    bgClass: "bg-rose-50 dark:bg-rose-500/10",
+    bgClass: "bg-rose-55 dark:bg-rose-500/10",
     borderClass: "border-rose-200 dark:border-rose-500/20",
     textClass: "text-rose-800 dark:text-rose-400",
     filledClass: "bg-rose-600 dark:bg-rose-500 text-white dark:text-slate-950 border-rose-650 dark:border-rose-500 hover:bg-rose-700 dark:hover:bg-rose-400",
@@ -111,7 +136,7 @@ const subjectMetadata = {
     name: "HR Preparation",
     icon: User,
     colorClass: "yellow",
-    bgClass: "bg-yellow-50 dark:bg-yellow-500/10",
+    bgClass: "bg-yellow-55 dark:bg-yellow-500/10",
     borderClass: "border-yellow-250 dark:border-yellow-500/20",
     textClass: "text-yellow-850 dark:text-yellow-400",
     filledClass: "bg-yellow-600 dark:bg-yellow-500 text-white dark:text-slate-950 border-yellow-650 dark:border-yellow-500 hover:bg-yellow-700 dark:hover:bg-yellow-400",
@@ -124,14 +149,14 @@ const subjectMetadata = {
     colorClass: "slate",
     bgClass: "bg-slate-100 dark:bg-slate-800/20",
     borderClass: "border-slate-200 dark:border-slate-800",
-    textClass: "text-slate-700 dark:text-slate-350",
+    textClass: "text-slate-700 dark:text-slate-355",
     filledClass: "bg-slate-600 dark:bg-slate-500 text-white dark:text-slate-950 border-slate-650 dark:border-slate-505 hover:bg-slate-700 dark:hover:bg-slate-400",
     accentColor: "#475569",
     darkAccentColor: "#94a3b8"
   }
 };
 
-// 2. KINETIC COUNT-UP TRANSITION
+// 2. KINETIC COUNTER
 function AnimatedNumber({ value }) {
   const [displayValue, setDisplayValue] = useState(value);
   
@@ -140,14 +165,13 @@ function AnimatedNumber({ value }) {
     const end = value;
     if (start === end) return;
     
-    const duration = 400; // ms
+    const duration = 400; 
     const startTime = performance.now();
     let animationFrameId;
     
     const updateNumber = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
       const ease = progress * (2 - progress);
       const current = Math.round(start + (end - start) * ease);
       
@@ -165,7 +189,7 @@ function AnimatedNumber({ value }) {
   return <span>{displayValue}</span>;
 }
 
-// 3. CUSTOM 3D MOUSE TILT HOOK
+// 3. 3D TILT HOOK
 function useTilt() {
   const [tilt, setTilt] = useState({ x: 0, y: 0, shadowX: 0, shadowY: 0 });
   const ref = useRef(null);
@@ -173,8 +197,6 @@ function useTilt() {
   const handleMouseMove = (e) => {
     const el = ref.current;
     if (!el) return;
-    
-    // Check user preference for reduced motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const rect = el.getBoundingClientRect();
@@ -184,11 +206,10 @@ function useTilt() {
     const cursorX = (e.clientX - rect.left) / width - 0.5;
     const cursorY = (e.clientY - rect.top) / height - 0.5;
     
-    const rotateX = -cursorY * 12; // max ~6 degrees X rotation
-    const rotateY = cursorX * 12;  // max ~6 degrees Y rotation
-    
-    const sx = -cursorX * 12;
-    const sy = -cursorY * 12;
+    const rotateX = -cursorY * 10; 
+    const rotateY = cursorX * 10;  
+    const sx = -cursorX * 10;
+    const sy = -cursorY * 10;
     
     setTilt({ x: rotateX, y: rotateY, shadowX: sx, shadowY: sy });
   };
@@ -201,18 +222,125 @@ function useTilt() {
     transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
     boxShadow: tilt.x === 0 && tilt.y === 0 
       ? "" 
-      : `${tilt.shadowX}px ${tilt.shadowY}px 24px rgba(0, 0, 0, 0.18)`,
+      : `${tilt.shadowX}px ${tilt.shadowY}px 24px rgba(0, 0, 0, 0.16)`,
     transition: "transform 0.15s ease-out, box-shadow 0.15s ease-out"
   };
 
   return { ref, style, handleMouseMove, handleMouseLeave };
 }
 
+// 4. PART B — WEBGL SPARKLE CAMERA CONTROLLER
+function SparkleCamera({ mouse }) {
+  useFrame((state) => {
+    const targetX = mouse.current.x * 0.35;
+    const targetY = mouse.current.y * 0.35;
+    state.camera.position.x += (targetX - state.camera.position.x) * 0.05;
+    state.camera.position.y += (targetY - state.camera.position.y) * 0.05;
+    state.camera.lookAt(0, 0, 0);
+  });
+  return null;
+}
+
+// 5. PART B — WEBGL LIQUID PROGRESS ORB
+function OrbMesh({ percentage, darkMode }) {
+  const groupRef = useRef();
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.6;
+      groupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.4) * 0.15;
+    }
+  });
+
+  const liquidScale = percentage / 100;
+  const liquidHeight = liquidScale * 1.5 - 0.75; 
+
+  return (
+    <group ref={groupRef}>
+      {/* Glossy translucent outer shell */}
+      <mesh>
+        <sphereGeometry args={[1.0, 32, 32]} />
+        <meshPhysicalMaterial 
+          color={darkMode ? "#1e293b" : "#f1f5f9"} 
+          roughness={0.08} 
+          transmission={0.65} 
+          thickness={0.7} 
+          ior={1.45}
+          transparent 
+          opacity={0.3} 
+        />
+      </mesh>
+      {/* Liquid core (scales & raises visually with progress) */}
+      <mesh position={[0, liquidHeight * 0.35, 0]}>
+        <sphereGeometry args={[0.82 * Math.max(0.1, liquidScale), 32, 32]} />
+        <meshStandardMaterial 
+          color={darkMode ? "#10b981" : "#059669"} 
+          roughness={0.2}
+          metalness={0.15}
+          emissive={darkMode ? "#10b981" : "#059669"}
+          emissiveIntensity={0.2}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+// 6. PART B — WEBGL CALENDAR CARD TURN
+function DayFlipMesh({ prevDayNum, currentDayNum, isAnimating, onDone }) {
+  const meshRef = useRef();
+  const [rotationY, setRotationY] = useState(0);
+
+  useEffect(() => {
+    if (isAnimating) {
+      let start = null;
+      const duration = 380;
+      const step = (timestamp) => {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        
+        setRotationY(ease * Math.PI); 
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          onDone();
+        }
+      };
+      requestAnimationFrame(step);
+    }
+  }, [isAnimating]);
+
+  if (!isAnimating) return null;
+
+  return (
+    <mesh ref={meshRef} rotation={[0, rotationY, 0]}>
+      <planeGeometry args={[2.5, 1.8]} />
+      <meshBasicMaterial color={rotationY > Math.PI / 2 ? "#020617" : "#1e293b"} />
+    </mesh>
+  );
+}
+
 export default function App() {
-  // 4. CORE STATE
+  // 7. PERSISTENCE LOADER METHODS (PART A)
+  const getCachedValue = (key, defaultVal) => {
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return saved;
+      }
+    }
+    return defaultVal;
+  };
+
+  // 8. CORE STATE
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState("2026-09-01");
-  const [completions, setCompletions] = useState({});
+  const [selectedDate, setSelectedDate] = useState(() => getCachedValue("selectedDate", "2026-09-01"));
+  const [completions, setCompletions] = useState(() => getCachedValue("completions", {}));
+  const [customTopics, setCustomTopics] = useState(() => getCachedValue("customTopics", {}));
   const [subjectFilter, setSubjectFilter] = useState(null); 
   const [filterMode, setFilterMode] = useState("highlight"); 
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
@@ -221,17 +349,62 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   
-  // Theme state: defaults to prefers-color-scheme, overrides stored in localStorage
-  const getInitialTheme = () => {
+  // Theme state
+  const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved === "dark";
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  };
-  const [darkMode, setDarkMode] = useState(getInitialTheme);
+  });
+
+  // Inline topic editor state
+  const [editingSlotIndex, setEditingSlotIndex] = useState(null);
+  const [editVal, setEditVal] = useState("");
+
+  // WebGL liveness states
+  const [webGLSupported, setWebGLSupported] = useState(false);
+  const [isTabVisible, setIsTabVisible] = useState(true);
+  const mouse = useRef({ x: 0, y: 0 });
+
+  // WebGL Day flip state
+  const [prevDayNum, setPrevDayNum] = useState(1);
+  const [isFlipAnimating, setIsFlipAnimating] = useState(false);
 
   const canvasRef = useRef(null);
 
-  // Sync theme with DOM root class list
+  // Initialize Page visibility & WebGL detections
+  useEffect(() => {
+    setWebGLSupported(checkWebGLSupport());
+
+    const handleVisibilityChange = () => {
+      setIsTabVisible(document.visibilityState === "visible");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    const handleMouseMove = (e) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  // Sync caches
+  useEffect(() => {
+    localStorage.setItem("completions", JSON.stringify(completions));
+  }, [completions]);
+
+  useEffect(() => {
+    localStorage.setItem("customTopics", JSON.stringify(customTopics));
+  }, [customTopics]);
+
+  useEffect(() => {
+    localStorage.setItem("selectedDate", selectedDate);
+  }, [selectedDate]);
+
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
     if (darkMode) {
@@ -241,52 +414,13 @@ export default function App() {
     }
   }, [darkMode]);
 
-  // Initial loading and default date triggers
+  // Loading shimmers
   useEffect(() => {
     const shimmerTimer = setTimeout(() => setIsLoading(false), 500);
-
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    if (year === 2026 && month === 9 && day >= 1 && day <= 30) {
-      const padDay = day < 10 ? `0${day}` : day;
-      setSelectedDate(`2026-09-${padDay}`);
-    }
-
     return () => clearTimeout(shimmerTimer);
   }, []);
 
-  // Cmd+K shortcut listener
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setIsSearchOpen((prev) => !prev);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  // Center selected date chip in the scrollable timeline
-  useEffect(() => {
-    if (isLoading) return;
-    const container = document.getElementById("timeline-scroll-container");
-    const selectedElement = document.getElementById(`timeline-chip-${selectedDate}`);
-    if (container && selectedElement) {
-      const containerWidth = container.clientWidth;
-      const elementLeft = selectedElement.offsetLeft;
-      const elementWidth = selectedElement.clientWidth;
-      
-      container.scrollTo({
-        left: elementLeft - (containerWidth / 2) + (elementWidth / 2),
-        behavior: "smooth"
-      });
-    }
-  }, [selectedDate, isLoading]);
-
-  // 5. DATA COMPUTATION HOOKS
+  // 9. DATA CALCULATIONS
   const currentDayData = useMemo(() => {
     return days.find((d) => d.date === selectedDate) || days[0];
   }, [selectedDate]);
@@ -294,14 +428,14 @@ export default function App() {
   const getDayChecklistKeys = (day) => {
     if (day.type === "study") {
       return [
-        { key: "sql", label: "SQL", subject: "sql" },
+        { key: "sql", label: "SQL Database", subject: "sql" },
         { key: "dsa", label: "DSA (Part 1)", subject: "dsa" },
         { key: "dsa_2", label: "DSA (Part 2)", subject: "dsa" },
         { key: "webdev", label: "Web Development", subject: "webdev" },
         { key: "extratech", label: "Extra Tech Skill", subject: "extratech" },
-        { key: "genai", label: "GenAI / RAG / Prompt Engineering", subject: "genai" },
+        { key: "genai", label: "GenAI / RAG / Prompts", subject: "genai" },
         { key: "csfund", label: "CS Fundamentals", subject: "csfund" },
-        { key: "aptitude", label: "Aptitude, Reasoning & Coding Practice", subject: "aptitude" },
+        { key: "aptitude", label: "Aptitude & Coding Practice", subject: "aptitude" },
         { key: "hr", label: "HR / Behavioral Prep", subject: "hr" },
         { key: "revision", label: "Daily Revision", subject: "revision" }
       ];
@@ -313,10 +447,10 @@ export default function App() {
       ];
     } else if (day.type === "revision") {
       return [
-        { key: "sql_rev", label: "SQL Revision (Joins, window functions, aggregates)", subject: "sql" },
-        { key: "dsa_rev", label: "DSA Revision (Arrays, Lists, Trees, DP)", subject: "dsa" },
+        { key: "sql_rev", label: "SQL Revision (Window, Joins, Aggregates)", subject: "sql" },
+        { key: "dsa_rev", label: "DSA Revision (Trees, Hashing, Lists)", subject: "dsa" },
         { key: "webdev_rev", label: "Web Dev & Resume updates", subject: "webdev" },
-        { key: "csfund_rev", label: "CS Fundamentals Revision (OS, DBMS, CN)", subject: "csfund" }
+        { key: "csfund_rev", label: "CS Fundamentals Revision (OS, DBMS)", subject: "csfund" }
       ];
     } else if (day.type === "final") {
       return [
@@ -463,7 +597,30 @@ export default function App() {
     return diffDays > 0 ? diffDays : 0;
   }, []);
 
-  // 6. CONFETTI BURST
+  // 10. RECHARTS TREND ANALYTICS COMPILER
+  const trendData = useMemo(() => {
+    const data = [];
+    days.forEach((day, index) => {
+      const { percentage } = getDayProgress(day.date);
+      data.push({
+        day: `Day ${index + 1}`,
+        percentage: percentage
+      });
+    });
+
+    let lastActiveIdx = -1;
+    for (let i = data.length - 1; i >= 0; i--) {
+      const { done } = getDayProgress(days[i].date);
+      if (done > 0) {
+        lastActiveIdx = i;
+        break;
+      }
+    }
+    const sliceEnd = lastActiveIdx === -1 ? 6 : Math.max(6, lastActiveIdx + 1);
+    return data.slice(0, sliceEnd);
+  }, [completions]);
+
+  // 11. CONFETTI BURST
   const fireConfetti = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -494,7 +651,6 @@ export default function App() {
       particles.forEach((p) => {
         if (p.alpha <= 0) return;
         alive = true;
-        
         p.x += p.vx;
         p.y += p.vy;
         p.vy += 0.38;
@@ -551,6 +707,7 @@ export default function App() {
   const handleResetProgress = () => {
     if (window.confirm("Are you sure you want to reset all progress data? This action cannot be undone.")) {
       setCompletions({});
+      setCustomTopics({});
     }
   };
 
@@ -590,7 +747,7 @@ export default function App() {
 
       const subjectsToCheck = ["sql", "dsa", "webdev", "extratech", "genai", "csfund"];
       for (const sub of subjectsToCheck) {
-        const topic = day[sub];
+        const topic = customTopics[day.date]?.[sub] || day[sub];
         if (topic && topic.toLowerCase().includes(query)) {
           results.push({
             date: day.date,
@@ -603,9 +760,127 @@ export default function App() {
       }
     });
     return results;
-  }, [searchQuery]);
+  }, [searchQuery, customTopics]);
 
-  // 7. HOOK CALLS FOR 3D TILT EFFECT
+  // 12. PART A — DYNAMIC CANVAS EXPORTER
+  const handleShareCard = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 800;
+    canvas.height = 460;
+    const ctx = canvas.getContext("2d");
+
+    // Draw background
+    const grad = ctx.createLinearGradient(0, 0, 800, 460);
+    if (darkMode) {
+      grad.addColorStop(0, "#090d16");
+      grad.addColorStop(0.5, "#0b1227");
+      grad.addColorStop(1, "#020617");
+    } else {
+      grad.addColorStop(0, "#f8fafc");
+      grad.addColorStop(0.5, "#f1f5f9");
+      grad.addColorStop(1, "#e2e8f0");
+    }
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 800, 460);
+
+    // Draw grid overlay lines
+    ctx.strokeStyle = darkMode ? "rgba(16, 185, 129, 0.04)" : "rgba(15, 23, 42, 0.03)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x < 800; x += 40) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, 460);
+      ctx.stroke();
+    }
+    for (let y = 0; y < 460; y += 40) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(800, y);
+      ctx.stroke();
+    }
+
+    // Draw branding
+    ctx.fillStyle = darkMode ? "#34d399" : "#059669";
+    ctx.font = "bold 13px Inter, sans-serif";
+    ctx.fillText("SEPTEMBER PREP TRACKER", 50, 60);
+
+    ctx.fillStyle = darkMode ? "#ffffff" : "#0f172a";
+    ctx.font = "bold 32px Inter, sans-serif";
+    ctx.fillText("Placement Readiness Summary", 50, 105);
+
+    // Render stats blocks
+    const drawShareCardWidget = (x, y, w, h, title, value, footerText) => {
+      ctx.fillStyle = darkMode ? "#111c30" : "#ffffff";
+      ctx.strokeStyle = darkMode ? "#1e293b" : "#e2e8f0";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, 16);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = darkMode ? "#94a3b8" : "#64748b";
+      ctx.font = "bold 11px Inter, sans-serif";
+      ctx.fillText(title.toUpperCase(), x + 20, y + 30);
+
+      ctx.fillStyle = darkMode ? "#ffffff" : "#0f172a";
+      ctx.font = "bold 26px Inter, sans-serif";
+      ctx.fillText(value, x + 20, y + 68);
+
+      ctx.fillStyle = darkMode ? "#64748b" : "#94a3b8";
+      ctx.font = "semibold 11px Inter, sans-serif";
+      ctx.fillText(footerText, x + 20, y + 94);
+    };
+
+    drawShareCardWidget(50, 155, 210, 125, "Readiness Ring", `${globalProgress.percentage}% Complete`, `${globalProgress.done}/${globalProgress.total} slots checked`);
+    drawShareCardWidget(295, 155, 210, 125, "Active Streak", `🔥 ${currentStreak} Days`, "Consecutive 100% days");
+    drawShareCardWidget(540, 155, 210, 125, "Days Finished", `${globalProgress.completedDays} / 30 Days`, "Total month progress");
+
+    // Quote
+    ctx.fillStyle = darkMode ? "#475569" : "#94a3b8";
+    ctx.font = "medium 12px Inter, sans-serif";
+    ctx.fillText("Automated snapshot generated on " + new Date().toLocaleDateString(), 50, 400);
+    ctx.fillText("https://github.com/Shashankesi/Time_Table", 530, 400);
+
+    const dataUrl = canvas.toDataURL("image/png");
+    const downloadLink = document.createElement("a");
+    downloadLink.setAttribute("href", dataUrl);
+    downloadLink.setAttribute("download", `september-readiness-card-${selectedDate}.png`);
+    downloadLink.click();
+  };
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify({
+      completions,
+      customTopics,
+      theme: darkMode ? "dark" : "light"
+    }, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = 'september-prep-tracker-backup.json';
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+  };
+
+  // 13. PART A — NOTIFICATIONS PERMISSION TRIGGER
+  const requestNotificationPermission = () => {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification("September Prep Tracker", {
+            body: "Daily reminders enabled! We'll remind you to log your prep progress.",
+            icon: "/favicon.svg"
+          });
+        }
+      });
+    } else {
+      alert("This browser does not support desktop notifications.");
+    }
+  };
+
+  // 3D Tilt instances
   const tiltSlotsCard = useTilt();
   const tiltDaysCard = useTilt();
   const tiltReadinessCard = useTilt();
@@ -616,7 +891,16 @@ export default function App() {
   const tiltWeekCard = useTilt();
   const tiltInterviewCard = useTilt();
 
-  // Tactical Shadow tokens (Top light highlight, bottom dark shadows)
+  // 3D Card flip helper
+  const handleSelectDateWithFlip = (newDate) => {
+    if (newDate === selectedDate) return;
+    const prevDay = parseInt(selectedDate.split("-")[2]);
+    setPrevDayNum(prevDay);
+    setIsFlipAnimating(true);
+    setSelectedDate(newDate);
+  };
+
+  // Shadow configurations
   const embossedStyle = {
     boxShadow: darkMode 
       ? "2px 2.5px 5px rgba(0,0,0,0.45), inset 1.5px 1.5px 0px rgba(255,255,255,0.06), inset -1.5px -1.5px 1.5px rgba(0,0,0,0.45)"
@@ -630,20 +914,39 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen bg-transparent text-slate-800 dark:text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-250 relative overflow-hidden transition-colors duration-300">
       
-      {/* 3D DYNAMIC DRIFTING BACKGROUND BLOBS */}
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-        {/* Blob 1: Teal (Enhanced opacity & slightly tighter blur in light mode for visible pastel effect) */}
-        <div className="absolute top-[-10%] left-[-10%] w-[55%] h-[55%] rounded-full bg-emerald-400/18 dark:bg-emerald-500/5 blur-[100px] dark:blur-[120px] animate-driftOne" />
-        {/* Blob 2: Violet (Enhanced opacity & slightly tighter blur in light mode for visible pastel effect) */}
-        <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] rounded-full bg-indigo-400/18 dark:bg-indigo-500/5 blur-[100px] dark:blur-[120px] animate-driftTwo" />
-        {/* Fine grid map (Refined contrast in light mode) */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#090d16_1px,transparent_1px),linear-gradient(to_bottom,#090d16_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-25 dark:opacity-40" />
-      </div>
+      {/* 3D PART B — WEBGL SPARKLING DRIFTING BACKGROUND */}
+      {webGLSupported && !isFlipAnimating && isTabVisible && (
+        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+          <Canvas gl={{ antialias: false, pixelRatio: 1 }} camera={{ position: [0, 0, 5], fov: 60 }}>
+            <ambientLight intensity={0.5} />
+            <Sparkles
+              count={45}
+              scale={10}
+              size={3.5}
+              speed={0.4}
+              opacity={darkMode ? 0.45 : 0.65}
+              color={darkMode ? "#10b981" : "#059669"}
+            />
+            <SparkleCamera mouse={mouse} />
+          </Canvas>
+        </div>
+      )}
 
-      {/* MILESTONE CELEBRATION CANVAS */}
+      {/* Fallback CSS background blobs if WebGL is disabled */}
+      {(!webGLSupported || isFlipAnimating || !isTabVisible) && (
+        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+          <div className="absolute top-[-10%] left-[-10%] w-[55%] h-[55%] rounded-full bg-emerald-400/18 dark:bg-emerald-500/5 blur-[100px] animate-driftOne" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] rounded-full bg-indigo-400/18 dark:bg-indigo-500/5 blur-[100px] animate-driftTwo" />
+        </div>
+      )}
+
+      {/* Fine grid map */}
+      <div className="fixed inset-0 -z-10 pointer-events-none bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#090d16_1px,transparent_1px),linear-gradient(to_bottom,#090d16_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-25 dark:opacity-40" />
+
+      {/* CANVAS FIREWORKS */}
       <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-50 w-full h-full" />
 
-      {/* SKELETON LOADERS (ON INITIAL MOUNT) */}
+      {/* INITIAL SHIMMER LOADERS */}
       {isLoading ? (
         <div className="min-h-screen max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 flex flex-col gap-8 animate-pulse">
           <div className="h-20 bg-slate-200 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-900 rounded-2xl flex items-center justify-between px-6">
@@ -665,11 +968,11 @@ export default function App() {
         </div>
       ) : (
         <>
-          {/* 1. HEADER SECTION (WITH THEME TOGGLE) */}
+          {/* 1. HEADER MODULE */}
           <header className="sticky top-0 z-40 bg-white/75 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-900/65 px-4 py-5 md:px-8 shadow-sm transition-colors duration-300">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
               
-              {/* Branding left */}
+              {/* Branding and streak */}
               <div>
                 <div className="flex items-center gap-3">
                   <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-650 dark:text-emerald-400 border border-emerald-500/25">
@@ -679,7 +982,6 @@ export default function App() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">September Prep Tracker</h1>
                       
-                      {/* Streak counter */}
                       {currentStreak > 0 && (
                         <div className="flex items-center gap-1 bg-orange-500/10 text-orange-650 dark:text-orange-400 border border-orange-500/25 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-bounce">
                           🔥 {currentStreak} Day Streak
@@ -698,10 +1000,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Header right: Metrics + theme switcher + Cmd+K Search trigger */}
-              <div className="flex items-center gap-4 sm:gap-6 bg-slate-100/60 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-900 p-4 rounded-2xl md:min-w-[500px]">
+              {/* Header metrics, theme togglers, notification permit trigger */}
+              <div className="flex items-center gap-4 sm:gap-6 bg-slate-100/60 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-900 p-4 rounded-2xl md:min-w-[520px]">
                 
-                {/* Search icon trigger */}
+                {/* Search Quick Jump trigger */}
                 <button 
                   onClick={() => setIsSearchOpen(true)}
                   className="p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shrink-0 flex items-center gap-1.5 text-xs font-bold shadow-sm"
@@ -711,10 +1013,9 @@ export default function App() {
                   <span className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[10px] px-1.5 py-0.5 rounded-md text-slate-500 hidden sm:inline">Ctrl+K</span>
                 </button>
 
-                {/* Stat blocks (Slots & Days done) */}
+                {/* Stats panel */}
                 <div className="flex-1 grid grid-cols-2 gap-3 min-w-[190px]">
-                  
-                  {/* Slots Done Card */}
+                  {/* Slots Done */}
                   <div 
                     ref={tiltSlotsCard.ref}
                     onMouseMove={tiltSlotsCard.handleMouseMove}
@@ -722,7 +1023,7 @@ export default function App() {
                     style={tiltSlotsCard.style}
                     className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm"
                   >
-                    <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-emerald-650 dark:text-emerald-400 shrink-0" />
                     <div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Slots Done</div>
                       <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
@@ -732,7 +1033,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Days Done Card */}
+                  {/* Days Done */}
                   <div 
                     ref={tiltDaysCard.ref}
                     onMouseMove={tiltDaysCard.handleMouseMove}
@@ -740,7 +1041,7 @@ export default function App() {
                     style={tiltDaysCard.style}
                     className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm"
                   >
-                    <Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                    <Calendar className="w-4 h-4 text-indigo-650 dark:text-indigo-400 shrink-0" />
                     <div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Days Done</div>
                       <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
@@ -749,65 +1050,107 @@ export default function App() {
                       </div>
                     </div>
                   </div>
-
                 </div>
 
-                {/* 3D-Shaded circular readiness ring */}
-                <div 
-                  ref={tiltReadinessCard.ref}
-                  onMouseMove={tiltReadinessCard.handleMouseMove}
-                  onMouseLeave={tiltReadinessCard.handleMouseLeave}
-                  style={{ ...tiltReadinessCard.style, ...ringFilterStyle }}
-                  className="relative w-20 h-20 sm:w-22 sm:h-22 shrink-0 flex items-center justify-center bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-900 shadow-md transition-all duration-300"
-                >
-                  <svg className="w-18 h-18 sm:w-20 sm:h-20 transform -rotate-90" viewBox="0 0 100 100">
-                    <circle 
-                      className="text-slate-200 dark:text-slate-900" 
-                      strokeWidth="8" 
-                      stroke="currentColor" 
-                      fill="transparent" 
-                      r="40" 
-                      cx="50" 
-                      cy="50" 
-                    />
-                    <circle 
-                      className="text-emerald-500 transition-all duration-1000 ease-out" 
-                      strokeWidth="8" 
-                      strokeDasharray="251.2" 
-                      strokeDashoffset={251.2 - (globalProgress.percentage / 100) * 251.2} 
-                      strokeLinecap="round" 
-                      stroke="currentColor" 
-                      fill="transparent" 
-                      r="40" 
-                      cx="50" 
-                      cy="50" 
-                    />
-                  </svg>
-                  <div className="absolute text-center flex flex-col justify-center items-center">
-                    <span className="text-sm font-black text-slate-900 dark:text-white leading-none">
-                      <AnimatedNumber value={globalProgress.percentage} />%
-                    </span>
-                    <span className="text-[8px] text-slate-500 uppercase font-extrabold tracking-wider mt-0.5">Ready</span>
-                  </div>
-                </div>
-
-                {/* Theme toggle & Reset buttons */}
-                <div className="flex flex-col gap-2 shrink-0">
-                  {/* Sun / Moon Switch */}
-                  <button
-                    onClick={() => setDarkMode(!darkMode)}
-                    title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                    className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                {/* PART B — WEBGL LIQUID PROGRESS ORB CONTAINER */}
+                {webGLSupported && isTabVisible ? (
+                  <div 
+                    ref={tiltReadinessCard.ref}
+                    onMouseMove={tiltReadinessCard.handleMouseMove}
+                    onMouseLeave={tiltReadinessCard.handleMouseLeave}
+                    style={tiltReadinessCard.style}
+                    className="relative w-20 h-20 sm:w-22 sm:h-22 shrink-0 flex items-center justify-center bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-900 shadow-md transition-all duration-300"
                   >
-                    {darkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-                  </button>
+                    <Suspense fallback={<div className="text-xs text-slate-500 font-bold">Orb</div>}>
+                      <Canvas gl={{ antialias: false, pixelRatio: 1 }} className="rounded-2xl" camera={{ position: [0, 0, 2.5] }}>
+                        <ambientLight intensity={0.75} />
+                        <directionalLight position={[1.5, 4, 1.5]} intensity={1.5} />
+                        <OrbMesh percentage={globalProgress.percentage} darkMode={darkMode} />
+                      </Canvas>
+                    </Suspense>
+                    <div className="absolute text-center flex flex-col justify-center items-center pointer-events-none bg-slate-900/10 px-1 rounded-md">
+                      <span className="text-xs font-black text-slate-900 dark:text-white">
+                        {globalProgress.percentage}%
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  // Fallback 2D Ring
+                  <div 
+                    ref={tiltReadinessCard.ref}
+                    onMouseMove={tiltReadinessCard.handleMouseMove}
+                    onMouseLeave={tiltReadinessCard.handleMouseLeave}
+                    style={{ ...tiltReadinessCard.style, ...ringFilterStyle }}
+                    className="relative w-20 h-20 sm:w-22 sm:h-22 shrink-0 flex items-center justify-center bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-900 shadow-md transition-all duration-300"
+                  >
+                    <svg className="w-18 h-18 sm:w-20 sm:h-20 transform -rotate-90" viewBox="0 0 100 100">
+                      <circle className="text-slate-200 dark:text-slate-900" strokeWidth="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+                      <circle 
+                        className="text-emerald-500 transition-all duration-1000 ease-out" 
+                        strokeWidth="8" 
+                        strokeDasharray="251.2" 
+                        strokeDashoffset={251.2 - (globalProgress.percentage / 100) * 251.2} 
+                        strokeLinecap="round" 
+                        stroke="currentColor" 
+                        fill="transparent" 
+                        r="40" 
+                        cx="50" 
+                        cy="50" 
+                      />
+                    </svg>
+                    <div className="absolute text-center flex flex-col justify-center items-center">
+                      <span className="text-sm font-black text-slate-900 dark:text-white leading-none">
+                        <AnimatedNumber value={globalProgress.percentage} />%
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Exporters, themes and permission buttons */}
+                <div className="flex flex-col gap-1.5 shrink-0">
+                  <div className="flex gap-1.5">
+                    {/* Theme toggle */}
+                    <button
+                      onClick={() => setDarkMode(!darkMode)}
+                      title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                    >
+                      {darkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+                    </button>
+                    {/* Notification API */}
+                    <button
+                      onClick={requestNotificationPermission}
+                      title="Enable Daily reminders"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                    >
+                      <Bell className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <div className="flex gap-1.5">
+                    {/* Share Card */}
+                    <button
+                      onClick={handleShareCard}
+                      title="Share progress card image"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                    >
+                      <Share2 className="w-3.5 h-3.5" />
+                    </button>
+                    {/* Backup export */}
+                    <button
+                      onClick={handleExportJSON}
+                      title="Export backup JSON"
+                      className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-650 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                   {/* Reset */}
                   <button 
                     onClick={handleResetProgress}
-                    title="Reset progress"
-                    className="p-2 text-slate-500 dark:text-slate-400 hover:text-rose-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
+                    title="Reset progress data"
+                    className="w-full py-1 text-[9px] uppercase tracking-wider font-extrabold text-slate-400 hover:text-rose-600 bg-white dark:bg-slate-950 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-900 transition-all shadow-sm"
                   >
-                    <RefreshCw className="w-3.5 h-3.5" />
+                    Reset
                   </button>
                 </div>
               </div>
@@ -816,7 +1159,7 @@ export default function App() {
 
           <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 flex flex-col gap-8">
 
-            {/* 2. TIMELINE STRIP */}
+            {/* 2. TIMELINE CHIP STRIP */}
             <section className="bg-white/70 dark:bg-slate-900/10 border border-slate-200 dark:border-slate-900 rounded-3xl p-4 md:p-5 shadow-sm backdrop-blur-md relative z-10">
               <div className="flex items-center justify-between mb-4 px-1.5">
                 <h2 className="text-xs uppercase tracking-wider font-extrabold text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
@@ -829,15 +1172,15 @@ export default function App() {
                     <span>Study</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-indigo-100 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30"></span>
+                    <span className="w-2 h-2 rounded-md bg-indigo-105 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30"></span>
                     <span>Rest</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30"></span>
+                    <span className="w-2 h-2 rounded-md bg-amber-105 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30"></span>
                     <span>Revision</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-md bg-rose-100 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30"></span>
+                    <span className="w-2 h-2 rounded-md bg-rose-105 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30"></span>
                     <span>Final Mock</span>
                   </div>
                 </div>
@@ -864,7 +1207,7 @@ export default function App() {
                   if (day.type === "study") {
                     typeStyles = isSelected 
                       ? "border-emerald-500 bg-white dark:bg-slate-900 shadow-[0_0_12px_rgba(16,185,129,0.2)] text-slate-900 dark:text-white font-bold" 
-                      : "border-slate-200 dark:border-slate-850 bg-white/70 dark:bg-slate-900/30 text-slate-700 dark:text-slate-350 hover:border-slate-400 dark:hover:border-slate-750 hover:bg-white dark:hover:bg-slate-900/50";
+                      : "border-slate-200 dark:border-slate-850 bg-white/70 dark:bg-slate-900/30 text-slate-700 dark:text-slate-355 hover:border-slate-400 dark:hover:border-slate-750 hover:bg-white dark:hover:bg-slate-900/50";
                   } else if (day.type === "rest") {
                     typeStyles = isSelected
                       ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950/45 shadow-[0_0_12px_rgba(129,140,248,0.3)] text-indigo-900 dark:text-indigo-100 font-bold"
@@ -872,11 +1215,10 @@ export default function App() {
                     ChipIcon = Coffee;
                   } else if (day.type === "revision") {
                     typeStyles = isSelected
-                      ? "border-amber-500 bg-amber-50 dark:bg-amber-950/45 shadow-[0_0_12px_rgba(245,158,11,0.3)] text-amber-900 dark:text-amber-100 font-bold"
+                      ? "border-amber-500 bg-amber-55 dark:bg-amber-950/45 shadow-[0_0_12px_rgba(245,158,11,0.3)] text-amber-900 dark:text-amber-100 font-bold"
                       : "border-amber-200 dark:border-amber-950 bg-amber-50/50 dark:bg-amber-950/15 text-amber-900 dark:text-slate-350 hover:border-amber-400 dark:hover:border-amber-900 hover:bg-amber-50 dark:hover:bg-amber-950/30";
                     ChipIcon = BookOpen;
                   } else if (day.type === "final") {
-                    // Final Mock day: Celebratory pulsing glows
                     typeStyles = isSelected
                       ? "border-rose-500 bg-rose-50 dark:bg-rose-950/50 shadow-[0_0_15px_rgba(244,63,94,0.4)] text-rose-900 dark:text-rose-100 font-black animate-pulse"
                       : "border-rose-300 dark:border-rose-900 bg-rose-50/50 dark:bg-rose-950/20 text-rose-900 dark:text-rose-300 hover:border-rose-500 dark:hover:border-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 shadow-[0_0_8px_rgba(244,63,94,0.06)] hover:shadow-[0_0_15px_rgba(244,63,94,0.15)] animate-pulse duration-[3000ms]";
@@ -889,10 +1231,9 @@ export default function App() {
                     <button
                       id={`timeline-chip-${day.date}`}
                       key={day.date}
-                      onClick={() => setSelectedDate(day.date)}
+                      onClick={() => handleSelectDateWithFlip(day.date)}
                       className={`w-[72px] shrink-0 h-[96px] flex flex-col items-center justify-between py-2 px-1 rounded-2xl border transition-all duration-300 cursor-pointer relative hover:-translate-y-1 hover:shadow-md ${typeStyles} ${isCurrentWeek && !isSelected ? "ring-1 ring-slate-300 dark:ring-slate-800" : ""} ${isSelected ? "border-2" : ""}`}
                     >
-                      {/* Weekday tag */}
                       <div className="flex items-center justify-between w-full px-1.5">
                         <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                           {day.day}
@@ -904,17 +1245,15 @@ export default function App() {
                         )}
                       </div>
 
-                      {/* Day count */}
                       <div className="text-2xl font-black font-mono tracking-tight my-0.5 leading-none">
                         {dayNum}
                       </div>
 
-                      {/* SVG circular progress */}
                       <div className="relative w-5 h-5 flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 22 22">
                           <circle className="text-slate-200 dark:text-slate-850" strokeWidth="2.5" stroke="currentColor" fill="transparent" r={radius} cx="11" cy="11" />
                           <circle 
-                            className={`${percentage === 100 ? "text-emerald-400" : "text-emerald-500"} transition-all duration-300`} 
+                            className={`${percentage === 100 ? "text-emerald-400" : "text-emerald-505 dark:text-emerald-500"} transition-all duration-300`} 
                             strokeWidth="2.5" 
                             strokeDasharray={circ} 
                             strokeDashoffset={strokeOffset} 
@@ -939,10 +1278,25 @@ export default function App() {
             {/* 3. COLUMNS GRID */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
-              {/* LEFT COLUMN: ACTIVE DAY VIEW (8 cols) */}
-              <div className="lg:col-span-8 flex flex-col gap-6">
+              {/* LEFT COLUMN: DAILY SCHEDULER & DETAILS (8 cols) */}
+              <div className="lg:col-span-8 flex flex-col gap-6 relative">
 
-                {/* Day Details Card (3D Mouse Tilt integrated) */}
+                {/* PART B — WEBGL DAY FLIP TRANSITION OVERLAY */}
+                {webGLSupported && isFlipAnimating && isTabVisible && (
+                  <div className="absolute inset-0 z-30 pointer-events-none rounded-2xl overflow-hidden min-h-[300px] border border-slate-250 dark:border-slate-850">
+                    <Canvas gl={{ antialias: false, pixelRatio: 1 }} camera={{ position: [0, 0, 3] }}>
+                      <ambientLight intensity={1.2} />
+                      <DayFlipMesh 
+                        prevDayNum={prevDayNum} 
+                        currentDayNum={parseInt(selectedDate.split("-")[2])} 
+                        isAnimating={isFlipAnimating} 
+                        onDone={() => setIsFlipAnimating(false)} 
+                      />
+                    </Canvas>
+                  </div>
+                )}
+
+                {/* Day Details card */}
                 <section 
                   ref={tiltHeaderCard.ref}
                   onMouseMove={tiltHeaderCard.handleMouseMove}
@@ -976,20 +1330,18 @@ export default function App() {
 
                     <div className="flex items-center justify-between md:justify-end gap-6 shrink-0 pt-4 md:pt-0 border-t md:border-t-0 border-slate-200 dark:border-slate-900">
                       
-                      {/* Day Type Badge */}
                       <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-xl border ${
                         currentDayData.type === "study" 
-                          ? "bg-slate-100 dark:bg-slate-900 text-slate-650 dark:text-slate-350 border-slate-200 dark:border-slate-850" 
+                          ? "bg-slate-100 dark:bg-slate-900 text-slate-650 dark:text-slate-355 border-slate-200 dark:border-slate-850" 
                           : currentDayData.type === "rest"
                           ? "bg-indigo-500/10 text-indigo-700 dark:text-indigo-405 border-indigo-500/20"
                           : currentDayData.type === "revision"
                           ? "bg-amber-500/10 text-amber-700 dark:text-amber-405 border-amber-500/20"
-                          : "bg-rose-500/10 text-rose-700 dark:text-rose-450 border-rose-500/20"
+                          : "bg-rose-500/10 text-rose-700 dark:text-rose-455 border-rose-500/20"
                       }`}>
                         {currentDayData.type === "study" ? "Study Day" : currentDayData.type === "rest" ? "Rest & Mock" : currentDayData.type === "revision" ? "Full Revision" : "Final Mock Round"}
                       </span>
 
-                      {/* Day Progress Ring with Shaded torus shadows */}
                       <div 
                         style={ringFilterStyle}
                         className="relative w-16 h-16 shrink-0 flex items-center justify-center bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-900 shadow-sm"
@@ -1024,7 +1376,7 @@ export default function App() {
                   {currentDayData.type === "study" && (
                     <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-900">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 shrink-0">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-555 dark:text-slate-400 flex items-center gap-1.5 shrink-0">
                           <Filter className="w-3.5 h-3.5" />
                           <span>Subject Focus</span>
                         </span>
@@ -1060,7 +1412,7 @@ export default function App() {
                           {subjectFilter && (
                             <button
                               onClick={() => setSubjectFilter(null)}
-                              className="text-[10px] font-extrabold uppercase tracking-wider text-rose-600 dark:text-rose-400 hover:text-rose-500 dark:hover:text-rose-300 hover:underline px-2.5 py-1.5"
+                              className="text-[10px] font-extrabold uppercase tracking-wider text-rose-600 dark:text-rose-455 hover:text-rose-500 dark:hover:text-rose-300 hover:underline px-2.5 py-1.5"
                             >
                               Clear
                             </button>
@@ -1074,13 +1426,13 @@ export default function App() {
                           <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 px-2">Mode:</span>
                           <button 
                             onClick={() => setFilterMode("highlight")}
-                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "highlight" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-850 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-850 dark:hover:text-slate-350"}`}
+                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "highlight" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-850 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-805 dark:hover:text-slate-350"}`}
                           >
                             Highlight Focus
                           </button>
                           <button 
                             onClick={() => setFilterMode("isolate")}
-                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "isolate" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-850 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-850 dark:hover:text-slate-350"}`}
+                            className={`text-xs font-semibold px-3 py-1 rounded-lg transition-all ${filterMode === "isolate" ? "bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-850 shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-805 dark:hover:text-slate-350"}`}
                           >
                             Isolate Focus
                           </button>
@@ -1090,7 +1442,7 @@ export default function App() {
                   )}
                 </section>
 
-                {/* Day Timetable List with 3D Y-Axis Flip page transition on selection change */}
+                {/* Day Timetable List */}
                 <div 
                   ref={tiltScheduleCard.ref}
                   onMouseMove={tiltScheduleCard.handleMouseMove}
@@ -1135,20 +1487,22 @@ export default function App() {
                       if (shouldHide) return null;
 
                       // Topic
-                      let focusTopicText = "";
-                      if (slot.subject === "break") {
-                        focusTopicText = slot.label;
-                      } else {
-                        focusTopicText = currentDayData[slot.subject];
-                        if (!focusTopicText) {
-                          if (slot.subject === "aptitude") {
-                            focusTopicText = "Practice aptitude test sheets, quantitative equations, and placement mock coding platforms (LeetCode/GFG).";
-                          } else if (slot.subject === "hr") {
-                            focusTopicText = "Prepare standard behavioral questions and refine your pitch answers.";
-                          } else if (slot.subject === "revision") {
-                            focusTopicText = "Self-review of all subjects covered today, document mistakes, and bookmark tough codes.";
-                          } else {
-                            focusTopicText = "Review and practice concepts.";
+                      let focusTopicText = customTopics[selectedDate]?.[slot.subject];
+                      if (!focusTopicText) {
+                        if (isBreak) {
+                          focusTopicText = slot.label;
+                        } else {
+                          focusTopicText = currentDayData[slot.subject];
+                          if (!focusTopicText) {
+                            if (slot.subject === "aptitude") {
+                              focusTopicText = "Practice aptitude test sheets, quantitative equations, and placement mock coding platforms (LeetCode/GFG).";
+                            } else if (slot.subject === "hr") {
+                              focusTopicText = "Prepare standard behavioral questions and refine your pitch answers.";
+                            } else if (slot.subject === "revision") {
+                              focusTopicText = "Self-review of all subjects covered today, document mistakes, and bookmark tough codes.";
+                            } else {
+                              focusTopicText = "Review and practice concepts.";
+                            }
                           }
                         }
                       }
@@ -1157,7 +1511,7 @@ export default function App() {
                         name: slot.label, 
                         bgClass: "bg-slate-100 dark:bg-slate-900",
                         borderClass: "border-slate-200 dark:border-slate-800",
-                        textClass: "text-slate-650 dark:text-slate-300",
+                        textClass: "text-slate-655 dark:text-slate-300",
                         colorClass: "slate",
                         icon: BookOpen,
                         accentColor: "#94a3b8",
@@ -1166,10 +1520,12 @@ export default function App() {
                       const IconComp = meta.icon;
                       const activeColor = darkMode ? meta.darkAccentColor : meta.accentColor;
 
+                      const isEditingThisSlot = editingSlotIndex === index;
+
                       return (
                         <div 
                           key={index} 
-                          className={`relative bg-white/70 dark:bg-slate-900/30 border rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 ${
+                          className={`relative group bg-white/70 dark:bg-slate-900/30 border rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 ${
                             isBreak 
                               ? "bg-slate-100/50 dark:bg-slate-950/20 text-slate-550 dark:text-slate-500 border-slate-200/80 dark:border-slate-900/50 border-dashed" 
                               : isChecked 
@@ -1185,7 +1541,7 @@ export default function App() {
                               : ""
                           }`}
                         >
-                          {/* Accent left border line */}
+                          {/* Accent left border */}
                           {!isBreak && (
                             <div 
                               className="absolute left-0 top-3.5 bottom-3.5 w-1 rounded-r-md transition-colors duration-300"
@@ -1195,12 +1551,10 @@ export default function App() {
 
                           {/* Time & Badges */}
                           <div className="flex items-center justify-between md:justify-start gap-4 pl-2 shrink-0">
-                            {/* Time badge */}
-                            <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-350 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-650" : ""}`}>
+                            <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-355 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-650" : ""}`}>
                               {slot.time}
                             </span>
 
-                            {/* Subject badge (Tactile look) */}
                             {isBreak ? (
                               <div className="flex items-center gap-1.5 text-slate-450 dark:text-slate-500 select-none">
                                 <Coffee className="w-3.5 h-3.5" />
@@ -1217,20 +1571,59 @@ export default function App() {
                             )}
                           </div>
 
-                          {/* Topic Details */}
-                          <div className="flex-1 pl-2 md:pl-0">
-                            <p className={`text-sm leading-relaxed ${
-                              isChecked 
-                                ? "line-through text-slate-400 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
-                                : isBreak 
-                                ? "text-slate-500 dark:text-slate-500 italic text-[11px]" 
-                                : "text-slate-800 dark:text-slate-200 font-medium"
-                            }`}>
-                              {focusTopicText}
-                            </p>
+                          {/* Topic Details (PART A — Inline Editing) */}
+                          <div className="flex-1 pl-2 md:pl-0 flex items-center gap-2.5">
+                            {isEditingThisSlot ? (
+                              <div className="flex-1 flex gap-2">
+                                <input
+                                  type="text"
+                                  value={editVal}
+                                  onChange={(e) => setEditVal(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") saveCustomTopic(slot.subject);
+                                    if (e.key === "Escape") setEditingSlotIndex(null);
+                                  }}
+                                  className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
+                                  autoFocus
+                                />
+                                <button 
+                                  onClick={() => saveCustomTopic(slot.subject)}
+                                  className="px-3.5 py-1.5 text-xs bg-emerald-550 hover:bg-emerald-500 text-slate-950 font-extrabold rounded-xl border border-emerald-500 transition-all"
+                                >
+                                  Save
+                                </button>
+                                <button 
+                                  onClick={() => setEditingSlotIndex(null)}
+                                  className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            ) : (
+                              <>
+                                <p className={`text-sm leading-relaxed flex-1 ${
+                                  isChecked 
+                                    ? "line-through text-slate-400 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
+                                    : isBreak 
+                                    ? "text-slate-500 dark:text-slate-500 italic text-[11px]" 
+                                    : "text-slate-805 dark:text-slate-200 font-medium"
+                                }`}>
+                                  {focusTopicText}
+                                </p>
+                                {!isBreak && (
+                                  <button
+                                    onClick={() => startEditing(index, focusTopicText)}
+                                    className="p-1.5 text-slate-450 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                                    title="Edit custom topic"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </>
+                            )}
                           </div>
 
-                          {/* Action Checkbox (Tactile) */}
+                          {/* Action Checkbox */}
                           {!isBreak && completionKey && (
                             <div className="flex items-center justify-end md:justify-center pr-1 shrink-0 pl-2 md:pl-0">
                               <button
@@ -1250,16 +1643,16 @@ export default function App() {
                       );
                     })
                   ) : (
-                    // 2. AGENDA VIEW FOR REST / REVISION / FINAL DAYS
+                    // Agenda Card
                     <div className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-sm backdrop-blur-md">
                       
                       <div className="flex flex-col md:flex-row gap-6 items-start">
                         <span className={`p-4 rounded-2xl border shrink-0 ${
                           currentDayData.type === "rest"
-                            ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-405 border-indigo-200 dark:border-indigo-500/25"
+                            ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-650 dark:text-indigo-405 border-indigo-200 dark:border-indigo-500/25"
                             : currentDayData.type === "revision"
-                            ? "bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-405 border-amber-200 dark:border-amber-500/25"
-                            : "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-405 border-rose-200 dark:border-rose-500/25"
+                            ? "bg-amber-55 dark:bg-amber-500/10 text-amber-600 dark:text-amber-405 border-amber-200 dark:border-amber-500/25"
+                            : "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-455 border-rose-200 dark:border-rose-500/25"
                         }`}>
                           {currentDayData.type === "rest" ? (
                             <Coffee className="w-8 h-8" />
@@ -1293,8 +1686,8 @@ export default function App() {
                           {getDayChecklistKeys(currentDayData).map((item) => {
                             const isChecked = !!(completions[selectedDate]?.[item.key]);
                             const meta = subjectMetadata[item.subject] || { 
-                              bgClass: "bg-slate-100 dark:bg-slate-900",
-                              borderClass: "border-slate-200 dark:border-slate-800",
+                              bgClass: "bg-slate-100 dark:bg-slate-905",
+                              borderClass: "border-slate-200 dark:border-slate-805",
                               textClass: "text-slate-700 dark:text-slate-350",
                               icon: BookOpen
                             };
@@ -1319,11 +1712,10 @@ export default function App() {
                                   </span>
                                 </div>
                                 
-                                {/* Checkbox */}
                                 <button
                                   className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300 ${
                                     isChecked
-                                      ? "bg-emerald-500 border-emerald-550 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
+                                      ? "bg-emerald-500 border-emerald-555 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
                                       : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent scale-100 shadow-sm"
                                   }`}
                                 >
@@ -1340,27 +1732,26 @@ export default function App() {
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: SIDEBAR METRICS & ACCORDIONS (4 cols) */}
+              {/* RIGHT COLUMN: SIDEBAR METRICS & ANALYTICS (4 cols) */}
               <div className="lg:col-span-4 flex flex-col gap-6">
 
-                {/* 1. MONTH HEATMAP (UPGRADED LIGHT/DARK CONTRAST) */}
+                {/* 1. MONTH HEATMAP */}
                 <section 
                   ref={tiltHeatmapCard.ref}
                   onMouseMove={tiltHeatmapCard.handleMouseMove}
                   onMouseLeave={tiltHeatmapCard.handleMouseLeave}
                   style={tiltHeatmapCard.style}
-                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
+                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
                       <span>September Heatmap</span>
                     </h3>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-500 font-bold uppercase">30 Cells</span>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase">30 Cells</span>
                   </div>
 
                   <div className="grid grid-cols-7 gap-2 p-1.5 bg-slate-50 dark:bg-slate-950/40 rounded-xl border border-slate-200 dark:border-slate-900">
-                    {/* Headers */}
                     {["M", "T", "W", "T", "F", "S", "S"].map((dHeader, i) => (
                       <div key={i} className="text-[9px] text-slate-400 dark:text-slate-500 font-extrabold text-center uppercase py-1">
                         {dHeader}
@@ -1369,14 +1760,13 @@ export default function App() {
 
                     <div className="aspect-square w-full rounded-md bg-transparent" />
 
-                    {/* Cells */}
                     {days.map((day, idx) => {
                       const { done, total, percentage } = getDayProgress(day.date);
                       const isSelected = day.date === selectedDate;
                       
                       let bgFill = "bg-slate-200 dark:bg-slate-900 border-slate-300 dark:border-slate-950";
                       if (done > 0) {
-                        if (percentage === 100) bgFill = "bg-emerald-500 border-emerald-500 dark:border-emerald-450";
+                        if (percentage === 100) bgFill = "bg-emerald-505 border-emerald-505 dark:bg-emerald-500 dark:border-emerald-450";
                         else if (percentage >= 60) bgFill = "bg-emerald-350 dark:bg-emerald-600/70 border-emerald-400 dark:border-emerald-700/30";
                         else if (percentage >= 30) bgFill = "bg-emerald-200 dark:bg-emerald-800/40 border-emerald-300 dark:border-emerald-800/20";
                         else bgFill = "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-100 dark:border-emerald-950/15";
@@ -1387,7 +1777,7 @@ export default function App() {
                       return (
                         <div key={day.date} className="relative group/cell aspect-square w-full">
                           <button
-                            onClick={() => setSelectedDate(day.date)}
+                            onClick={() => handleSelectDateWithFlip(day.date)}
                             className={`w-full h-full rounded-md border transition-all hover:scale-110 ${bgFill} ${isSelected ? "ring-2 ring-emerald-500 dark:ring-emerald-400/60 scale-105 border-emerald-500" : ""}`}
                           >
                             <span className="text-[8px] font-bold opacity-45 dark:opacity-30 select-none block text-center leading-none mt-0.5">
@@ -1395,11 +1785,10 @@ export default function App() {
                             </span>
                           </button>
 
-                          {/* Tooltips */}
                           <div className="absolute bottom-[115%] left-1/2 transform -translate-x-1/2 hidden group-hover/cell:flex flex-col items-center z-50 pointer-events-none min-w-[150px]">
                             <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-850 p-2 rounded-xl text-center shadow-xl">
                               <div className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{day.day}, Sept {dayNum}</div>
-                              <div className="text-xs font-black text-slate-800 dark:text-white mt-1">{done} / {total} tasks</div>
+                              <div className="text-xs font-black text-slate-805 dark:text-white mt-1">{done} / {total} tasks</div>
                               <div className="text-[10px] text-emerald-605 dark:text-emerald-400 font-bold mt-0.5">({percentage}% complete)</div>
                             </div>
                             <div className="w-2.5 h-2.5 bg-white dark:bg-slate-950 border-r border-b border-slate-200 dark:border-slate-850 transform rotate-45 -mt-1.5" />
@@ -1410,62 +1799,138 @@ export default function App() {
                   </div>
                 </section>
 
-                {/* 2. SUBJECT PROGRESS BAR LIST */}
-                <section 
-                  ref={tiltSubjectCard.ref}
-                  onMouseMove={tiltSubjectCard.handleMouseMove}
-                  onMouseLeave={tiltSubjectCard.handleMouseLeave}
-                  style={tiltSubjectCard.style}
-                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
+                {/* PART B — WEBGL 3D SUBJECT BREAKDOWN BAR CHART */}
+                {webGLSupported && isTabVisible ? (
+                  <section 
+                    ref={tiltSubjectCard.ref}
+                    onMouseMove={tiltSubjectCard.handleMouseMove}
+                    onMouseLeave={tiltSubjectCard.handleMouseLeave}
+                    style={tiltSubjectCard.style}
+                    className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
+                  >
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                      <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                        <span>3D Analytics Chart</span>
+                      </h3>
+                      <span className="text-[10px] text-slate-550 font-bold uppercase">WebGL Rendering</span>
+                    </div>
+
+                    <Suspense fallback={<div className="h-56 flex items-center justify-center text-xs font-semibold text-slate-400">Loading 3D Visualizer...</div>}>
+                      <SubjectBar3D stats={subjectStats} darkMode={darkMode} />
+                    </Suspense>
+
+                    {/* Compact flat fallback bar indicators for labels */}
+                    <div className="mt-4 flex flex-col gap-2">
+                      {["sql", "dsa", "webdev", "genai", "csfund"].map((subKey) => {
+                        const meta = subjectMetadata[subKey];
+                        const stats = subjectStats[subKey];
+                        return (
+                          <div key={subKey} className="flex justify-between items-center text-[10px] font-extrabold uppercase">
+                            <span className={meta.textClass}>{meta.name.split(" ")[0]}</span>
+                            <span className="text-slate-500">{stats.percentage}% done</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </section>
+                ) : (
+                  // Flat 2D Subject progress list fallback
+                  <section 
+                    ref={tiltSubjectCard.ref}
+                    onMouseMove={tiltSubjectCard.handleMouseMove}
+                    onMouseLeave={tiltSubjectCard.handleMouseLeave}
+                    style={tiltSubjectCard.style}
+                    className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
+                  >
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                      <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                        <span>Subject Breakdown</span>
+                      </h3>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase">5 Core Subjects</span>
+                    </div>
+
+                    <div className="flex flex-col gap-4">
+                      {["sql", "dsa", "webdev", "genai", "csfund"].map((subKey) => {
+                        const meta = subjectMetadata[subKey];
+                        const stats = subjectStats[subKey];
+                        const BarIcon = meta.icon;
+                        const activeColor = darkMode ? meta.darkAccentColor : meta.accentColor;
+                        
+                        return (
+                          <div key={subKey} className="flex flex-col gap-1.5">
+                            <div className="flex justify-between items-center text-xs font-semibold">
+                              <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                                <span className={`p-1 rounded-md ${meta.bgClass} ${meta.textClass}`}>
+                                  <BarIcon className="w-3.5 h-3.5" />
+                                </span>
+                                <span>{meta.name}</span>
+                              </div>
+                              <span className={`${meta.textClass} font-bold`}>{stats.percentage}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 rounded-full h-2.5 overflow-hidden">
+                              <div 
+                                className="h-full rounded-full transition-all duration-750 ease-out"
+                                style={{ 
+                                  width: `${stats.percentage}%`,
+                                  backgroundColor: activeColor
+                                }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </section>
+                )}
+
+                {/* PART A — PROGRESS ANALYTICS CHART (RECHARTS AREA TREND) */}
+                <section
+                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                      <span>Subject Breakdown</span>
+                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                      <span>Analytics Trend Curve</span>
                     </h3>
-                    <span className="text-[10px] text-slate-500 font-bold uppercase">5 Core Subjects</span>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase">Daily Curve</span>
                   </div>
 
-                  <div className="flex flex-col gap-4">
-                    {["sql", "dsa", "webdev", "genai", "csfund"].map((subKey) => {
-                      const meta = subjectMetadata[subKey];
-                      const stats = subjectStats[subKey];
-                      const BarIcon = meta.icon;
-                      const activeColor = darkMode ? meta.darkAccentColor : meta.accentColor;
-                      
-                      return (
-                        <div key={subKey} className="flex flex-col gap-1.5">
-                          <div className="flex justify-between items-center text-xs font-semibold">
-                            <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                              <span className={`p-1 rounded-md ${meta.bgClass} ${meta.textClass}`}>
-                                <BarIcon className="w-3.5 h-3.5" />
-                              </span>
-                              <span>{meta.name}</span>
-                            </div>
-                            <span className={`${meta.textClass} font-bold`}>{stats.percentage}%</span>
-                          </div>
-                          
-                          {/* Progress bar container */}
-                          <div className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 rounded-full h-2.5 overflow-hidden">
-                            <div 
-                              className="h-full rounded-full transition-all duration-750 ease-out"
-                              style={{ 
-                                width: `${stats.percentage}%`,
-                                backgroundColor: activeColor,
-                                boxShadow: `0 0 8px ${activeColor}30` 
-                              }}
-                            />
-                          </div>
-                          <div className="text-[9px] text-slate-450 dark:text-slate-500 font-bold uppercase text-right tracking-wider">
-                            {stats.done} / {stats.total} topics done
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className="w-full h-44 text-xs">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={trendData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="colorPercentage" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor={darkMode ? "#10b981" : "#059669"} stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor={darkMode ? "#10b981" : "#059669"} stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "rgba(255,255,255,0.04)" : "rgba(15,23,42,0.05)"} />
+                        <XAxis dataKey="day" stroke={darkMode ? "#475569" : "#94a3b8"} fontSize={9} tickLine={false} />
+                        <YAxis stroke={darkMode ? "#475569" : "#94a3b8"} fontSize={9} domain={[0, 100]} tickLine={false} />
+                        <ChartTooltip 
+                          contentStyle={{ 
+                            backgroundColor: darkMode ? "#0f172a" : "#ffffff", 
+                            borderColor: darkMode ? "#1e293b" : "#e2e8f0",
+                            borderRadius: "12px",
+                            color: darkMode ? "#f8fafc" : "#0f172a"
+                          }} 
+                        />
+                        <Area 
+                          type="monotone" 
+                          dataKey="percentage" 
+                          stroke={darkMode ? "#10b981" : "#059669"} 
+                          strokeWidth={2}
+                          fillOpacity={1} 
+                          fill="url(#colorPercentage)" 
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
                   </div>
                 </section>
 
-                {/* 3. WEEKLY THEMES */}
+                {/* 3. WEEKLY SUMMARY */}
                 <section 
                   ref={tiltWeekCard.ref}
                   onMouseMove={tiltWeekCard.handleMouseMove}
@@ -1478,7 +1943,7 @@ export default function App() {
                       <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>Weekly Summary</span>
                     </h3>
-                    <span className="text-[10px] text-slate-500 font-bold uppercase">4 Phases</span>
+                    <span className="text-[10px] text-slate-505 font-bold uppercase">4 Phases</span>
                   </div>
                   
                   <div className="flex flex-col gap-3">
@@ -1486,7 +1951,6 @@ export default function App() {
                       const weekNum = index + 1;
                       const theme = weekThemes[wKey];
                       const isCurrentWeek = currentDayData.week === weekNum;
-                      
                       const stats = weekStats[weekNum];
                       const isFullyCompleted = stats.percentage === 100 && stats.total > 0;
 
@@ -1509,7 +1973,7 @@ export default function App() {
                               </span>
                             </div>
                             {isCurrentWeek ? (
-                              <span className="text-[8px] uppercase tracking-wider font-black bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-md">
+                              <span className="text-[8px] uppercase tracking-wider font-black bg-emerald-500/10 text-emerald-605 dark:text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-md">
                                 Current Week
                               </span>
                             ) : isFullyCompleted ? (
@@ -1550,13 +2014,13 @@ export default function App() {
                   className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
-                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Info className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Info className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
                       <span>Interview Q&A Prep</span>
                     </h3>
                     <button
                       onClick={() => setIsInterviewOpen(!isInterviewOpen)}
-                      className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
+                      className="text-xs font-bold text-emerald-605 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
                     >
                       <span>{isInterviewOpen ? "Hide" : "Show Quick-Card"}</span>
                       <ChevronDown className={`w-3.5 h-3.5 transform transition-transform ${isInterviewOpen ? "rotate-180" : ""}`} />
@@ -1581,7 +2045,7 @@ export default function App() {
                           className={`flex-1 text-xs py-1.5 rounded-lg font-semibold transition-all ${
                             expandedInterviewSection === "technical" 
                               ? "bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-850 text-slate-900 dark:text-white shadow-sm" 
-                              : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-350"
+                              : "text-slate-550 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-355"
                           }`}
                         >
                           Technical
@@ -1680,7 +2144,6 @@ export default function App() {
                     <div className="flex flex-col gap-1.5">
                       {searchResults.map((res, index) => {
                         const matchMeta = res.subjectMatch ? subjectMetadata[res.subjectMatch] : null;
-                        
                         return (
                           <div 
                             key={index}
@@ -1693,9 +2156,8 @@ export default function App() {
                           >
                             <div className="flex-1">
                               <div className="text-xs font-black text-slate-900 dark:text-white">{res.title}</div>
-                              <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{res.subtitle}</div>
+                              <div className="text-[11px] text-slate-550 dark:text-slate-400 mt-1 leading-relaxed">{res.subtitle}</div>
                             </div>
-                            
                             {matchMeta && (
                               <span className={`text-[8px] font-extrabold uppercase tracking-wider py-1 px-2.5 rounded-md border shrink-0 ${matchMeta.bgClass} ${matchMeta.borderClass} ${matchMeta.textClass}`}>
                                 {matchMeta.name.split(" ")[0]}
@@ -1717,19 +2179,82 @@ export default function App() {
           )}
 
           {/* 5. FOOTER */}
-          <footer className="mt-auto border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-6 px-4 text-center text-slate-500 dark:text-slate-400 text-xs font-semibold transition-colors duration-300">
+          <footer className="mt-auto border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-6 px-4 text-center text-slate-555 dark:text-slate-400 text-xs font-semibold transition-colors duration-300">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
               <p>© 2026 Placement Prep Hub. All rights reserved.</p>
               <div className="flex gap-4">
                 <span className="text-emerald-600 dark:text-emerald-500/90 font-bold hover:underline cursor-default">Keep Learning</span>
                 <span className="text-slate-300 dark:text-slate-800">|</span>
-                <span className="hover:text-slate-700 dark:hover:text-slate-350 cursor-default">Structured Timeline</span>
+                <span className="hover:text-slate-705 dark:hover:text-slate-350 cursor-default">Structured Timeline</span>
               </div>
             </div>
           </footer>
         </>
       )}
 
+    </div>
+  );
+}
+
+// Custom WebGL rounded bar chart
+function SubjectBar3D({ stats, darkMode }) {
+  const subjects = [
+    { key: "sql", color: "#06b6d4", index: -2 },
+    { key: "dsa", color: "#8b5cf6", index: -1 },
+    { key: "webdev", color: "#3b82f6", index: 0 },
+    { key: "genai", color: "#d946ef", index: 1 },
+    { key: "csfund", color: "#10b981", index: 2 }
+  ];
+  
+  return (
+    <div className="w-full h-56 bg-slate-50/50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-2xl overflow-hidden shadow-inner relative">
+      <Canvas camera={{ position: [0, 2.8, 5.2], fov: 45 }}>
+        <ambientLight intensity={darkMode ? 0.65 : 0.9} />
+        <directionalLight position={[2, 6, 3.5]} intensity={darkMode ? 1.1 : 1.3} castShadow />
+        
+        <group position={[0, -0.85, 0]}>
+          {subjects.map((sub) => {
+            const percentage = stats[sub.key]?.percentage || 0;
+            const height = 0.15 + (percentage / 100) * 2.15;
+            
+            return (
+              <group key={sub.key} position={[sub.index * 0.92, 0, 0]}>
+                <RoundedBox 
+                  args={[0.62, height, 0.62]} 
+                  radius={0.06} 
+                  smoothness={4} 
+                  position={[0, height / 2, 0]}
+                >
+                  <meshStandardMaterial 
+                    color={sub.color} 
+                    roughness={0.12} 
+                    metalness={0.08} 
+                  />
+                </RoundedBox>
+              </group>
+            );
+          })}
+          
+          <ContactShadows 
+            position={[0, 0, 0]} 
+            opacity={0.42} 
+            scale={8.5} 
+            blur={1.6} 
+            far={1.4} 
+          />
+        </group>
+        
+        <OrbitControls 
+          enableZoom={false} 
+          minPolarAngle={Math.PI / 4} 
+          maxPolarAngle={Math.PI / 2.15} 
+          autoRotate 
+          autoRotateSpeed={0.65} 
+        />
+      </Canvas>
+      <div className="absolute top-2 left-3 text-[9px] uppercase tracking-wider font-black text-slate-450 dark:text-slate-505 pointer-events-none">
+        Drag to rotate 3D bars
+      </div>
     </div>
   );
 }
