@@ -751,21 +751,214 @@ export const days = [
 ];
 
 export const interviewQuestions = {
-  technical: [
-    "Explain a JOIN you used and why (SQL)",
-    "Time/space complexity of your DSA solutions — be ready to optimize",
-    "Difference between SQL and NoSQL, when to use which",
-    "Explain your project architecture, tech stack choices, and trade-offs",
-    "OOPs concepts with real code examples",
-    "REST vs GraphQL; how authentication works in your app",
-    "What is RAG, why use it over fine-tuning, how would you reduce hallucination"
-  ],
-  hr: [
-    "Tell me about yourself",
-    "A challenge you faced in a project and how you solved it",
-    "Why should we hire you / why this company",
-    "Strengths, weaknesses, how you handle deadlines/conflict"
-  ]
+  technical: {
+    oops: [
+      {
+        id: "tech_oops_1",
+        q: "What are the four main pillars of OOPs and how do you explain them?",
+        outline: [
+          "Inheritance: Reusing code from parent to child (e.g. Employee -> Manager)",
+          "Polymorphism: One interface, multiple forms (Overloading vs Overriding)",
+          "Encapsulation: Bundling data and methods, hiding state via private fields",
+          "Abstraction: Hiding implementation details via interfaces/abstract classes"
+        ]
+      },
+      {
+        id: "tech_oops_2",
+        q: "What is the difference between an Abstract Class and an Interface?",
+        outline: [
+          "Abstract classes can have state (instance variables) and constructors; interfaces cannot",
+          "A class can extend only one abstract class, but implement multiple interfaces",
+          "Use abstract classes for 'is-a' relationships; interfaces for 'can-do' features"
+        ]
+      }
+    ],
+    dbms: [
+      {
+        id: "tech_dbms_1",
+        q: "Explain Normalization (1NF, 2NF, 3NF) and why we use it.",
+        outline: [
+          "1NF: Atomic values, no repeating groups",
+          "2NF: In 1NF + no partial dependency on candidate keys",
+          "3NF: In 2NF + no transitive dependency",
+          "Use case: Prevents insert/update/delete anomalies and saves storage space"
+        ]
+      },
+      {
+        id: "tech_dbms_2",
+        q: "What are ACID properties in a database?",
+        outline: [
+          "Atomicity: All-or-nothing execution",
+          "Consistency: Database transitions from one valid state to another",
+          "Isolation: Concurrent transactions run without interfering with each other",
+          "Durability: Committed changes survive system crashes"
+        ]
+      }
+    ],
+    os: [
+      {
+        id: "tech_os_1",
+        q: "What is the difference between a Process and a Thread?",
+        outline: [
+          "A process is a program in execution with its own memory space",
+          "A thread is a path of execution within a process, sharing memory with other threads",
+          "Context switching is expensive for processes, cheap for threads",
+          "Threads communicate directly; processes require IPC (Inter-Process Communication)"
+        ]
+      },
+      {
+        id: "tech_os_2",
+        q: "What is a Deadlock and what are the 4 necessary conditions for it?",
+        outline: [
+          "A state where threads are blocked waiting for resources held by each other",
+          "Conditions: Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait",
+          "Prevention: Break any of these 4 conditions (e.g., resource ordering)"
+        ]
+      }
+    ],
+    cn: [
+      {
+        id: "tech_cn_1",
+        q: "Explain the OSI Model layers and a real-world example of each.",
+        outline: [
+          "Application/Presentation/Session: User interaction, formatting, session control",
+          "Transport: Segmenting data and reliability (TCP/UDP ports)",
+          "Network/Data Link/Physical: Routing (IP), MAC addressing, physical cables",
+          "Analogy: Sending a physical letter inside envelopes and sorting trucks"
+        ]
+      },
+      {
+        id: "tech_cn_2",
+        q: "What is the difference between TCP and UDP?",
+        outline: [
+          "TCP is connection-oriented, reliable, guarantees packet order, has flow control",
+          "UDP is connectionless, fast, has overhead latency reduction, but is unreliable",
+          "TCP is used for HTTP, email, database transactions; UDP for streaming, gaming, DNS"
+        ]
+      }
+    ],
+    sql: [
+      {
+        id: "tech_sql_1",
+        q: "Explain a JOIN you used in a project and why you chose it.",
+        outline: [
+          "State which JOIN type and why (business logic reason, not just syntax)",
+          "Give the actual tables/columns from a real project if possible",
+          "Mention what would break if you used the wrong JOIN type",
+          "Keep it under 90 seconds spoken"
+        ]
+      },
+      {
+        id: "tech_sql_2",
+        q: "What is database indexing and when does it hurt performance?",
+        outline: [
+          "Speeds up read query lookup using B-Tree/Hash indexing structures",
+          "Hurts write performance (INSERT/UPDATE/DELETE) since index must be rebuilt",
+          "Avoid indexing low-cardinality columns (e.g. gender)"
+        ]
+      }
+    ],
+    dsa: [
+      {
+        id: "tech_dsa_1",
+        q: "How do you explain your approach to a coding problem to an interviewer?",
+        outline: [
+          "Start with clarification: ask constraints, bounds, sample inputs/outputs",
+          "State the brute-force approach first, compute its time/space complexity",
+          "Identify bottlenecks (nested loops, duplicate work) and propose optimizations",
+          "Dry-run your pseudocode on an edge case before writing actual code"
+        ]
+      },
+      {
+        id: "tech_dsa_2",
+        q: "How do you communicate complexity trade-offs during a technical round?",
+        outline: [
+          "Clearly state: 'I can reduce time from O(N^2) to O(N) by using O(N) auxiliary space.'",
+          "Ask: 'Is memory constraint a priority in this context?'",
+          "Show trade-off understanding (e.g. cache vs compute limits)"
+        ]
+      }
+    ],
+    sysdesign: [
+      {
+        id: "tech_sys_1",
+        q: "Explain horizontal vs vertical scaling and CAP theorem.",
+        outline: [
+          "Vertical scaling: adding resources (CPU/RAM) to a single machine (hardware ceiling)",
+          "Horizontal scaling: adding more machines (requires load balancing, stateless servers)",
+          "CAP theorem: A distributed system can guarantee at most 2 out of Consistency, Availability, Partition Tolerance",
+          "Partition tolerance is mandatory in network splits; you choose CP or AP"
+        ]
+      }
+    ],
+    genai: [
+      {
+        id: "tech_genai_1",
+        q: "What is Retrieval-Augmented Generation (RAG) and why use it over fine-tuning?",
+        outline: [
+          "RAG fetches relevant source documents and appends them to LLM prompt as context",
+          "Why RAG: Zero training cost, absolute data access controls, zero hallucination (via grounding)",
+          "Fine-tuning changes model weights to learn styles/formats, but struggles with factual updates"
+        ]
+      },
+      {
+        id: "tech_genai_2",
+        q: "How do you evaluate RAG pipelines and reduce hallucination?",
+        outline: [
+          "Use metrics: Faithfulness (is the answer based on context?), Answer Relevance",
+          "Reduce hallucination: Strict system instructions, set temperature to 0, use hybrid search",
+          "Rerank retrieved chunks using cross-encoders to ensure top quality context"
+        ]
+      }
+    ]
+  },
+  hr: {
+    about: [
+      {
+        id: "hr_about_1",
+        q: "Tell me about yourself.",
+        outline: [
+          "Present: Current role/education and primary skills focus (MERN/GenAI)",
+          "Past: Key academic milestones, placements prep focus, coding accomplishments",
+          "Future: Express genuine enthusiasm for the role and company alignment"
+        ]
+      }
+    ],
+    teamwork: [
+      {
+        id: "hr_team_1",
+        q: "Describe a challenge/conflict you faced in a group project and how you resolved it.",
+        outline: [
+          "Situation: Team conflict or blocker in coding/deployment",
+          "Task: Resolving the split and ensuring project timelines are met",
+          "Action: Clear, objective discussion of options without finger-pointing",
+          "Result: Successful delivery and improved team collaboration patterns"
+        ]
+      }
+    ],
+    motivation: [
+      {
+        id: "hr_mot_1",
+        q: "Why should we hire you / why do you want to join this company?",
+        outline: [
+          "Connect company projects or engineering culture to your own portfolio interests",
+          "Showcase value: 'My hands-on MERN and GenAI/RAG build experiences map to your pipeline needs.'",
+          "Show commitment to growth and ownership"
+        ]
+      }
+    ],
+    growth: [
+      {
+        id: "hr_grow_1",
+        q: "What is your greatest weakness and how are you working on it?",
+        outline: [
+          "State a real technical/working weakness (e.g. wanting to refactor too early)",
+          "Explain the action: 'I use structured task lists and timelines to stay focused on MVPs.'",
+          "Show positive trajectory and self-awareness"
+        ]
+      }
+    ]
+  }
 };
 
 export const weekThemes = {

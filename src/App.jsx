@@ -343,8 +343,6 @@ export default function App() {
   const [customTopics, setCustomTopics] = useState(() => getCachedValue("customTopics", {}));
   const [solvedProblems, setSolvedProblems] = useState(() => getCachedValue("solvedProblems", {}));
   const [isPracticeOpen, setIsPracticeOpen] = useState(true);
-  const [expandedRows, setExpandedRows] = useState({});
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [subjectFilter, setSubjectFilter] = useState(null); 
   const [filterMode, setFilterMode] = useState("highlight"); 
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
@@ -352,6 +350,15 @@ export default function App() {
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  
+  // Custom states for collapsible rows, Reference Library, and Interview Q&A
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [qaSearchQuery, setQaSearchQuery] = useState("");
+  const [interviewDrafts, setInterviewDrafts] = useState(() => getCachedValue("interviewDrafts", {}));
+  const [interviewPracticed, setInterviewPracticed] = useState(() => getCachedValue("interviewPracticed", {}));
+  const [expandedQAs, setExpandedQAs] = useState({});
+  const [expandedCategories, setExpandedCategories] = useState({ oops: true, about: true });
+  const [expandedRows, setExpandedRows] = useState({});
   
   // Theme state
   const [darkMode, setDarkMode] = useState(() => {
@@ -412,6 +419,14 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("selectedDate", selectedDate);
   }, [selectedDate]);
+
+  useEffect(() => {
+    localStorage.setItem("interviewDrafts", JSON.stringify(interviewDrafts));
+  }, [interviewDrafts]);
+
+  useEffect(() => {
+    localStorage.setItem("interviewPracticed", JSON.stringify(interviewPracticed));
+  }, [interviewPracticed]);
 
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
@@ -875,6 +890,8 @@ export default function App() {
       completions,
       customTopics,
       solvedProblems,
+      interviewPracticed,
+      interviewDrafts,
       theme: darkMode ? "dark" : "light"
     }, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
@@ -931,6 +948,34 @@ export default function App() {
     setExpandedRows((prev) => ({
       ...prev,
       [index]: !prev[index]
+    }));
+  };
+
+  const saveInterviewDraft = (id, val) => {
+    setInterviewDrafts((prev) => {
+      const next = { ...prev, [id]: val };
+      return next;
+    });
+  };
+
+  const togglePracticedState = (id) => {
+    setInterviewPracticed((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      return next;
+    });
+  };
+
+  const toggleCategoryExpand = (catKey) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [catKey]: !prev[catKey]
+    }));
+  };
+
+  const toggleQAExpand = (id) => {
+    setExpandedQAs((prev) => ({
+      ...prev,
+      [id]: !prev[id]
     }));
   };
 
@@ -1594,10 +1639,10 @@ export default function App() {
                               ? "bg-slate-100/50 dark:bg-slate-950/20 text-slate-555 dark:text-slate-500 border-slate-200/80 dark:border-slate-900/50 border-dashed" 
                               : isChecked 
                               ? "bg-emerald-50/20 dark:bg-emerald-950/5 border-emerald-200/40 dark:border-emerald-950/15 opacity-55" 
-                              : "border-slate-200 dark:border-slate-900 hover:bg-white dark:hover:bg-slate-900/55 hover:border-slate-350 dark:hover:border-slate-850 shadow-sm"
+                              : "border-slate-200 dark:border-slate-900 hover:bg-white dark:hover:bg-slate-900/55 hover:border-slate-350 dark:hover:border-slate-855 shadow-sm"
                           } ${
                             isMatch && filterMode === "highlight"
-                              ? "ring-1 ring-emerald-500/25 border-emerald-500/20 bg-emerald-50/10 dark:bg-emerald-950/5" 
+                              ? "ring-1 ring-emerald-500/25 border-emerald-500/20 bg-emerald-50/10 dark:bg-emerald-955/5" 
                               : ""
                           } ${
                             shouldDim && filterMode === "highlight"
@@ -1617,12 +1662,12 @@ export default function App() {
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
                             {/* Time & Badges */}
                             <div className="flex items-center justify-between md:justify-start gap-4 pl-2 shrink-0">
-                              <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-355 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-650" : ""}`}>
+                              <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-355 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-650" : ""}`}>
                                 {slot.time}
                               </span>
 
                               {isBreak ? (
-                                <div className="flex items-center gap-1.5 text-slate-450 dark:text-slate-500 select-none">
+                                <div className="flex items-center gap-1.5 text-slate-450 dark:text-slate-505 select-none">
                                   <Coffee className="w-3.5 h-3.5" />
                                   <span className="text-[10px] font-extrabold uppercase tracking-wider">{slot.label}</span>
                                 </div>
@@ -1658,7 +1703,7 @@ export default function App() {
                                       if (e.key === "Enter") saveCustomTopic(slot.subject);
                                       if (e.key === "Escape") setEditingSlotIndex(null);
                                     }}
-                                    className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
+                                    className="flex-1 bg-slate-100 dark:bg-slate-955 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
                                     autoFocus
                                   />
                                   <button 
@@ -1669,7 +1714,7 @@ export default function App() {
                                   </button>
                                   <button 
                                     onClick={() => setEditingSlotIndex(null)}
-                                    className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 font-extrabold rounded-xl transition-all"
+                                    className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-405 font-extrabold rounded-xl transition-all"
                                   >
                                     Cancel
                                   </button>
@@ -1678,7 +1723,7 @@ export default function App() {
                                 <>
                                   <p className={`text-sm leading-relaxed flex-1 ${
                                     isChecked 
-                                      ? "line-through text-slate-450 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
+                                      ? "line-through text-slate-455 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
                                       : isBreak 
                                       ? "text-slate-500 dark:text-slate-500 italic text-[11px]" 
                                       : "text-slate-805 dark:text-slate-200 font-medium"
@@ -1688,16 +1733,16 @@ export default function App() {
                                   {details && (
                                     <button
                                       onClick={() => toggleRowExpand(index)}
-                                      className="p-1 text-slate-405 hover:text-emerald-505 transition-colors shrink-0"
+                                      className="p-1 text-slate-405 hover:text-emerald-550 transition-colors shrink-0"
                                       title="Toggle study details"
                                     >
-                                      <ChevronDown className={`w-4 h-4 transform transition-transform duration-300 ${expandedRows[index] ? "rotate-180" : ""}`} />
+                                      <ChevronDown className={`w-4 h-4 transform transition-transform duration-355 ${expandedRows[index] ? "rotate-180" : ""}`} />
                                     </button>
                                   )}
                                   {!isBreak && (
                                     <button
                                       onClick={() => startEditing(index, focusTopicText)}
-                                      className="p-1.5 text-slate-450 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                                      className="p-1.5 text-slate-455 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                                       title="Edit custom topic"
                                     >
                                       <Edit2 className="w-3.5 h-3.5" />
@@ -1715,7 +1760,7 @@ export default function App() {
                                   className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
                                     isChecked
                                       ? "bg-emerald-500 border-emerald-550 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
-                                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-955 text-transparent hover:border-slate-450 dark:hover:border-slate-500 scale-100 shadow-sm"
+                                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-955 text-transparent hover:border-slate-455 dark:hover:border-slate-500 scale-100 shadow-sm"
                                   }`}
                                 >
                                   <Check className={`w-4 h-4 stroke-[3.5] transition-all duration-300 ${isChecked ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
@@ -1727,7 +1772,7 @@ export default function App() {
                           {/* Collapsible Details Drawer */}
                           {details && expandedRows[index] && (
                             <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 w-full animate-fadeIn">
-                              <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-350 flex flex-col gap-2 font-semibold leading-relaxed">
+                              <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-355 flex flex-col gap-2 font-semibold leading-relaxed">
                                 {details.map((bullet, bIdx) => (
                                   <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
                                 ))}
@@ -1744,11 +1789,11 @@ export default function App() {
                                     className="flex items-center gap-1.5 text-xs text-indigo-650 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
                                     title={resource.note}
                                   >
-                                    <span className="bg-red-500/10 text-red-500 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
+                                    <span className="bg-red-500/10 text-red-505 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
                                       {resource.platform}
                                     </span>
                                     <span>{resource.channel}</span>
-                                    <span className="text-slate-400 dark:text-slate-505 font-bold">({resource.note})</span>
+                                    <span className="text-slate-400 dark:text-slate-550 font-bold">({resource.note})</span>
                                   </a>
                                 </div>
                               )}
@@ -2027,13 +2072,477 @@ export default function App() {
                   </div>
                 </section>
 
+                {/* PART B — WEBGL 3D SUBJECT BREAKDOWN BAR CHART */}
+                {webGLSupported && isTabVisible ? (
+                  <section 
+                    ref={tiltSubjectCard.ref}
+                    onMouseMove={tiltSubjectCard.handleMouseMove}
+                    onMouseLeave={tiltSubjectCard.handleMouseLeave}
+                    style={tiltSubjectCard.style}
+                    className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
+                  >
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                      <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                        <span>3D Analytics Chart</span>
+                      </h3>
+                      <span className="text-[10px] text-slate-550 font-bold uppercase">WebGL Rendering</span>
+                    </div>
+
+                    <Suspense fallback={<div className="h-56 flex items-center justify-center text-xs font-semibold text-slate-400">Loading 3D Visualizer...</div>}>
+                      <SubjectBar3D stats={subjectStats} darkMode={darkMode} />
+                    </Suspense>
+
+                    {/* Compact flat fallback bar indicators for labels */}
+                    <div className="mt-4 flex flex-col gap-2">
+                      {["sql", "dsa", "webdev", "genai", "csfund"].map((subKey) => {
+                        const meta = subjectMetadata[subKey];
+                        const stats = subjectStats[subKey];
+                        return (
+                          <div key={subKey} className="flex justify-between items-center text-[10px] font-extrabold uppercase">
+                            <span className={meta.textClass}>{meta.name.split(" ")[0]}</span>
+                            <span className="text-slate-500">{stats.percentage}% done</span>
+                          </div>
+                        );
+                      })}
+                      {/* Problems Solved count */}
+                      <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-900/60 flex items-center justify-between text-[10px] font-extrabold uppercase">
+                        <span className="text-slate-500 dark:text-slate-450 font-bold">Problems Solved</span>
+                        <span className="text-emerald-605 dark:text-emerald-400 flex items-center gap-1">
+                          🔥 {totalProblemsSolved} Solved
+                        </span>
+                      </div>
+                    </div>
+                  </section>
+                ) : (
+                  // Flat 2D Subject progress list fallback
+                  <section 
+                    ref={tiltSubjectCard.ref}
+                    onMouseMove={tiltSubjectCard.handleMouseMove}
+                    onMouseLeave={tiltSubjectCard.handleMouseLeave}
+                    style={tiltSubjectCard.style}
+                    className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
+                  >
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                      <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                        <span>Subject Breakdown</span>
+                      </h3>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase">5 Core Subjects</span>
+                    </div>
+
+                    <div className="flex flex-col gap-4">
+                      {["sql", "dsa", "webdev", "genai", "csfund"].map((subKey) => {
+                        const meta = subjectMetadata[subKey];
+                        const stats = subjectStats[subKey];
+                        const BarIcon = meta.icon;
+                        const activeColor = darkMode ? meta.darkAccentColor : meta.accentColor;
+                        
+                        return (
+                          <div key={subKey} className="flex flex-col gap-1.5">
+                            <div className="flex justify-between items-center text-xs font-semibold">
+                              <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                                <span className={`p-1 rounded-md ${meta.bgClass} ${meta.textClass}`}>
+                                  <BarIcon className="w-3.5 h-3.5" />
+                                </span>
+                                <span>{meta.name}</span>
+                              </div>
+                              <span className={`${meta.textClass} font-bold`}>{stats.percentage}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 rounded-full h-2.5 overflow-hidden">
+                              <div 
+                                className="h-full rounded-full transition-all duration-750 ease-out"
+                                style={{ 
+                                  width: `${stats.percentage}%`,
+                                  backgroundColor: activeColor
+                                }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                      {/* Problems Solved count */}
+                      <div className="mt-2 pt-3.5 border-t border-slate-200 dark:border-slate-900/60 flex items-center justify-between text-[10px] font-extrabold uppercase">
+                        <span className="text-slate-500 dark:text-slate-450 font-bold">Problems Solved</span>
+                        <span className="text-emerald-600 dark:text-emerald-450 flex items-center gap-1">
+                          🔥 {totalProblemsSolved} Solved
+                        </span>
+                      </div>
+                    </div>
+                  </section>
+                )}
+
+                {/* PART A — PROGRESS ANALYTICS CHART (RECHARTS AREA TREND) */}
+                <section
+                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
+                >
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Star className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                      <span>Analytics Trend Curve</span>
+                    </h3>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase">Daily Curve</span>
+                  </div>
+
+                  <div className="w-full h-44 text-xs">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={trendData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="colorPercentage" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor={darkMode ? "#10b981" : "#059669"} stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor={darkMode ? "#10b981" : "#059669"} stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "rgba(255,255,255,0.04)" : "rgba(15,23,42,0.05)"} />
+                        <XAxis dataKey="day" stroke={darkMode ? "#475569" : "#94a3b8"} fontSize={9} tickLine={false} />
+                        <YAxis stroke={darkMode ? "#475569" : "#94a3b8"} fontSize={9} domain={[0, 100]} tickLine={false} />
+                        <ChartTooltip 
+                          contentStyle={{ 
+                            backgroundColor: darkMode ? "#0f172a" : "#ffffff", 
+                            borderColor: darkMode ? "#1e293b" : "#e2e8f0",
+                            borderRadius: "12px",
+                            color: darkMode ? "#f8fafc" : "#0f172a"
+                          }} 
+                        />
+                        <Area 
+                          type="monotone" 
+                          dataKey="percentage" 
+                          stroke={darkMode ? "#10b981" : "#059669"} 
+                          strokeWidth={2}
+                          fillOpacity={1} 
+                          fill="url(#colorPercentage)" 
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </section>
+
+                {/* 3. WEEKLY SUMMARY */}
+                <section 
+                  ref={tiltWeekCard.ref}
+                  onMouseMove={tiltWeekCard.handleMouseMove}
+                  onMouseLeave={tiltWeekCard.handleMouseLeave}
+                  style={tiltWeekCard.style}
+                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
+                >
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                    <h3 className="text-xs font-extrabold text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Star className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                      <span>Weekly Summary</span>
+                    </h3>
+                    <span className="text-[10px] text-slate-505 font-bold uppercase">4 Phases</span>
+                  </div>
+                  
+                  <div className="flex flex-col gap-3">
+                    {Object.keys(weekThemes).map((wKey, index) => {
+                      const weekNum = index + 1;
+                      const theme = weekThemes[wKey];
+                      const isCurrentWeek = currentDayData.week === weekNum;
+                      const stats = weekStats[weekNum];
+                      const isFullyCompleted = stats.percentage === 100 && stats.total > 0;
+
+                      return (
+                        <div 
+                          key={wKey}
+                          className={`p-4 rounded-2xl border transition-all ${
+                            isCurrentWeek
+                              ? "bg-slate-100/50 dark:bg-slate-900/80 border-emerald-500/35 ring-1 ring-emerald-500/10 shadow-sm"
+                              : "bg-white/40 dark:bg-slate-950/40 border-slate-150 dark:border-slate-900 opacity-70 hover:opacity-100"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-1.5">
+                              {isFullyCompleted && (
+                                <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                              )}
+                              <span className={`text-xs font-bold ${isCurrentWeek ? "text-emerald-600 dark:text-emerald-400 text-[13px]" : "text-slate-700 dark:text-slate-355"}`}>
+                                {theme.title}
+                              </span>
+                            </div>
+                            {isCurrentWeek ? (
+                              <span className="text-[8px] uppercase tracking-wider font-black bg-emerald-500/10 text-emerald-605 dark:text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-md">
+                                Current Week
+                              </span>
+                            ) : isFullyCompleted ? (
+                              <span className="text-[8px] uppercase tracking-wider font-black bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md">
+                                100% Done
+                              </span>
+                            ) : null}
+                          </div>
+
+                          <p className="text-xs text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed font-semibold">
+                            {theme.desc}
+                          </p>
+
+                          <div className="mt-3.5 pt-3 border-t border-slate-200 dark:border-slate-900/60">
+                            <div className="flex justify-between items-center text-[10px] text-slate-450 dark:text-slate-400 mb-1.5 font-extrabold uppercase">
+                              <span>Progress</span>
+                              <span className={`${isFullyCompleted ? "text-emerald-605 dark:text-emerald-400" : isCurrentWeek ? "text-slate-700 dark:text-slate-250" : ""}`}>{stats.percentage}%</span>
+                            </div>
+                            <div className="w-full bg-slate-200 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-300 dark:border-slate-900">
+                              <div 
+                                className={`h-full rounded-full transition-all duration-500 ${isFullyCompleted ? "bg-emerald-400" : "bg-emerald-505 dark:bg-emerald-500"}`}
+                                style={{ width: `${stats.percentage}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+
+                {/* 4. INTERVIEW PREP */}
+                <section 
+                  ref={tiltInterviewCard.ref}
+                  onMouseMove={tiltInterviewCard.handleMouseMove}
+                  onMouseLeave={tiltInterviewCard.handleMouseLeave}
+                  style={tiltInterviewCard.style}
+                  className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md"
+                >
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
+                    <h3 className="text-xs font-extrabold text-slate-805 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Info className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                      <span>Interview Q&A Prep</span>
+                    </h3>
+                    <button
+                      onClick={() => setIsInterviewOpen(!isInterviewOpen)}
+                      className="text-xs font-bold text-emerald-605 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 transition-all flex items-center gap-0.5"
+                    >
+                      <span>{isInterviewOpen ? "Hide" : "Show Prep"}</span>
+                      <ChevronDown className={`w-3.5 h-3.5 transform transition-transform ${isInterviewOpen ? "rotate-180" : ""}`} />
+                    </button>
+                  </div>
+
+                  {!isInterviewOpen ? (
+                    <div className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-semibold bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 p-4 rounded-2xl flex items-center justify-between gap-4">
+                      <span>Access technical, STAR outline, and behavioral question prep.</span>
+                      <button
+                        onClick={() => setIsInterviewOpen(true)}
+                        className="text-[10px] uppercase font-extrabold text-emerald-600 dark:text-emerald-400 hover:underline shrink-0"
+                      >
+                        Open
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-4">
+                      {/* Technical/HR Tabs */}
+                      <div className="flex bg-slate-100 dark:bg-slate-955 rounded-xl p-1 border border-slate-200 dark:border-slate-900">
+                        <button
+                          onClick={() => {
+                            setExpandedInterviewSection("technical");
+                            setQaSearchQuery("");
+                          }}
+                          className={`flex-1 text-xs py-1.5 rounded-lg font-semibold transition-all ${
+                            expandedInterviewSection === "technical" 
+                              ? "bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-850 text-slate-900 dark:text-white shadow-sm" 
+                              : "text-slate-550 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-355"
+                          }`}
+                        >
+                          Technical
+                        </button>
+                        <button
+                          onClick={() => {
+                            setExpandedInterviewSection("hr");
+                            setQaSearchQuery("");
+                          }}
+                          className={`flex-1 text-xs py-1.5 rounded-lg font-semibold transition-all ${
+                            expandedInterviewSection === "hr" 
+                              ? "bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-850 text-slate-900 dark:text-white shadow-sm" 
+                              : "text-slate-550 dark:text-slate-450 hover:text-slate-855 dark:hover:text-slate-350"
+                          }`}
+                        >
+                          HR / Behavioral
+                        </button>
+                      </div>
+
+                      {/* Filter Bar */}
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={qaSearchQuery}
+                          onChange={(e) => setQaSearchQuery(e.target.value)}
+                          placeholder="Search questions or categories..."
+                          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 dark:text-white outline-none focus:border-emerald-500"
+                        />
+                        <Search className="w-3.5 h-3.5 text-slate-450 absolute left-2.5 top-1/2 transform -translate-y-1/2" />
+                        {qaSearchQuery && (
+                          <button
+                            onClick={() => setQaSearchQuery("")}
+                            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-slate-450 hover:text-slate-800 dark:hover:text-white text-[10px] font-extrabold"
+                          >
+                            Clear
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Readiness Progress Indicator */}
+                      {(() => {
+                        const activeSecQuestions = interviewQuestions[expandedInterviewSection] || {};
+                        let totalQ = 0;
+                        let practicedQ = 0;
+                        
+                        Object.keys(activeSecQuestions).forEach((catKey) => {
+                          const list = activeSecQuestions[catKey] || [];
+                          list.forEach((q) => {
+                            totalQ++;
+                            if (interviewPracticed[q.id]) {
+                              practicedQ++;
+                            }
+                          });
+                        });
+                        
+                        const readinessPct = totalQ > 0 ? Math.round((practicedQ / totalQ) * 100) : 0;
+                        
+                        return (
+                          <div className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 p-3 rounded-xl shadow-inner">
+                            <div className="flex justify-between items-center text-[10px] text-slate-555 dark:text-slate-450 mb-1.5 font-extrabold uppercase">
+                              <span>Readiness ({practicedQ}/{totalQ} Practiced)</span>
+                              <span className="text-emerald-600 dark:text-emerald-450">{readinessPct}%</span>
+                            </div>
+                            <div className="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                              <div 
+                                className="h-full bg-emerald-500 dark:bg-emerald-500 rounded-full transition-all duration-500"
+                                style={{ width: `${readinessPct}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })()}
+
+                      {/* STAR Method Guide pinned at the top of HR tab */}
+                      {expandedInterviewSection === "hr" && (
+                        <div className="bg-indigo-50/50 dark:bg-indigo-950/10 border border-indigo-200/50 dark:border-indigo-950/20 p-3.5 rounded-xl text-[11px] text-slate-655 dark:text-slate-355 leading-relaxed font-semibold">
+                          <div className="text-[9px] uppercase font-black tracking-wider text-indigo-650 dark:text-indigo-400 mb-1.5 flex items-center gap-1.5 select-none">
+                            <Star className="w-3.5 h-3.5" />
+                            <span>STAR Interview Method Template</span>
+                          </div>
+                          <ul className="flex flex-col gap-1.5 pl-1.5">
+                            <li><strong>S - Situation:</strong> Set the context and specify technical stack setup.</li>
+                            <li><strong>T - Task:</strong> Describe the coding problem or resource conflicts.</li>
+                            <li><strong>A - Action:</strong> Describe YOUR specific code fixes and optimization choices.</li>
+                            <li><strong>R - Result:</strong> Share outcomes, benchmark figures, and learnings.</li>
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Collapsible Categories list */}
+                      <div className="flex flex-col gap-3 max-h-[360px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-855 pr-1">
+                        {(() => {
+                          const activeSecQuestions = interviewQuestions[expandedInterviewSection] || {};
+                          
+                          const categoryMeta = {
+                            oops: "OOPs Concepts",
+                            dbms: "Database (DBMS)",
+                            os: "Operating Systems (OS)",
+                            cn: "Computer Networks (CN)",
+                            sql: "SQL Joins & Indexes",
+                            dsa: "DSA Communication",
+                            sysdesign: "System Design HLD",
+                            genai: "GenAI & RAG Arch",
+                            about: "About You",
+                            teamwork: "Teamwork & Conflict",
+                            motivation: "Career Motivation",
+                            growth: "Weaknesses & Growth"
+                          };
+                          
+                          return Object.keys(activeSecQuestions).map((catKey) => {
+                            const catName = categoryMeta[catKey] || catKey.toUpperCase();
+                            const qList = activeSecQuestions[catKey] || [];
+                            const filteredQList = qList.filter(q => 
+                              q.q.toLowerCase().includes(qaSearchQuery.toLowerCase()) ||
+                              catName.toLowerCase().includes(qaSearchQuery.toLowerCase())
+                            );
+                            
+                            if (filteredQList.length === 0) return null;
+                            
+                            const isCatExpanded = !!expandedCategories[catKey];
+                            const catPracticed = filteredQList.filter(q => !!interviewPracticed[q.id]).length;
+                            const catTotal = filteredQList.length;
+                            
+                            return (
+                              <div key={catKey} className="flex flex-col">
+                                <button 
+                                  onClick={() => toggleCategoryExpand(catKey)}
+                                  className="w-full flex items-center justify-between p-2 bg-slate-100/50 dark:bg-slate-950/20 border border-slate-205 dark:border-slate-900 rounded-xl hover:bg-slate-200/50 dark:hover:bg-slate-900/50 transition-all text-left"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-bold text-slate-850 dark:text-slate-200">{catName}</span>
+                                    <span className="text-[8px] font-black uppercase text-slate-455 dark:text-slate-500 bg-slate-200/50 dark:bg-slate-900/60 border border-slate-300/30 dark:border-slate-800/40 px-1.5 py-0.5 rounded">
+                                      {catPracticed}/{catTotal}
+                                    </span>
+                                  </div>
+                                  <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transform transition-transform duration-300 ${isCatExpanded ? "rotate-180" : ""}`} />
+                                </button>
+                                
+                                {isCatExpanded && (
+                                  <div className="flex flex-col gap-2 mt-2 pl-1 pr-1">
+                                    {filteredQList.map((q) => {
+                                      const isQAExpanded = !!expandedQAs[q.id];
+                                      const isPracticed = !!interviewPracticed[q.id];
+                                      return (
+                                        <div key={q.id} className="p-3 bg-slate-50/50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:bg-slate-800/80 rounded-xl transition-all flex flex-col gap-2.5 relative">
+                                          <div className="flex items-start justify-between gap-3">
+                                            <button 
+                                              onClick={() => toggleQAExpand(q.id)}
+                                              className="flex-1 text-left text-xs text-slate-700 dark:text-slate-250 leading-relaxed font-semibold hover:text-emerald-500 dark:hover:text-emerald-455"
+                                            >
+                                              {q.q}
+                                            </button>
+                                            <button
+                                              onClick={() => togglePracticedState(q.id)}
+                                              className={`text-[8px] font-black uppercase px-2 py-0.5 rounded border shrink-0 transition-all ${
+                                                isPracticed 
+                                                  ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
+                                                  : "bg-slate-100 dark:bg-slate-900 text-slate-455 dark:text-slate-550 border-slate-300 dark:border-slate-800 hover:border-slate-455"
+                                              }`}
+                                            >
+                                              {isPracticed ? "Practiced ✓" : "Mark"}
+                                            </button>
+                                          </div>
+                                          
+                                          {isQAExpanded && (
+                                            <div className="pt-2 border-t border-slate-200/50 dark:border-slate-900/50 flex flex-col gap-3 animate-fadeIn">
+                                              <div className="text-[9px] uppercase tracking-wider font-extrabold text-slate-405 dark:text-slate-550 select-none">Suggested Answer Outline:</div>
+                                              <ul className="list-disc pl-4.5 text-[11px] text-slate-650 dark:text-slate-355 flex flex-col gap-1.5 font-semibold leading-relaxed">
+                                                {q.outline.map((bullet, bIdx) => (
+                                                  <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
+                                                ))}
+                                              </ul>
+                                              
+                                              <div className="flex flex-col gap-1.5 mt-1">
+                                                <div className="text-[9px] uppercase tracking-wider font-extrabold text-slate-405 dark:text-slate-505 select-none">Your Draft Answer:</div>
+                                                <textarea
+                                                  value={interviewDrafts[q.id] || ""}
+                                                  onChange={(e) => saveInterviewDraft(q.id, e.target.value)}
+                                                  placeholder="Type notes or STAR bullet points here... Saved automatically."
+                                                  rows={3}
+                                                  className="w-full bg-white dark:bg-slate-950 border border-slate-250 dark:border-slate-850 rounded-xl p-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 outline-none focus:border-emerald-500 font-medium resize-none shadow-sm dark:shadow-none"
+                                                />
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    </div>
+                  )}
+                </section>
+
                 {/* 5. QUICK REFERENCE LIBRARY */}
                 <section 
                   className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md relative z-10"
                 >
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-900">
                     <h3 className="text-xs font-extrabold text-slate-850 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Globe className="w-4 h-4 text-emerald-505 dark:text-emerald-400" />
+                      <Globe className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                       <span>Quick Reference Library</span>
                     </h3>
                     <button
@@ -2079,7 +2588,7 @@ export default function App() {
                         }
                       ].map((grp, gIdx) => (
                         <div key={gIdx} className="flex flex-col gap-2">
-                          <span className="text-[9px] uppercase tracking-wider font-black text-slate-450 dark:text-slate-500 select-none">
+                          <span className="text-[9px] uppercase tracking-wider font-black text-slate-455 dark:text-slate-500 select-none">
                             {grp.category}
                           </span>
                           <div className="flex flex-col gap-2">
@@ -2089,11 +2598,11 @@ export default function App() {
                                 href={res.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-3 bg-slate-50 dark:bg-slate-950/50 hover:bg-emerald-500/5 border border-slate-205 dark:border-slate-900 hover:border-emerald-500/20 rounded-xl transition-all flex flex-col gap-1 shadow-sm dark:shadow-none"
+                                className="p-3 bg-slate-50 dark:bg-slate-955/50 hover:bg-emerald-500/5 border border-slate-205 dark:border-slate-900 hover:border-emerald-500/20 rounded-xl transition-all flex flex-col gap-1 shadow-sm dark:shadow-none"
                               >
-                                <div className="flex items-center justify-between text-xs font-bold text-slate-805 dark:text-slate-200">
+                                <div className="flex items-center justify-between text-xs font-bold text-slate-850 dark:text-slate-200">
                                   <span>{res.channel}</span>
-                                  <span className="text-[8px] bg-red-500/10 text-red-505 px-1.5 py-0.5 rounded border border-red-500/20 font-black">
+                                  <span className="text-[8px] bg-red-500/10 text-red-550 px-1.5 py-0.5 rounded border border-red-500/20 font-black">
                                     {res.topic}
                                   </span>
                                 </div>
@@ -2109,9 +2618,10 @@ export default function App() {
                   )}
                 </section>
 
-               </div>
 
-             </div>
+              </div>
+
+            </div>
 
           </main>
 
