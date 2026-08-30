@@ -19,40 +19,155 @@ export const days = [
     dsa: "Arrays: full revision + timed practice set (prefix sum, rotation, subarray problems)",
     webdev: "Advanced JS: closures, scope & hoisting",
     extratech: "Git: init, commit, push",
-    genai: "PHASE 1 — Foundations: AI vs ML vs DL vs NLP landscape; why GenAI matters for placements right now",
-    csfund: "OOPs: Class & Object" },
+    genai: {
+      topic: "AI/ML/DL/NLP landscape",
+      details: [
+        "How these fields relate; why GenAI matters for placements right now",
+        "Landscape definitions: AI vs Machine Learning vs Deep Learning"
+      ],
+      resource: { platform: "YouTube", channel: "3Blue1Brown", note: "Large Language Models explained briefly", url: "https://www.youtube.com/watch?v=LPZh9BOjkQs" }
+    },
+    csfund: {
+      topic: "OOPs: Class & Object",
+      details: [
+        "Class vs object analogy; constructors; access modifiers (public/private/protected)",
+        "Practice: model 2 real objects as classes in your language of choice"
+      ],
+      resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist — clean, code-first explanations", url: "https://www.youtube.com/@KunalKushwaha" }
+    },
+    aptitude: {
+      topic: "Number system, percentages, ratios",
+      details: [
+        "Foundation quant topics — these show up in almost every aptitude round",
+        "Number systems conversion rules and shortcuts"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude placement tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-02", day: "Wed", type: "study", week: 1,
     sql: "GROUP BY, HAVING",
     dsa: "Strings: full revision + timed practice set (pattern matching, anagrams, substrings)",
     webdev: "Advanced JS: promises & async/await",
     extratech: "Git branching",
-    genai: "What is an LLM? Transformer intuition — attention explained without the math",
-    csfund: "OOPs: Inheritance" },
+    genai: {
+      topic: "What is an LLM? Transformer intuition",
+      details: [
+        "Attention mechanism explained conceptually, no math required yet",
+        "Encoder-decoder stack conceptual walkthrough"
+      ],
+      resource: { platform: "YouTube", channel: "3Blue1Brown", note: "Large Language Models explained briefly", url: "https://www.youtube.com/watch?v=LPZh9BOjkQs" }
+    },
+    csfund: {
+      topic: "OOPs: Inheritance",
+      details: [
+        "Single/multiple/multilevel inheritance; super/extends keywords",
+        "When inheritance is the wrong tool (favor composition)"
+      ],
+      resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
+    },
+    aptitude: {
+      topic: "Number system, percentages, ratios",
+      details: [
+        "Ratio proportions, percentages calculations, indices rules",
+        "Solving 10 medium ratio questions"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude placement tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-03", day: "Thu", type: "study", week: 1,
     sql: "INNER/LEFT/RIGHT JOIN",
     dsa: "Two-pointer & sliding window: revision + medium/hard practice set",
     webdev: "Advanced JS: event loop, call stack, microtasks vs macrotasks",
     extratech: "Git merge & conflicts",
-    genai: "Tokens, context window, temperature & sampling — experiment with 3 prompts, observe output changes",
-    csfund: "OOPs: Polymorphism" },
+    genai: {
+      topic: "Tokens, context window, temperature",
+      details: [
+        "Run 3 prompts at different temperatures, observe output changes yourself",
+        "Understand context window constraints and billing rules"
+      ],
+      resource: { platform: "YouTube", channel: "Andrej Karpathy", note: "Intro to Large Language Models", url: "https://youtu.be/zjkBMFhNj_g" }
+    },
+    csfund: {
+      topic: "OOPs: Polymorphism",
+      details: [
+        "Compile-time (overloading) vs runtime (overriding)",
+        "Write one code example of each to explain in interviews"
+      ],
+      resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
+    },
+    aptitude: {
+      topic: "Number system, percentages, ratios",
+      details: [
+        "Sub-topic: percentages practice and shortcuts",
+        "Solve 10 timed percentage questions"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude placement tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-04", day: "Fri", type: "study", week: 1,
     sql: "FULL JOIN, Self Join",
     dsa: "Hashing/HashMap: revision + practice (frequency counting, grouping, subarray-sum problems)",
     webdev: "DOM APIs + Fetch API — build an interactive UI without a framework",
     extratech: "GitHub PR workflow",
-    genai: "How LLMs are trained: pretraining, fine-tuning, RLHF (high-level, no math required)",
-    csfund: "OOPs: Encapsulation, Abstraction" },
+    genai: {
+      topic: "How LLMs are trained",
+      details: [
+        "Pretraining -> fine-tuning -> RLHF (high level, no math required)",
+        "Role of human feedback and dataset preparation"
+      ],
+      resource: { platform: "YouTube", channel: "Andrej Karpathy", note: "Intro to Large Language Models", url: "https://youtu.be/zjkBMFhNj_g" }
+    },
+    csfund: {
+      topic: "OOPs: Encapsulation & Abstraction",
+      details: [
+        "Getters/setters and why; abstract classes vs interfaces",
+        "Real interview trap: difference between abstraction and encapsulation"
+      ],
+      resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
+    },
+    aptitude: {
+      topic: "Number system, percentages, ratios",
+      details: [
+        "Practice 10 timed questions on number systems",
+        "Focus on LCM/HCF based puzzle questions"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude placement tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-05", day: "Sat", type: "study", week: 1,
     sql: "Aggregate functions + mixed JOIN practice (timed)",
     dsa: "Recursion & basic backtracking: revision + timed practice set",
     webdev: "Mini vanilla-JS project (Fetch-based app) + JS fundamentals recap",
     extratech: "Weekly recap: Git workflow end-to-end",
-    genai: "Phase 1 recap: explain 'what is an LLM' out loud in your own words, no notes",
-    csfund: "OOPs full revision + mock questions" },
+    genai: {
+      topic: "Phase 1 recap",
+      details: [
+        "Explain 'what is an LLM' out loud, no notes",
+        "Optional deep dive: Let's build GPT: from scratch (2 hrs)"
+      ],
+      resource: { platform: "YouTube", channel: "Andrej Karpathy", note: "Let's build GPT from scratch", url: "https://www.youtube.com/watch?v=kCc8FmEb1nY" }
+    },
+    csfund: {
+      topic: "OOPs: Full Revision",
+      details: [
+        "Redo all 4 pillars from memory with your own code examples, no notes",
+        "Attempt 5 OOPs interview questions timed"
+      ],
+      resource: { platform: "YouTube", channel: "Kunal Kushwaha", note: "OOPs playlist", url: "https://www.youtube.com/@KunalKushwaha" }
+    },
+    aptitude: {
+      topic: "Number system, percentages, ratios",
+      details: [
+        "Recap Week 1 quant topics under test conditions",
+        "Review mistakes and compile cheat-sheets"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude placement tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-06", day: "Sun", type: "rest",
     note: "Full mock test — Week 1 (SQL, DSA arrays/strings/hashing/recursion, Advanced JS). GenAI: no test, just make sure you can explain tokens/context window/temperature simply." },
@@ -62,48 +177,185 @@ export const days = [
     dsa: "Linked List: full revision + practice (reverse, merge, cycle detection, intersection)",
     webdev: "React: setup + JSX",
     extratech: "Vector embeddings intro",
-    genai: "PHASE 2 — Prompt Engineering: zero-shot vs few-shot prompting, hands-on comparison",
-    csfund: "DBMS: Normalization (1NF–3NF)" },
+    genai: {
+      topic: "Zero-shot vs few-shot prompting",
+      details: [
+        "Write the same task both ways, compare output quality",
+        "Learn how few-shot examples anchor model styling"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering", note: "Prompt engineering techniques", url: "https://www.youtube.com/@engineerprompt" }
+    },
+    csfund: {
+      topic: "DBMS: Normalization (1NF–3NF)",
+      details: [
+        "Why normalize; anomalies it prevents",
+        "Normalize one sample messy table by hand"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS Normalization tutorials", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Time-Speed-Distance, Time & Work",
+      details: [
+        "Time and Work speed formulas; work rates",
+        "Solve 10 basic questions on work completion rates"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-08", day: "Tue", type: "study", week: 2,
     sql: "Correlated subqueries",
     dsa: "Stack: revision + practice (monotonic stack problems, next greater/smaller element)",
     webdev: "React: components & props",
     extratech: "Vector DB overview (Pinecone/FAISS)",
-    genai: "System vs user vs assistant roles; instructions vs context in a prompt",
-    csfund: "DBMS: Keys (primary/foreign/candidate)" },
+    genai: {
+      topic: "System/user/assistant roles",
+      details: [
+        "Instructions vs context - where each belongs in a prompt",
+        "System prompt formatting for safety constraints"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering", note: "Prompt roles and structures", url: "https://www.youtube.com/@engineerprompt" }
+    },
+    csfund: {
+      topic: "DBMS: Keys",
+      details: [
+        "Primary, foreign, candidate, composite, super key",
+        "Key differences with examples"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Time-Speed-Distance, Time & Work",
+      details: [
+        "Time, Speed, Distance classic equations",
+        "Relative speed rules for trains and platforms"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-09", day: "Wed", type: "study", week: 2,
     sql: "Window functions (RANK, ROW_NUMBER)",
     dsa: "Queue & Deque: revision + practice (sliding window max, circular queue problems)",
     webdev: "React: state & useState",
     extratech: "Chunking strategies for documents",
-    genai: "Chain-of-Thought (CoT) prompting — when and why it improves reasoning tasks",
-    csfund: "DBMS: ACID properties" },
+    genai: {
+      topic: "Chain-of-Thought (CoT)",
+      details: [
+        "'Think step by step' - when it helps (reasoning tasks) vs when it doesn't (lookups)",
+        "Zero-shot CoT vs Few-shot CoT"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering", note: "Reasoning prompts", url: "https://www.youtube.com/@engineerprompt" }
+    },
+    csfund: {
+      topic: "DBMS: ACID properties",
+      details: [
+        "Atomicity, Consistency, Isolation, Durability",
+        "One real-world failure example per property"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Time-Speed-Distance, Time & Work",
+      details: [
+        "Practice 10 timed problems on Time & Work",
+        "Focus on worker efficiency changes"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-10", day: "Thu", type: "study", week: 2,
     sql: "Window functions (LEAD, LAG)",
     dsa: "Binary Trees: revision + practice (traversals, views, diameter, LCA)",
     webdev: "React: useEffect, hooks",
     extratech: "RAG architecture overview",
-    genai: "Self-consistency & the ReAct pattern (reason + act) — build a small example",
-    csfund: "DBMS: Transactions & concurrency" },
+    genai: {
+      topic: "Self-consistency & ReAct",
+      details: [
+        "Reason + Act pattern - build one small example combining reasoning and a tool call",
+        "Looping logic of Thought -> Action -> Observation -> Thought"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering", note: "ReAct patterns", url: "https://www.youtube.com/@engineerprompt" }
+    },
+    csfund: {
+      topic: "DBMS: Transactions & concurrency",
+      details: [
+        "Isolation levels, dirty reads, phantom reads",
+        "Know these by name for interviews"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Time-Speed-Distance, Time & Work",
+      details: [
+        "Practice 10 timed problems on Time-Speed-Distance",
+        "Sub-topic: Boats and streams problems"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-11", day: "Fri", type: "study", week: 2,
     sql: "CTEs (Common Table Expressions)",
     dsa: "BST + balanced trees: revision + practice (validate BST, insert/delete, AVL basics)",
     webdev: "React: forms & events",
     extratech: "Docker: images vs containers",
-    genai: "Structured outputs: JSON mode and function/tool calling basics",
-    csfund: "DBMS: Indexing" },
+    genai: {
+      topic: "Structured outputs",
+      details: [
+        "JSON mode / function calling - get a model to return parseable data reliably",
+        "Enforcing Pydantic schemas in output definitions"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering", note: "Structured outputs", url: "https://www.youtube.com/@engineerprompt" }
+    },
+    csfund: {
+      topic: "DBMS: Indexing",
+      details: [
+        "Clustered vs non-clustered indexes",
+        "When an index helps vs hurts write performance"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Time-Speed-Distance, Time & Work",
+      details: [
+        "Tackle mixed problems on Time & Work / TSD",
+        "Practice solving under 1.5 minutes per question"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-12", day: "Sat", type: "study", week: 2,
     sql: "Mixed subquery + window practice",
     dsa: "Graphs (BFS/DFS): revision + practice set (connected components, cycle detection)",
     webdev: "React mini project",
     extratech: "Docker: Dockerfile basics",
-    genai: "Build a personal 'prompt library' — 10 reusable prompt templates you've tested yourself",
-    csfund: "DBMS revision + mock questions" },
+    genai: {
+      topic: "Build a prompt library",
+      details: [
+        "10 tested, reusable prompt templates - your first portfolio artifact",
+        "Organize templates by role: code helper, writing assistant, system reviewer"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering", note: "Building templates", url: "https://www.youtube.com/@engineerprompt" }
+    },
+    csfund: {
+      topic: "DBMS: Full Revision",
+      details: [
+        "Timed mock: 10 DBMS interview questions, no lookup"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "DBMS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Time-Speed-Distance, Time & Work",
+      details: [
+        "Weekly recap and speed verification tests",
+        "Identify and review weak points"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-13", day: "Sun", type: "rest",
     note: "Full mock test — Week 2 (SQL, DSA: linked list/stack/queue/trees/graphs, React basics). GenAI: review your prompt library, refine 3 weakest entries." },
@@ -113,48 +365,185 @@ export const days = [
     dsa: "Heaps & Priority Queue: revision + practice (k-th largest, merge k lists, top-k problems)",
     webdev: "Node.js basics",
     extratech: "AWS: EC2 intro",
-    genai: "PHASE 3 — Embeddings: what they encode, how semantic search actually works",
-    csfund: "OS: Process vs Thread" },
+    genai: {
+      topic: "Embeddings",
+      details: [
+        "What they encode; how semantic search differs from keyword search",
+        "Dimensions, distance metrics (Cosine similarity, L2, dot product)"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Introduction to RAG", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "OS: Process vs Thread",
+      details: [
+        "Memory sharing differences; context switching cost; when to use multithreading",
+        "Multiprocessing vs Multithreading"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS Process Management", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Logical reasoning: puzzles, seating, blood relations",
+      details: [
+        "Blood relations diagrams and practice",
+        "Coded blood relations questions"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Logical Reasoning tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-15", day: "Tue", type: "study", week: 3,
     sql: "Indexing (clustered/non-clustered)",
     dsa: "Graphs: Union-Find & Minimum Spanning Tree — revision + practice",
     webdev: "Express.js setup",
     extratech: "AWS: S3 basics",
-    genai: "Vector databases overview: Pinecone vs FAISS vs Chroma — pick one to use for your project",
-    csfund: "OS: Scheduling algorithms" },
+    genai: {
+      topic: "Vector databases",
+      details: [
+        "Pinecone vs FAISS vs Chroma - pick one to use for your project",
+        "Index types: Flat, HNSW, IVF"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Vector databases", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "OS: Scheduling algorithms",
+      details: [
+        "FCFS, SJF, Round Robin, Priority - trade-offs of each",
+        "Preemptive vs non-preemptive scheduling"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Logical reasoning: puzzles, seating, blood relations",
+      details: [
+        "Seating arrangements (circular and linear)",
+        "Facing inside vs facing outside circular puzzle rules"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Logical Reasoning tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-16", day: "Wed", type: "study", week: 3,
     sql: "Views & stored procedures intro",
     dsa: "Graphs: Dijkstra & shortest-path algorithms — revision + practice",
     webdev: "REST API design principles",
     extratech: "System Design: LLD intro",
-    genai: "Chunking strategies: fixed-size vs semantic chunking, overlap trade-offs",
-    csfund: "OS: Memory management" },
+    genai: {
+      topic: "Chunking strategies",
+      details: [
+        "Fixed-size vs semantic chunking; overlap trade-offs",
+        "Impact of chunk sizes on retrieval relevance and context"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Chunking documents", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "OS: Memory management",
+      details: [
+        "Paging vs segmentation; virtual memory; page faults",
+        "Page replacement policies (FIFO, LRU, Optimal)"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS Memory Management", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Logical reasoning: puzzles, seating, blood relations",
+      details: [
+        "Logical puzzles and riddle sets",
+        "Grid based categorization puzzles"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Logical Reasoning tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-17", day: "Thu", type: "study", week: 3,
     sql: "Real-world query writing",
     dsa: "DP (1D): revision + practice (climbing stairs, house robber, coin change)",
     webdev: "Building REST APIs (CRUD)",
     extratech: "System Design: caching basics",
-    genai: "RAG architecture: retriever + generator pipeline, end-to-end diagram",
-    csfund: "OS: Deadlocks" },
+    genai: {
+      topic: "RAG architecture",
+      details: [
+        "Retriever + generator pipeline, draw the full diagram yourself",
+        "Understanding query reformulation and search parameters"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "RAG Architecture", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "OS: Deadlocks",
+      details: [
+        "4 necessary conditions; prevention vs avoidance vs detection",
+        "Banker's Algorithm for deadlock avoidance"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS Deadlock tutorials", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Logical reasoning: puzzles, seating, blood relations",
+      details: [
+        "Practice pattern recognition speed",
+        "Directions and distance logical tests"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Logical Reasoning tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-18", day: "Fri", type: "study", week: 3,
     sql: "Real-world query writing (joins + agg)",
     dsa: "DP (2D / Knapsack): revision + practice (0/1 knapsack, unbounded knapsack, grid DP)",
     webdev: "Connecting frontend to backend API",
     extratech: "CI/CD: GitHub Actions basics",
-    genai: "Hybrid search & re-ranking: combining keyword (BM25) + vector search",
-    csfund: "OS: Paging & segmentation" },
+    genai: {
+      topic: "Hybrid search & re-ranking",
+      details: [
+        "Combining keyword (BM25) + vector search",
+        "Cross-encoders and reciprocal rank fusion (RRF) algorithms"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Hybrid search", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "OS: Paging & segmentation (deep dive)",
+      details: [
+        "Internal vs external fragmentation",
+        "Page table structure, TLB (Translation Lookaside Buffer)"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS memory deep-dive", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Logical reasoning: puzzles, seating, blood relations",
+      details: [
+        "Mixed logical reasoning timed tests",
+        "Focus on 1-minute thresholds per puzzle"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Logical Reasoning tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-19", day: "Sat", type: "study", week: 3,
     sql: "Timed SQL mock test",
     dsa: "DP (LCS, LIS, string DP): revision + practice",
     webdev: "Auth basics (JWT) in API",
     extratech: "Weekly recap: cloud + system design LLD",
-    genai: "RAG evaluation basics: faithfulness, relevance, and reducing hallucination",
-    csfund: "OS revision + mock questions" },
+    genai: {
+      topic: "RAG evaluation",
+      details: [
+        "Faithfulness, relevance, and reducing hallucination",
+        "Using Ragas framework metrics conceptual understanding"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Evaluating RAG pipelines", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "OS: Full Revision",
+      details: [
+        "Timed mock: 10 OS interview questions, no lookup"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS playlist", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Logical reasoning: puzzles, seating, blood relations",
+      details: [
+        "Recap Week 3 Logical Reasoning",
+        "Review tricky blood relation puzzles"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Logical Reasoning tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-20", day: "Sun", type: "rest",
     note: "Full mock test — Week 3 (SQL, DSA: heaps/graphs advanced/DP, Node/Express/REST APIs). GenAI: if Phase 2/3 feels shaky, use today to patch gaps before starting the build week." },
@@ -164,48 +553,186 @@ export const days = [
     dsa: "Greedy algorithms: revision + practice (interval scheduling, activity selection)",
     webdev: "MERN: connect MongoDB",
     extratech: "System Design: HLD basics",
-    genai: "PHASE 4 — Build: choose your stack (LangChain or LlamaIndex + a free LLM API + Chroma/FAISS), set up project skeleton",
-    csfund: "CN: OSI model" },
+    genai: {
+      topic: "Project setup",
+      details: [
+        "Choose stack (LangChain/LlamaIndex + free LLM API + Chroma/FAISS)",
+        "Set up python virtual env, import API keys and load skeletons"
+      ],
+      resource: { platform: "Official Docs", channel: "LangChain & LlamaIndex", note: "LangChain docs: https://python.langchain.com/docs/introduction/ | LlamaIndex docs: https://docs.llamaindex.ai/", url: "https://python.langchain.com/docs/introduction/" }
+    },
+    csfund: {
+      topic: "CN: OSI model",
+      details: [
+        "All 7 layers, one real-world example of what happens at each layer",
+        "Difference between presentation/session/application boundary layers"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN OSI layers", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Data Interpretation + mocks",
+      details: [
+        "Bar graphs, pie charts, and data tables",
+        "Calculating percentage shifts from charts"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude and DI tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-22", day: "Tue", type: "study", week: 4,
     sql: "Timed SQL problems (mixed)",
     dsa: "Backtracking (advanced): N-Queens, permutations, subsets, Sudoku solver — practice",
     webdev: "MERN: full CRUD app",
     extratech: "System Design: load balancing",
-    genai: "Build document ingestion + chunking + embedding pipeline",
-    csfund: "CN: TCP/IP model" },
+    genai: {
+      topic: "Ingestion pipeline",
+      details: [
+        "Document loading, chunking, embedding",
+        "Setup automated local PDF parsing script"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "RAG Tutorial video", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "CN: TCP/IP model",
+      details: [
+        "TCP vs UDP - when each is used; 3-way handshake",
+        "Header fields and connection termination states"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN TCP/IP layers", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Data Interpretation + mocks",
+      details: [
+        "Data interpretation speed drills",
+        "Averaging data series from multiple columns"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude and DI tutorials", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-23", day: "Wed", type: "study", week: 4,
     sql: "SQL interview questions practice",
     dsa: "Company-wise practice set 1 (top Amazon/Google problems, timed)",
     webdev: "Deploy backend (Render/Railway)",
     extratech: "Finish + test RAG project",
-    genai: "Build retrieval logic + connect retrieved context to the LLM for generation",
-    csfund: "CN: HTTP/HTTPS, status codes" },
+    genai: {
+      topic: "Retrieval + generation",
+      details: [
+        "Connect retrieved context to the LLM",
+        "Prompt template overrides to restrict hallucination limits"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "RAG Tutorial video", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "CN: HTTP/HTTPS, status codes",
+      details: [
+        "Common status codes (200/301/404/500) and what causes each",
+        "TLS handshake basics (keys negotiation)"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN web protocols", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Data Interpretation + mocks",
+      details: [
+        "Full timed mock aptitude: 20 questions, 20-min timer",
+        "Identify topic gaps in timed tests"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Mock tests", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-24", day: "Thu", type: "study", week: 4,
     sql: "SQL revision + flashcards",
     dsa: "Company-wise practice set 2 (top Microsoft/Flipkart problems, timed)",
     webdev: "Deploy frontend (Vercel/Netlify)",
     extratech: "Advanced prompting: structured outputs",
-    genai: "Add a minimal UI (Streamlit or a simple web page) so the RAG demo is actually clickable",
-    csfund: "CN: DNS, load balancing basics" },
+    genai: {
+      topic: "Minimal UI",
+      details: [
+        "Add a minimal UI (Streamlit or a simple web page) so the RAG demo is actually clickable",
+        "Bind text input queries to custom local API routing"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "RAG Tutorial video", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "CN: DNS & load balancing",
+      details: [
+        "How DNS resolution works step by step",
+        "Round-robin vs least-connections load balancing"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN DNS and balancing", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Data Interpretation + mocks",
+      details: [
+        "Full timed mock aptitude test 2",
+        "Benchmark percentile scores"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Mock tests", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-25", day: "Fri", type: "study", week: 4,
     sql: "Mock SQL interview round",
     dsa: "Weak-topic focused revision — pick your 2-3 shakiest topics from the month and drill them",
     webdev: "Polish full-stack project (README, demo)",
     extratech: "System Design: HLD basics recap",
-    genai: "Test & debug: handle no-answer cases, check for hallucination, tune chunk size/top-k",
-    csfund: "System Design: HLD basics" },
+    genai: {
+      topic: "Test & debug",
+      details: [
+        "Test & debug: handle no-answer cases, check for hallucination, tune chunk size/top-k",
+        "Compare retrieval relevancy with different chunk splits"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Testing RAG pipelines", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "HLD basics",
+      details: [
+        "Horizontal vs vertical scaling, caching, load balancers, CAP theorem — enough to survive a fresher-level HLD question",
+        "Identify single point of failures (SPOF)"
+      ],
+      resource: { platform: "YouTube", channel: "Gaurav Sen", note: "System design basics for freshers", url: "https://www.youtube.com/c/GauravSensei/videos" }
+    },
+    aptitude: {
+      topic: "Data Interpretation + mocks",
+      details: [
+        "Aptitude weak-area targeted review",
+        "Practice 10 compound interest questions"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Aptitude reviews", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-26", day: "Sat", type: "study", week: 4,
     sql: "Mock SQL interview round",
     dsa: "Full-syllabus timed mock (2 hrs, mixed difficulty, simulate real coding round)",
     webdev: "Project walkthrough practice",
     extratech: "Polish RAG project for resume",
-    genai: "Polish project, write a clear README, prepare a 2-minute spoken walkthrough of the architecture",
-    csfund: "Mock technical interview (mixed)" },
+    genai: {
+      topic: "Polish & document",
+      details: [
+        "Polish project, write a clear README, prepare a 2-minute spoken walkthrough of the architecture",
+        "Refine GitHub repository files"
+      ],
+      resource: { platform: "YouTube", channel: "RAG Tutorial 2026", note: "Packaging RAG apps", url: "https://www.youtube.com/watch?v=vAK0iqA6-QI" }
+    },
+    csfund: {
+      topic: "Mock technical interview (mixed)",
+      details: [
+        "Mock interview questions on all subjects",
+        "Practicing speed and communication confidence"
+      ],
+      resource: { platform: "YouTube", channel: "Gate Smashers", note: "CS mock tests", url: "https://www.youtube.com/gatesmashers" }
+    },
+    aptitude: {
+      topic: "Data Interpretation + mocks",
+      details: [
+        "Final checklist for placement tests",
+        "Formula cheatsheet reviews"
+      ],
+      resource: { platform: "YouTube", channel: "CareerRide", note: "Mock tests", url: "https://www.youtube.com/channel/UCjDHKp8AGNucJmEBMCk0NGg" }
+    }
+  },
 
   { date: "2026-09-27", day: "Sun", type: "rest",
     note: "Full mock test — Week 4 (SQL, DSA greedy/backtracking/company sets, MERN deployment). GenAI: run through your RAG project demo end-to-end once, unscripted." },
