@@ -359,6 +359,11 @@ export default function App() {
   const [expandedQAs, setExpandedQAs] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({ oops: true, about: true });
   const [expandedRows, setExpandedRows] = useState({});
+
+  // CS Fundamentals & Accenture Prep states (v11)
+  const [isCsFundPrepOpen, setIsCsFundPrepOpen] = useState(true);
+  const [isAccenturePrepOpen, setIsAccenturePrepOpen] = useState(false);
+  const [quickFireStates, setQuickFireStates] = useState(() => getCachedValue("quickFireStates", {}));
   
   // Theme state
   const [darkMode, setDarkMode] = useState(() => {
@@ -427,6 +432,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("interviewPracticed", JSON.stringify(interviewPracticed));
   }, [interviewPracticed]);
+
+  useEffect(() => {
+    localStorage.setItem("quickFireStates", JSON.stringify(quickFireStates));
+  }, [quickFireStates]);
 
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
@@ -892,6 +901,7 @@ export default function App() {
       solvedProblems,
       interviewPracticed,
       interviewDrafts,
+      quickFireStates,
       theme: darkMode ? "dark" : "light"
     }, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
@@ -977,6 +987,19 @@ export default function App() {
       ...prev,
       [id]: !prev[id]
     }));
+  };
+
+  const toggleQuickFire = (key, option) => {
+    setQuickFireStates((prev) => {
+      const current = prev[key];
+      const next = { ...prev };
+      if (current === option) {
+        delete next[key];
+      } else {
+        next[key] = option;
+      }
+      return next;
+    });
   };
 
   const getProblemLink = (prob) => {
@@ -1891,6 +1914,160 @@ export default function App() {
                   )}
 
                   {/* PRACTICE PROBLEMS COLLAPSIBLE PANEL */}
+
+                  {/* CS FUNDAMENTALS & COMPANY-SPECIFIC PREP PANEL (v11) */}
+                  {currentDayData.type === "study" && currentDayData.csfund && (
+                    <section 
+                      className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md transition-all duration-300"
+                    >
+                      <button
+                        onClick={() => setIsCsFundPrepOpen(!isCsFundPrepOpen)}
+                        className="w-full flex items-center justify-between font-bold text-slate-900 dark:text-white"
+                      >
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="w-5 h-5 text-emerald-500 dark:text-emerald-450" />
+                          <span className="text-sm uppercase tracking-wider">CS Fundamentals & Company-Specific Prep</span>
+                        </div>
+                        <ChevronDown className={`w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isCsFundPrepOpen ? "rotate-180" : ""}`} />
+                      </button>
+
+                      {isCsFundPrepOpen && (
+                        <div className="flex flex-col gap-4 mt-5">
+                          {/* Sub-section A — Quick-Fire CS Fundamentals */}
+                          <div className="flex flex-col gap-3">
+                            <div className="text-[10px] uppercase font-black tracking-wider text-slate-400 dark:text-slate-500 select-none">
+                              Sub-section A — Quick-Fire CS Fundamentals
+                            </div>
+                            
+                            {(() => {
+                              const csFundData = currentDayData.csfund;
+                              const mostAskedQuestions = csFundData && typeof csFundData === "object" && csFundData.details
+                                ? csFundData.details.filter(d => d.includes("MOST ASKED:"))
+                                : [];
+                                
+                              if (mostAskedQuestions.length === 0) {
+                                return (
+                                  <div className="text-xs text-slate-500 dark:text-slate-400 font-semibold italic">
+                                    No quick-fire questions for today's topic.
+                                  </div>
+                                );
+                              }
+                              
+                              return (
+                                <div className="flex flex-col gap-2.5">
+                                  {mostAskedQuestions.map((qText, qIdx) => {
+                                    const qKey = `${selectedDate}_q_${qIdx}`;
+                                    const status = quickFireStates[qKey] || null;
+                                    
+                                    return (
+                                      <div key={qIdx} className="p-3.5 bg-slate-55 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
+                                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 leading-relaxed">
+                                          {qText.replace("MOST ASKED:", "").replace(/['"]/g, "").trim()}
+                                        </span>
+                                        <div className="flex items-center gap-2 shrink-0">
+                                          <button
+                                            onClick={() => toggleQuickFire(qKey, "confident")}
+                                            className={`text-[9px] font-black uppercase px-2.5 py-1 rounded-md border transition-all ${
+                                              status === "confident"
+                                                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 font-extrabold"
+                                                : "bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-800 hover:border-slate-400"
+                                            }`}
+                                          >
+                                            Confident ✓
+                                          </button>
+                                          <button
+                                            onClick={() => toggleQuickFire(qKey, "revisit")}
+                                            className={`text-[9px] font-black uppercase px-2.5 py-1 rounded-md border transition-all ${
+                                              status === "revisit"
+                                                ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 font-extrabold"
+                                                : "bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-800 hover:border-slate-400"
+                                            }`}
+                                          >
+                                            Revisit ↻
+                                          </button>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              );
+                            })()}
+                          </div>
+
+                          {/* Sub-section B — Accenture Technical Round Prep */}
+                          <div className="border-t border-slate-200 dark:border-slate-800/80 pt-4">
+                            <button
+                              onClick={() => setIsAccenturePrepOpen(!isAccenturePrepOpen)}
+                              className="w-full flex items-center justify-between text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-3 select-none"
+                            >
+                              <div className="flex items-center gap-1.5">
+                                <Terminal className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                                <span>Sub-section B — Accenture Technical Round Prep</span>
+                              </div>
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isAccenturePrepOpen ? "rotate-180" : ""}`} />
+                            </button>
+                            
+                            {isAccenturePrepOpen && (
+                              <div className="flex flex-col gap-4 animate-fadeIn pl-0.5 text-xs text-slate-600 dark:text-slate-300 font-semibold leading-relaxed">
+                                {/* Cognitive Assessment */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400">
+                                    Cognitive Assessment (Aptitude & Logic)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>Verbal Ability:</strong> Reading comprehension, sentence correction.</li>
+                                    <li><strong>Critical Reasoning:</strong> Pseudo-code output prediction — practice reading language-agnostic code loops, conditionals, recursion, and string/array manipulation BY HAND without compiler assistance.</li>
+                                    <li><strong>Abstract Reasoning:</strong> Figure series, pattern completion families.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Technical Assessment */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400">
+                                    Technical Assessment (MCQ-based: ~45 Questions / 45 Minutes)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>OOPs One-Liners:</strong> 4 pillars (abstraction, encapsulation, polymorphism, inheritance), function overloading vs overriding.</li>
+                                    <li><strong>DBMS One-Liners:</strong> Normalization keys (1NF, 2NF, 3NF), candidate/primary keys, ACID properties.</li>
+                                    <li><strong>Networking Fundamentals:</strong> OSI/TCP-IP models, common protocols, IP addressing classes & subnetting.</li>
+                                    <li><strong>Programming Output Prediction:</strong> Line-by-line tracing of dry-run snippets (C/Java/Python).</li>
+                                    <li>💡 <strong>Prep Tip:</strong> Tracing code logic on paper line-by-line is the single highest-leverage skill for this MCQ round.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Coding Round */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400">
+                                    Coding Round (2 Problems / ~45 Minutes)
+                                  </div>
+                                  <ul className="list-disc pl-4 flex flex-col gap-1.5">
+                                    <li><strong>Common Patterns:</strong> String/array reversal, palindrome checking, two-sum, missing number search, anagram check, simple search algorithms, pattern printing.</li>
+                                    <li>💡 <strong>Prep Tip:</strong> Overlaps heavily with practice problems on **Sep 1**, **Sep 2**, and **Sep 4**. Practice those specific days' code templates.</li>
+                                    <li>💡 <strong>Partial Credit Tip:</strong> Accenture compilers grade test cases incrementally. Prioritize delivering a functional brute-force solution over getting stuck finding the absolute optimal code.</li>
+                                  </ul>
+                                </div>
+                                
+                                {/* Communication Assessment */}
+                                <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl flex flex-col gap-2">
+                                  <div className="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400">
+                                    Communication Assessment (AI-Graded Spoken/Written English)
+                                  </div>
+                                  <p className="pl-1">
+                                    Standard automated round checking spoken pronunciation, reading/listening comprehension, and sentence construction. Not a core technical prep round, but review flow templates so there are no surprises on drive day.
+                                  </p>
+                                </div>
+                                
+                                {/* Disclaimer */}
+                                <div className="text-[9px] text-slate-400 dark:text-slate-500 italic mt-1 pl-1">
+                                  * Company patterns can shift between hiring cycles — this reflects recent (2026) campus placement reports, verify specifics closer to your actual drive.
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </section>
+                  )}
                   {((practiceProblemsData[selectedDate] && practiceProblemsData[selectedDate].length > 0) || selectedDate === "2026-09-23" || selectedDate === "2026-09-24") && (
                     <section 
                       className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md transition-all duration-300"

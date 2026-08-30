@@ -381,9 +381,10 @@ export const days = [
     csfund: {
       topic: "OS: Process vs Thread",
       details: [
-        "Memory sharing differences; context switching cost; when to use multithreading",
-        "Multiprocessing vs Multithreading"
-      ],
+      "Process vs Thread — memory sharing differences, context switching cost",
+      "MOST ASKED: 'What happens when you create a new process vs a new thread?'",
+      "Practice: explain with a real example (e.g. a web server handling requests)"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS Process Management", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -412,9 +413,10 @@ export const days = [
     csfund: {
       topic: "OS: Scheduling algorithms",
       details: [
-        "FCFS, SJF, Round Robin, Priority - trade-offs of each",
-        "Preemptive vs non-preemptive scheduling"
-      ],
+      "Scheduling algorithms — FCFS, SJF, Round Robin, Priority",
+      "MOST ASKED: compare Round Robin vs Priority scheduling trade-offs",
+      "Also commonly asked: what is a context switch and why is it expensive"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -443,9 +445,10 @@ export const days = [
     csfund: {
       topic: "OS: Memory management",
       details: [
-        "Paging vs segmentation; virtual memory; page faults",
-        "Page replacement policies (FIFO, LRU, Optimal)"
-      ],
+      "Memory management — paging vs segmentation, virtual memory, page faults",
+      "MOST ASKED: 'What is virtual memory and why do we need it?'",
+      "Also commonly asked: internal vs external fragmentation, with examples"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS Memory Management", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -474,9 +477,10 @@ export const days = [
     csfund: {
       topic: "OS: Deadlocks",
       details: [
-        "4 necessary conditions; prevention vs avoidance vs detection",
-        "Banker's Algorithm for deadlock avoidance"
-      ],
+      "Deadlocks — 4 necessary conditions, prevention vs avoidance vs detection",
+      "MOST ASKED: give a real-world analogy for a deadlock, then map it to the 4 conditions",
+      "Also commonly asked: process synchronization — semaphores vs mutex (add this even though not in original plan — comes up often alongside deadlocks)"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS Deadlock tutorials", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -505,9 +509,9 @@ export const days = [
     csfund: {
       topic: "OS: Paging & segmentation (deep dive)",
       details: [
-        "Internal vs external fragmentation",
-        "Page table structure, TLB (Translation Lookaside Buffer)"
-      ],
+      "Paging & segmentation deep dive — page table structure",
+      "MOST ASKED: 'Difference between paging and segmentation' — a near-guaranteed one-liner question"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS memory deep-dive", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -536,8 +540,9 @@ export const days = [
     csfund: {
       topic: "OS: Full Revision",
       details: [
-        "Timed mock: 10 OS interview questions, no lookup"
-      ],
+      "OS full revision — timed mock, 10 questions, no lookup",
+      "Prioritize re-drilling: process vs thread, deadlock conditions, paging vs segmentation, virtual memory — these four cover the large majority of OS questions actually asked"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "OS playlist", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -569,9 +574,9 @@ export const days = [
     csfund: {
       topic: "CN: OSI model",
       details: [
-        "All 7 layers, one real-world example of what happens at each layer",
-        "Difference between presentation/session/application boundary layers"
-      ],
+      "OSI model — all 7 layers, one real-world example per layer",
+      "MOST ASKED: 'Walk me through what happens when you type a URL and hit enter' — maps directly to OSI/TCP-IP layers, near-guaranteed question"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN OSI layers", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -599,9 +604,10 @@ export const days = [
     csfund: {
       topic: "CN: TCP/IP model",
       details: [
-        "TCP vs UDP - when each is used; 3-way handshake",
-        "Header fields and connection termination states"
-      ],
+      "TCP/IP model — TCP vs UDP, 3-way handshake",
+      "MOST ASKED: 'Difference between TCP and UDP, with a real use case for each'",
+      "Also commonly asked: what is the 3-way handshake, step by step"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN TCP/IP layers", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -629,9 +635,10 @@ export const days = [
     csfund: {
       topic: "CN: HTTP/HTTPS, status codes",
       details: [
-        "Common status codes (200/301/404/500) and what causes each",
-        "TLS handshake basics (keys negotiation)"
-      ],
+      "HTTP/HTTPS, status codes — common codes and what causes each",
+      "MOST ASKED: explain the TLS/SSL handshake at a high level",
+      "Also frequently tested: IP addressing basics — what is a subnet, how IP classes work (add this — comes up often in MCQ-style rounds even though not originally scheduled)"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN web protocols", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
@@ -659,9 +666,10 @@ export const days = [
     csfund: {
       topic: "CN: DNS & load balancing",
       details: [
-        "How DNS resolution works step by step",
-        "Round-robin vs least-connections load balancing"
-      ],
+      "DNS & load balancing — DNS resolution step by step",
+      "MOST ASKED: 'How does DNS resolution work?' — walk through resolver → root → TLD → authoritative server",
+      "Also commonly asked: round-robin vs least-connections load balancing"
+    ],
       resource: { platform: "YouTube", channel: "Gate Smashers", note: "CN DNS and balancing", url: "https://www.youtube.com/gatesmashers" }
     },
     aptitude: {
