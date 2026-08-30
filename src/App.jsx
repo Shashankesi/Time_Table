@@ -41,7 +41,7 @@ import {
 } from "recharts";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { RoundedBox, ContactShadows, OrbitControls, Sparkles } from "@react-three/drei";
-import { timeSlots, days, interviewQuestions, weekThemes } from "./data";
+import { timeSlots, days, interviewQuestions, weekThemes, practiceProblemsData } from "./data";
 
 // WebGL support detector
 const checkWebGLSupport = () => {
@@ -341,6 +341,8 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState(() => getCachedValue("selectedDate", "2026-09-01"));
   const [completions, setCompletions] = useState(() => getCachedValue("completions", {}));
   const [customTopics, setCustomTopics] = useState(() => getCachedValue("customTopics", {}));
+  const [solvedProblems, setSolvedProblems] = useState(() => getCachedValue("solvedProblems", {}));
+  const [isPracticeOpen, setIsPracticeOpen] = useState(true);
   const [subjectFilter, setSubjectFilter] = useState(null); 
   const [filterMode, setFilterMode] = useState("highlight"); 
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
@@ -400,6 +402,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("customTopics", JSON.stringify(customTopics));
   }, [customTopics]);
+
+  useEffect(() => {
+    localStorage.setItem("solvedProblems", JSON.stringify(solvedProblems));
+  }, [solvedProblems]);
 
   useEffect(() => {
     localStorage.setItem("selectedDate", selectedDate);
@@ -563,6 +569,19 @@ export default function App() {
     };
   }, [completions]);
 
+  const totalProblemsSolved = useMemo(() => {
+    let count = 0;
+    Object.keys(solvedProblems).forEach((dateStr) => {
+      const dayCompletions = solvedProblems[dateStr] || {};
+      Object.keys(dayCompletions).forEach((probTitle) => {
+        if (dayCompletions[probTitle] === true) {
+          count += 1;
+        }
+      });
+    });
+    return count;
+  }, [solvedProblems]);
+
   const currentStreak = useMemo(() => {
     let lastActiveIndex = -1;
     for (let i = days.length - 1; i >= 0; i--) {
@@ -708,6 +727,7 @@ export default function App() {
     if (window.confirm("Are you sure you want to reset all progress data? This action cannot be undone.")) {
       setCompletions({});
       setCustomTopics({});
+      setSolvedProblems({});
     }
   };
 
@@ -852,6 +872,7 @@ export default function App() {
     const dataStr = JSON.stringify({
       completions,
       customTopics,
+      solvedProblems,
       theme: darkMode ? "dark" : "light"
     }, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
@@ -890,6 +911,31 @@ export default function App() {
   const tiltSubjectCard = useTilt();
   const tiltWeekCard = useTilt();
   const tiltInterviewCard = useTilt();
+
+  const toggleProblemSolve = (dateStr, title) => {
+    setSolvedProblems((prev) => {
+      const daySolved = prev[dateStr] || {};
+      return {
+        ...prev,
+        [dateStr]: {
+          ...daySolved,
+          [title]: !daySolved[title]
+        }
+      };
+    });
+  };
+
+  const getProblemLink = (prob) => {
+    const slug = prob.title.toLowerCase().trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-");
+    
+    if (prob.platform === "leetcode") {
+      return `https://leetcode.com/problems/${slug}/`;
+    } else {
+      return `https://www.geeksforgeeks.org/problems/${slug}/`;
+    }
+  };
 
   // 3D Card flip helper
   const handleSelectDateWithFlip = (newDate) => {
@@ -1729,6 +1775,119 @@ export default function App() {
 
                     </div>
                   )}
+
+                  {/* PRACTICE PROBLEMS COLLAPSIBLE PANEL */}
+                  {((practiceProblemsData[selectedDate] && practiceProblemsData[selectedDate].length > 0) || selectedDate === "2026-09-23" || selectedDate === "2026-09-24") && (
+                    <section 
+                      className="bg-white/80 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-900 rounded-2xl p-5 md:p-6 shadow-sm backdrop-blur-md transition-all duration-300"
+                    >
+                      <button
+                        onClick={() => setIsPracticeOpen(!isPracticeOpen)}
+                        className="w-full flex items-center justify-between font-bold text-slate-905 dark:text-white"
+                      >
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Award className="w-5 h-5 text-emerald-505 dark:text-emerald-400" />
+                          <span className="text-sm uppercase tracking-wider">Practice Problems</span>
+                          {practiceProblemsData[selectedDate] && (
+                            <span className="text-[10px] bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-855 px-2 py-0.5 rounded-full font-bold text-slate-500 dark:text-slate-400">
+                              {practiceProblemsData[selectedDate].filter(p => solvedProblems[selectedDate]?.[p.title] === true).length}/{practiceProblemsData[selectedDate].length} Solved
+                            </span>
+                          )}
+                        </div>
+                        <ChevronDown className={`w-4 h-4 transform transition-transform ${isPracticeOpen ? "rotate-180" : ""}`} />
+                      </button>
+
+                      {isPracticeOpen && (
+                        <div className="mt-5 pt-4 border-t border-slate-200 dark:border-slate-900/60 flex flex-col gap-3">
+                          {selectedDate === "2026-09-23" || selectedDate === "2026-09-24" ? (
+                            <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/15 border border-indigo-200/80 dark:border-indigo-950/20">
+                              <p className="text-xs font-semibold text-slate-705 dark:text-slate-300 leading-relaxed">
+                                💡 <strong>Company-Wise Prep Focus</strong>: Today is dedicated to targeted company prep. Revisit well-established sets to benchmark your timing:
+                              </p>
+                              <ul className="mt-3 flex flex-col gap-2 text-xs font-bold text-indigo-705 dark:text-indigo-400">
+                                <li>
+                                  <a href="https://neetcode.io/practice" target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1.5">
+                                    🚀 NeetCode 150 Practice Roadmap
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="https://leetcode.com/discuss/general-discussion/460599/blind-75-leetcode-questions-a-technical-interview-preparation-map" target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1.5">
+                                    🚀 Blind 75 Curated Classic Set
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="https://www.geeksforgeeks.org/company-wise-coding-practice-for-product-based-companies/" target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1.5">
+                                    🚀 GFG Company-Wise Practice Index
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          ) : (
+                            practiceProblemsData[selectedDate].map((prob, idx) => {
+                              const isSolved = !!(solvedProblems[selectedDate]?.[prob.title]);
+                              
+                              let diffColor = "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-450 border-emerald-200/50 dark:border-emerald-950/10";
+                              if (prob.difficulty === "Medium") {
+                                diffColor = "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-455 border-amber-200/50 dark:border-amber-950/10";
+                              } else if (prob.difficulty === "Hard") {
+                                diffColor = "bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-455 border-rose-200/50 dark:border-rose-950/10";
+                              }
+
+                              const link = getProblemLink(prob);
+
+                              return (
+                                <div 
+                                  key={idx}
+                                  className={`p-3.5 rounded-xl border flex items-center justify-between gap-4 transition-all ${
+                                    isSolved 
+                                      ? "bg-emerald-50/10 dark:bg-emerald-950/5 border-emerald-250/20 dark:border-emerald-950/10 opacity-60" 
+                                      : "bg-white dark:bg-slate-950/30 border-slate-200 dark:border-slate-900 hover:border-slate-350 dark:hover:border-slate-800"
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-3 flex-wrap">
+                                    {/* Difficulty Badge */}
+                                    <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md border shrink-0 ${diffColor}`}>
+                                      {prob.difficulty}
+                                    </span>
+                                    {/* Title & Number */}
+                                    <span className={`text-xs font-semibold leading-snug ${isSolved ? "line-through text-slate-450 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
+                                      {prob.id ? `${prob.id} — ` : ""}{prob.title}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center gap-3 shrink-0">
+                                    {/* Link Icon */}
+                                    <a 
+                                      href={link} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="p-1 text-slate-405 hover:text-emerald-500 hover:scale-108 transition-all"
+                                      title={`Open ${prob.title} on ${prob.platform.toUpperCase()}`}
+                                    >
+                                      <Globe className="w-3.5 h-3.5" />
+                                    </a>
+                                    
+                                    {/* Solve checkbox */}
+                                    <button
+                                      onClick={() => toggleProblemSolve(selectedDate, prob.title)}
+                                      className={`w-6.5 h-6.5 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300 ${
+                                        isSolved
+                                          ? "bg-emerald-505 border-emerald-555 text-slate-950 scale-108 shadow-sm"
+                                          : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-955 text-transparent scale-100"
+                                      }`}
+                                    >
+                                      <Check className={`w-3.5 h-3.5 stroke-[3.5] transition-all duration-300 ${isSolved ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          )}
+                        </div>
+                      )}
+                    </section>
+                  )}
+
                 </div>
               </div>
 
@@ -1832,6 +1991,13 @@ export default function App() {
                           </div>
                         );
                       })}
+                      {/* Problems Solved count */}
+                      <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-900/60 flex items-center justify-between text-[10px] font-extrabold uppercase">
+                        <span className="text-slate-500 dark:text-slate-450 font-bold">Problems Solved</span>
+                        <span className="text-emerald-605 dark:text-emerald-400 flex items-center gap-1">
+                          🔥 {totalProblemsSolved} Solved
+                        </span>
+                      </div>
                     </div>
                   </section>
                 ) : (
@@ -1881,6 +2047,13 @@ export default function App() {
                           </div>
                         );
                       })}
+                      {/* Problems Solved count */}
+                      <div className="mt-2 pt-3.5 border-t border-slate-200 dark:border-slate-900/60 flex items-center justify-between text-[10px] font-extrabold uppercase">
+                        <span className="text-slate-500 dark:text-slate-450 font-bold">Problems Solved</span>
+                        <span className="text-emerald-600 dark:text-emerald-450 flex items-center gap-1">
+                          🔥 {totalProblemsSolved} Solved
+                        </span>
+                      </div>
                     </div>
                   </section>
                 )}
