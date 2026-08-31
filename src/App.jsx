@@ -1310,15 +1310,17 @@ export default function App() {
               {/* Branding and streak */}
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+                  <span className="p-2.5 rounded-xl bg-gradient-to-tr from-emerald-500/15 to-teal-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 dark:border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)] hover:rotate-6 transition-transform duration-300 shrink-0">
                     <Calendar className="w-5 h-5" />
                   </span>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">September Prep Tracker</h1>
+                      <h1 className="text-2xl font-black tracking-tight bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-500 dark:from-emerald-450 dark:via-teal-400 dark:to-indigo-400 text-transparent bg-clip-text">
+                        September Prep Tracker
+                      </h1>
                       
                       {currentStreak > 0 && (
-                        <div className="flex items-center gap-1 bg-orange-500/10 text-orange-650 dark:text-orange-400 border border-orange-500/25 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-bounce">
+                        <div className="flex items-center gap-1 bg-orange-500/10 text-orange-650 dark:text-orange-400 border border-orange-500/25 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-bounce shadow-sm">
                           🔥 {currentStreak} Day Streak
                         </div>
                       )}
@@ -1343,7 +1345,7 @@ export default function App() {
               </div>
 
               {/* Header metrics, theme togglers, notification permit trigger */}
-              <div className="flex items-center gap-4 sm:gap-6 bg-slate-100/60 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-900 p-4 rounded-2xl md:min-w-[520px]">
+              <div className="flex items-center gap-4 sm:gap-6 bg-white/40 dark:bg-slate-950/20 backdrop-blur-md border border-slate-200/80 dark:border-slate-900/50 p-4 rounded-2xl md:min-w-[520px] shadow-[0_8px_30px_rgba(0,0,0,0.02)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all">
                 
                 {/* Search Quick Jump trigger */}
                 <button 
@@ -1909,7 +1911,7 @@ export default function App() {
                       return (
                         <div 
                           key={index} 
-                          className={`relative group bg-white/70 dark:bg-slate-900/30 border rounded-2xl p-4 flex flex-col gap-4 transition-all duration-300 ${
+                          className={`relative group bg-white/70 dark:bg-slate-900/30 border rounded-2xl p-4.5 flex flex-col gap-4.5 transition-all duration-300 ${
                             isBreak 
                               ? "bg-slate-100/50 dark:bg-slate-950/20 text-slate-500 dark:text-slate-500 border-slate-200/80 dark:border-slate-900/50 border-dashed" 
                               : isChecked 
@@ -1928,16 +1930,16 @@ export default function App() {
                           {/* Accent left border */}
                           {!isBreak && (
                             <div 
-                              className="absolute left-0 top-3.5 bottom-3.5 w-1 rounded-r-md transition-colors duration-300"
+                              className="absolute left-0 top-4 bottom-4 w-1.5 rounded-r-md transition-colors duration-300"
                               style={{ backgroundColor: activeColor }}
                             />
                           )}
 
-                          {/* Row details flex */}
-                          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 w-full">
-                            {/* Time & Badges */}
-                            <div className="flex items-center justify-between md:justify-start gap-4 pl-2 shrink-0">
-                              <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-300 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-600" : ""}`}>
+                          {/* Row 1: Header Row */}
+                          <div className="flex items-center justify-between gap-4 w-full pl-2.5">
+                            {/* Left: Time & Badges */}
+                            <div className="flex items-center gap-4 shrink-0">
+                              <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-650 dark:text-slate-300 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-650" : ""}`}>
                                 {slot.time}
                               </span>
 
@@ -1966,169 +1968,170 @@ export default function App() {
                               )}
                             </div>
 
-                            {/* Topic Details (PART A — Inline Editing) */}
-                            <div className="flex-1 pl-2 md:pl-0 flex items-start justify-between gap-2.5">
-                              <div className="flex-1 flex flex-col gap-4">
-                                {isEditingThisSlot ? (
-                                  <div className="flex gap-2">
-                                    <input
-                                      type="text"
-                                      value={editVal}
-                                      onChange={(e) => setEditVal(e.target.value)}
-                                      onKeyDown={(e) => {
-                                        if (e.key === "Enter") saveCustomTopic(slot.subject);
-                                        if (e.key === "Escape") setEditingSlotIndex(null);
-                                      }}
-                                      className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
-                                      autoFocus
-                                    />
-                                    <button 
-                                      onClick={() => saveCustomTopic(slot.subject)}
-                                      className="px-3.5 py-1.5 text-xs bg-emerald-505 hover:bg-emerald-500 text-slate-950 font-extrabold rounded-xl border border-emerald-500 transition-all"
-                                    >
-                                      Save
-                                    </button>
-                                    <button 
-                                      onClick={() => setEditingSlotIndex(null)}
-                                      className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
-                                    >
-                                      Cancel
-                                    </button>
-                                  </div>
-                                ) : isBreak ? (
-                                  <p className="text-slate-500 dark:text-slate-500 italic text-[11px]">
-                                    {focusTopicText}
-                                  </p>
-                                ) : (
-                                  <div className="flex flex-col gap-3 w-full">
-                                    {displayTopics.map((item, itemIdx) => {
-                                      const isItemCurrent = item.sourceDate === selectedDate;
-                                      return (
-                                        <div 
-                                          key={itemIdx} 
-                                          className={`flex flex-col gap-2.5 w-full p-3.5 rounded-xl border ${
-                                            isItemCurrent 
-                                              ? "bg-slate-50/40 dark:bg-slate-900/10 border-slate-200/50 dark:border-slate-800/40" 
-                                              : "bg-amber-50/15 dark:bg-amber-950/5 border-amber-200/20 dark:border-amber-950/10"
-                                          }`}
-                                        >
-                                          <div className="flex items-center gap-2.5 flex-wrap">
-                                            {!isItemCurrent ? (
-                                              <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0 select-none shadow-sm dark:shadow-none">
-                                                Deferred from {item.sourceDate.split("-")[2]} Sep
-                                              </span>
-                                            ) : (
-                                              <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shrink-0 select-none shadow-sm dark:shadow-none">
-                                                Today's Topic
-                                              </span>
-                                            )}
-                                            <p className={`text-sm leading-relaxed flex-1 ${
-                                              isChecked 
-                                                ? "line-through text-slate-400 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
-                                                : "text-slate-800 dark:text-slate-200 font-semibold"
-                                            }`}>
-                                              {item.topic}
-                                            </p>
-                                          </div>
-                                          
-                                          {item.details && expandedRows[index] && (
-                                            <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-350 flex flex-col gap-2 font-medium leading-relaxed mt-1">
-                                              {item.details.map((bullet, bIdx) => (
-                                                <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
-                                              ))}
-                                            </ul>
-                                          )}
-                                          
-                                          {item.resource && expandedRows[index] && (
-                                            <div className="pt-2 border-t border-slate-100/50 dark:border-slate-800/40 flex flex-wrap items-center gap-2 mt-1">
-                                              <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">
-                                                Reference Resource:
-                                              </span>
-                                              <a
-                                                href={item.resource.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
-                                                title={item.resource.note}
-                                              >
-                                                <span className="bg-red-500/10 text-red-500 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
-                                                  {item.resource.platform}
-                                                </span>
-                                                <span>{item.resource.channel}</span>
-                                                <span className="text-slate-400 dark:text-slate-500 font-bold">({item.resource.note})</span>
-                                              </a>
-                                            </div>
-                                          )}
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                )}
-                              </div>
-                              
-                              {/* Edit & Expand Actions */}
-                              {!isEditingThisSlot && !isBreak && (
-                                <div className="flex items-center gap-1.5 shrink-0 pl-2 pt-1.5">
-                                  {hasDetails && (
+                            {/* Right: Actions Container */}
+                            {!isBreak && (
+                              <div className="flex items-center gap-3 shrink-0">
+                                {/* Edit & Expand Actions */}
+                                {!isEditingThisSlot && (
+                                  <div className="flex items-center gap-1.5">
+                                    {hasDetails && (
+                                      <button
+                                        onClick={() => toggleRowExpand(index)}
+                                        className="p-1.5 text-slate-455 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-colors shrink-0"
+                                        title="Toggle study details"
+                                      >
+                                        <ChevronDown className={`w-4 h-4 transform transition-transform duration-355 ${expandedRows[index] ? "rotate-180" : ""}`} />
+                                      </button>
+                                    )}
                                     <button
-                                      onClick={() => toggleRowExpand(index)}
-                                      className="p-1 text-slate-400 hover:text-emerald-500 transition-colors shrink-0"
-                                      title="Toggle study details"
+                                      onClick={() => startEditing(index, focusTopicText)}
+                                      className="p-1.5 text-slate-455 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 opacity-0 group-hover:opacity-100 transition-all rounded-lg shrink-0"
+                                      title="Edit custom topic"
                                     >
-                                      <ChevronDown className={`w-4 h-4 transform transition-transform duration-355 ${expandedRows[index] ? "rotate-180" : ""}`} />
+                                      <Edit2 className="w-3.5 h-3.5" />
                                     </button>
-                                  )}
-                                  <button
-                                    onClick={() => startEditing(index, focusTopicText)}
-                                    className="p-1.5 text-slate-400 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
-                                    title="Edit custom topic"
-                                  >
-                                    <Edit2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Action Checkbox & Defer Button */}
-                            {!isBreak && completionKey && (
-                              <div className="flex items-center justify-end md:justify-center pr-1 shrink-0 pl-2 md:pl-0 gap-2 pt-1.5">
-                                {!isChecked && getNextStudyDate(selectedDate) && (
-                                  <button
-                                    onClick={() => deferSlotToNextDay(selectedDate, slot.subject)}
-                                    className="w-7 h-7 rounded-lg border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-all shadow-sm"
-                                    title="Move uncompleted topic to next day"
-                                  >
-                                    <ArrowRight className="w-3.5 h-3.5" />
-                                  </button>
+                                  </div>
                                 )}
-                                <button
-                                  onClick={() => handleCheckboxClick(selectedDate, completionKey, slot.time, slot.label, isChecked)}
-                                  className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
-                                    isChecked
-                                      ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
-                                      : !isChecked && isSlotFuture(selectedDate, slot.time)
-                                      ? "border-slate-200/80 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-600 scale-100 cursor-not-allowed hover:bg-rose-500/5 dark:hover:bg-rose-500/5 hover:border-rose-500/30"
-                                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent hover:border-slate-400 dark:hover:border-slate-500 scale-100 shadow-sm"
-                                  }`}
-                                  title={
-                                    isChecked 
-                                      ? "Mark as incomplete" 
-                                      : !isChecked && isSlotFuture(selectedDate, slot.time)
-                                      ? `Locked until ${parseSlotEndTime(selectedDate, slot.time)?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-                                      : "Mark as completed"
-                                  }
-                                >
-                                  {isChecked ? (
-                                    <Check className="w-4 h-4 stroke-[3.5] scale-100 rotate-0 transition-all duration-300" />
-                                  ) : !isChecked && isSlotFuture(selectedDate, slot.time) ? (
-                                    <Lock className="w-3 h-3 text-slate-400 dark:text-slate-650" />
-                                  ) : (
-                                    <Check className="w-4 h-4 stroke-[3.5] scale-0 rotate-12 transition-all duration-300 text-transparent" />
-                                  )}
-                                </button>
+
+                                {/* Checkbox & Defer Buttons */}
+                                {completionKey && (
+                                  <div className="flex items-center gap-2">
+                                    {!isChecked && getNextStudyDate(selectedDate) && (
+                                      <button
+                                        onClick={() => deferSlotToNextDay(selectedDate, slot.subject)}
+                                        className="w-7 h-7 rounded-lg border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-all shadow-sm"
+                                        title="Move uncompleted topic to next day"
+                                      >
+                                        <ArrowRight className="w-3.5 h-3.5" />
+                                      </button>
+                                    )}
+                                    <button
+                                      onClick={() => handleCheckboxClick(selectedDate, completionKey, slot.time, slot.label, isChecked)}
+                                      className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
+                                        isChecked
+                                          ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
+                                          : !isChecked && isSlotFuture(selectedDate, slot.time)
+                                          ? "border-slate-200/80 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-600 scale-100 cursor-not-allowed hover:bg-rose-500/5 dark:hover:bg-rose-500/5 hover:border-rose-500/30"
+                                          : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent hover:border-slate-400 dark:hover:border-slate-500 scale-100 shadow-sm"
+                                      }`}
+                                      title={
+                                        isChecked 
+                                          ? "Mark as incomplete" 
+                                          : !isChecked && isSlotFuture(selectedDate, slot.time)
+                                          ? `Locked until ${parseSlotEndTime(selectedDate, slot.time)?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                                          : "Mark as completed"
+                                      }
+                                    >
+                                      {isChecked ? (
+                                        <Check className="w-4 h-4 stroke-[3.5] scale-100 rotate-0 transition-all duration-300" />
+                                      ) : !isChecked && isSlotFuture(selectedDate, slot.time) ? (
+                                        <Lock className="w-3 h-3 text-slate-400 dark:text-slate-650" />
+                                      ) : (
+                                        <Check className="w-4 h-4 stroke-[3.5] scale-0 rotate-12 transition-all duration-300 text-transparent" />
+                                      )}
+                                    </button>
+                                  </div>
+                                )}
                               </div>
                             )}
                           </div>
+
+                          {/* Row 2: Details Row (Full Width!) */}
+                          {(!isBreak && (isEditingThisSlot || displayTopics.length > 0)) && (
+                            <div className="w-full border-t border-slate-100 dark:border-slate-900/60 pt-4 pl-2.5 pr-2.5 animate-fadeIn">
+                              {isEditingThisSlot ? (
+                                <div className="flex gap-2 w-full max-w-2xl">
+                                  <input
+                                    type="text"
+                                    value={editVal}
+                                    onChange={(e) => setEditVal(e.target.value)}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") saveCustomTopic(slot.subject);
+                                      if (e.key === "Escape") setEditingSlotIndex(null);
+                                    }}
+                                    className="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
+                                    autoFocus
+                                  />
+                                  <button 
+                                    onClick={() => saveCustomTopic(slot.subject)}
+                                    className="px-4 py-2 text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-955 font-extrabold rounded-xl border border-emerald-500 transition-all shadow-sm"
+                                  >
+                                    Save
+                                  </button>
+                                  <button 
+                                    onClick={() => setEditingSlotIndex(null)}
+                                    className="px-4 py-2 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col gap-3.5 w-full">
+                                  {displayTopics.map((item, itemIdx) => {
+                                    const isItemCurrent = item.sourceDate === selectedDate;
+                                    return (
+                                      <div 
+                                        key={itemIdx} 
+                                        className={`flex flex-col gap-2.5 w-full p-4.5 rounded-2xl border ${
+                                          isItemCurrent 
+                                            ? "bg-slate-50/50 dark:bg-slate-900/10 border-slate-200/50 dark:border-slate-900/40" 
+                                            : "bg-amber-50/15 dark:bg-amber-950/5 border-amber-200/20 dark:border-amber-950/10"
+                                        }`}
+                                      >
+                                        <div className="flex items-center gap-2.5 flex-wrap">
+                                          {!isItemCurrent ? (
+                                            <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0 select-none shadow-sm dark:shadow-none">
+                                              Deferred from {item.sourceDate.split("-")[2]} Sep
+                                            </span>
+                                          ) : (
+                                            <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-450 border border-slate-200 dark:border-slate-700 shrink-0 select-none shadow-sm dark:shadow-none">
+                                              Today's Topic
+                                              </span>
+                                          )}
+                                          <p className={`text-sm leading-relaxed flex-1 ${
+                                            isChecked 
+                                              ? "line-through text-slate-400 dark:text-slate-500 decoration-slate-450 dark:decoration-slate-600 font-medium" 
+                                              : "text-slate-800 dark:text-slate-200 font-bold"
+                                          }`}>
+                                            {item.topic}
+                                          </p>
+                                        </div>
+                                        
+                                        {item.details && expandedRows[index] && (
+                                          <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-350 flex flex-col gap-2 font-medium leading-relaxed mt-1">
+                                            {item.details.map((bullet, bIdx) => (
+                                              <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
+                                            ))}
+                                          </ul>
+                                        )}
+                                        
+                                        {item.resource && expandedRows[index] && (
+                                          <div className="pt-2.5 border-t border-slate-100/50 dark:border-slate-800/40 flex flex-wrap items-center gap-2 mt-1">
+                                            <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">
+                                              Reference Resource:
+                                            </span>
+                                            <a
+                                              href={item.resource.url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
+                                              title={item.resource.note}
+                                            >
+                                              <span className="bg-red-500/10 text-red-500 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
+                                                {item.resource.platform}
+                                              </span>
+                                              <span>{item.resource.channel}</span>
+                                              <span className="text-slate-450 dark:text-slate-500 font-bold">({item.resource.note})</span>
+                                            </a>
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       );
                     })
