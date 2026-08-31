@@ -9,6 +9,7 @@ import {
   Filter, 
   ChevronDown,
   ArrowRight,
+  Lock,
   User,
   Database,
   Globe,
@@ -348,6 +349,19 @@ export default function App() {
   const [subjectFilter, setSubjectFilter] = useState(null); 
   const [filterMode, setFilterMode] = useState("highlight"); 
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
+  
+  // Real-time clock and lock verification states
+  const [currentTime, setCurrentTime] = useState(() => new Date());
+  const [earlyCompleteWarning, setEarlyCompleteWarning] = useState(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentTimeStr = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   const [expandedInterviewSection, setExpandedInterviewSection] = useState("technical");
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -892,6 +906,68 @@ export default function App() {
     }
   };
 
+  const parseSlotEndTime = (dateStr, timeRangeStr) => {
+    try {
+      const cleanRange = timeRangeStr.replace("–", "-").trim();
+      const parts = cleanRange.split("-");
+      if (parts.length < 2) return null;
+      
+      const endPartWithPeriod = parts[1].trim();
+      
+      const ampmMatch = endPartWithPeriod.match(/(AM|PM)/i);
+      if (!ampmMatch) return null;
+      const ampm = ampmMatch[0].toUpperCase();
+      
+      const timeOnly = endPartWithPeriod.replace(/(AM|PM)/i, "").trim();
+      const timeParts = timeOnly.split(":");
+      if (timeParts.length < 2) return null;
+      
+      let hours = parseInt(timeParts[0], 10);
+      const minutes = parseInt(timeParts[1], 10);
+      
+      if (ampm === "PM" && hours !== 12) {
+        hours += 12;
+      }
+      if (ampm === "AM" && hours === 12) {
+        hours = 0;
+      }
+      
+      const dateParts = dateStr.split("-");
+      const year = parseInt(dateParts[0], 10);
+      const month = parseInt(dateParts[1], 10) - 1;
+      const day = parseInt(dateParts[2], 10);
+      
+      return new Date(year, month, day, hours, minutes, 0, 0);
+    } catch (e) {
+      console.error("Error parsing slot end time:", e);
+      return null;
+    }
+  };
+
+  const isSlotFuture = (dateStr, timeRangeStr) => {
+    const endTime = parseSlotEndTime(dateStr, timeRangeStr);
+    if (!endTime) return false;
+    return new Date() < endTime;
+  };
+
+  const handleCheckboxClick = (dateStr, completionKey, slotTime, slotLabel, isChecked) => {
+    if (!isChecked && isSlotFuture(dateStr, slotTime)) {
+      const endTime = parseSlotEndTime(dateStr, slotTime);
+      const timeStr = endTime ? endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+      setEarlyCompleteWarning(
+        `This task (${slotLabel}) is scheduled until ${timeStr}. You can only mark it as completed after this time.`
+      );
+      setTimeout(() => {
+        setEarlyCompleteWarning(prev => {
+          if (prev && prev.includes(slotLabel)) return null;
+          return prev;
+        });
+      }, 5000);
+      return;
+    }
+    toggleCompletion(dateStr, completionKey);
+  };
+
   const handleCopyQuestion = (text, index) => {
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
@@ -1251,8 +1327,15 @@ export default function App() {
                       <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">Placement Timetable Dashboard</p>
                       <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></span>
                       
-                      <div className="flex items-center gap-1 bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                      <div className="flex items-center gap-1 bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
                         {daysRemaining > 0 ? `${daysRemaining} Days Remaining` : "Timeline Ended"}
+                      </div>
+                      
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></span>
+                      
+                      <div className="flex items-center gap-1.5 bg-indigo-500/10 text-indigo-750 dark:text-indigo-400 border border-indigo-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm shrink-0">
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse inline-block" />
+                        <span>⏱️ {currentTimeStr}</span>
                       </div>
                     </div>
                   </div>
@@ -2019,15 +2102,29 @@ export default function App() {
                                   </button>
                                 )}
                                 <button
-                                  onClick={() => toggleCompletion(selectedDate, completionKey)}
+                                  onClick={() => handleCheckboxClick(selectedDate, completionKey, slot.time, slot.label, isChecked)}
                                   className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
                                     isChecked
                                       ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
+                                      : !isChecked && isSlotFuture(selectedDate, slot.time)
+                                      ? "border-slate-200/80 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-600 scale-100 cursor-not-allowed hover:bg-rose-500/5 dark:hover:bg-rose-500/5 hover:border-rose-500/30"
                                       : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent hover:border-slate-400 dark:hover:border-slate-500 scale-100 shadow-sm"
                                   }`}
-                                  title={isChecked ? "Mark as incomplete" : "Mark as completed"}
+                                  title={
+                                    isChecked 
+                                      ? "Mark as incomplete" 
+                                      : !isChecked && isSlotFuture(selectedDate, slot.time)
+                                      ? `Locked until ${parseSlotEndTime(selectedDate, slot.time)?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                                      : "Mark as completed"
+                                  }
                                 >
-                                  <Check className={`w-4 h-4 stroke-[3.5] transition-all duration-300 ${isChecked ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
+                                  {isChecked ? (
+                                    <Check className="w-4 h-4 stroke-[3.5] scale-100 rotate-0 transition-all duration-300" />
+                                  ) : !isChecked && isSlotFuture(selectedDate, slot.time) ? (
+                                    <Lock className="w-3 h-3 text-slate-400 dark:text-slate-650" />
+                                  ) : (
+                                    <Check className="w-4 h-4 stroke-[3.5] scale-0 rotate-12 transition-all duration-300 text-transparent" />
+                                  )}
                                 </button>
                               </div>
                             )}
@@ -3167,6 +3264,27 @@ export default function App() {
             </div>
           </footer>
         </>
+      )}
+
+      {/* Early completion warning toast */}
+      {earlyCompleteWarning && (
+        <div className="fixed bottom-6 right-6 z-[9999] bg-slate-900/95 dark:bg-slate-950/95 border border-amber-500/30 backdrop-blur-md px-5 py-4 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex items-start gap-3.5 max-w-sm animate-fadeIn">
+          <span className="p-1.5 bg-amber-500/10 text-amber-500 rounded-xl border border-amber-500/20 shrink-0">
+            <Clock className="w-5 h-5 animate-pulse" />
+          </span>
+          <div className="flex-1">
+            <h4 className="text-xs font-black text-amber-500 uppercase tracking-wider">Early Completion Locked</h4>
+            <p className="text-slate-300 dark:text-slate-400 text-xs mt-1 leading-relaxed">
+              {earlyCompleteWarning}
+            </p>
+          </div>
+          <button 
+            onClick={() => setEarlyCompleteWarning(null)}
+            className="text-slate-400 hover:text-slate-200 text-xs font-bold pl-2 self-start animate-pulse"
+          >
+            ✕
+          </button>
+        </div>
       )}
 
     </div>
