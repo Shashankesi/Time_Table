@@ -58,7 +58,7 @@ const checkWebGLSupport = () => {
 // 1. SUBJECT CONFIGURATIONS
 const subjectMetadata = {
   sql: {
-    name: "SQL Database",
+    name: "💾 SQL Database",
     icon: Database,
     colorClass: "cyan",
     bgClass: "bg-cyan-50 dark:bg-cyan-500/10",
@@ -69,7 +69,7 @@ const subjectMetadata = {
     darkAccentColor: "#06b6d4"
   },
   dsa: {
-    name: "DSA Algorithms",
+    name: "🧠 DSA Algorithms",
     icon: Binary,
     colorClass: "violet",
     bgClass: "bg-violet-50 dark:bg-violet-500/10",
@@ -80,7 +80,7 @@ const subjectMetadata = {
     darkAccentColor: "#8b5cf6"
   },
   webdev: {
-    name: "Web Development",
+    name: "🌐 Web Development",
     icon: Code2,
     colorClass: "blue",
     bgClass: "bg-blue-55 dark:bg-blue-500/10",
@@ -91,18 +91,18 @@ const subjectMetadata = {
     darkAccentColor: "#3b82f6"
   },
   extratech: {
-    name: "Extra Tech Skill",
+    name: "🔧 Extra Tech Skill",
     icon: GitBranch,
     colorClass: "amber",
     bgClass: "bg-amber-50 dark:bg-amber-500/10",
     borderClass: "border-amber-200 dark:border-amber-500/20",
     textClass: "text-amber-800 dark:text-amber-400",
-    filledClass: "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 border-amber-600 dark:border-amber-500 hover:bg-amber-700 dark:hover:bg-amber-400",
+    filledClass: "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 border-amber-600 dark:border-amber-500 hover:bg-amber-700 dark:hover:bg-cyan-400",
     accentColor: "#d97706",
     darkAccentColor: "#f59e0b"
   },
   genai: {
-    name: "GenAI / RAG",
+    name: "🤖 GenAI / RAG",
     icon: SparklesIcon,
     colorClass: "fuchsia",
     bgClass: "bg-fuchsia-50 dark:bg-fuchsia-500/10",
@@ -113,7 +113,7 @@ const subjectMetadata = {
     darkAccentColor: "#d946ef"
   },
   csfund: {
-    name: "CS Fundamentals",
+    name: "💻 CS Fundamentals",
     icon: BookOpen,
     colorClass: "emerald",
     bgClass: "bg-emerald-50 dark:bg-emerald-500/10",
@@ -124,7 +124,7 @@ const subjectMetadata = {
     darkAccentColor: "#10b981"
   },
   aptitude: {
-    name: "Aptitude Prep",
+    name: "🧩 Aptitude Prep",
     icon: Award,
     colorClass: "rose",
     bgClass: "bg-rose-50 dark:bg-rose-500/10",
@@ -135,7 +135,7 @@ const subjectMetadata = {
     darkAccentColor: "#f43f5e"
   },
   hr: {
-    name: "HR Preparation",
+    name: "🤝 HR Preparation",
     icon: User,
     colorClass: "yellow",
     bgClass: "bg-yellow-55 dark:bg-yellow-500/10",
@@ -146,7 +146,7 @@ const subjectMetadata = {
     darkAccentColor: "#eab308"
   },
   revision: {
-    name: "Daily Revision",
+    name: "🔄 Daily Revision",
     icon: RefreshCw,
     colorClass: "slate",
     bgClass: "bg-slate-100 dark:bg-slate-800/20",
@@ -1359,41 +1359,41 @@ export default function App() {
 
                 {/* Stats panel */}
                 <div className="flex-1 grid grid-cols-2 gap-3 min-w-[190px]">
-                  {/* Slots Done */}
-                  <div 
-                    ref={tiltSlotsCard.ref}
-                    onMouseMove={tiltSlotsCard.handleMouseMove}
-                    onMouseLeave={tiltSlotsCard.handleMouseLeave}
-                    style={tiltSlotsCard.style}
-                    className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm"
-                  >
-                    <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                    <div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Slots Done</div>
-                      <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
-                        <AnimatedNumber value={globalProgress.done} />
-                        <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px] ml-0.5">/{globalProgress.total}</span>
+                    {/* Slots Done */}
+                    <div 
+                      ref={tiltSlotsCard.ref}
+                      onMouseMove={tiltSlotsCard.handleMouseMove}
+                      onMouseLeave={tiltSlotsCard.handleMouseLeave}
+                      style={tiltSlotsCard.style}
+                      className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm hover:border-emerald-500/30 transition-colors"
+                    >
+                      <span className="text-base shrink-0 select-none">🎓</span>
+                      <div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Slots Done</div>
+                        <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
+                          <AnimatedNumber value={globalProgress.done} />
+                          <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px] ml-0.5">/{globalProgress.total}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Days Done */}
-                  <div 
-                    ref={tiltDaysCard.ref}
-                    onMouseMove={tiltDaysCard.handleMouseMove}
-                    onMouseLeave={tiltDaysCard.handleMouseLeave}
-                    style={tiltDaysCard.style}
-                    className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm"
-                  >
-                    <Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
-                    <div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Days Done</div>
-                      <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
-                        <AnimatedNumber value={globalProgress.completedDays} />
-                        <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px] ml-0.5">/30</span>
+                    {/* Days Done */}
+                    <div 
+                      ref={tiltDaysCard.ref}
+                      onMouseMove={tiltDaysCard.handleMouseMove}
+                      onMouseLeave={tiltDaysCard.handleMouseLeave}
+                      style={tiltDaysCard.style}
+                      className="bg-white dark:bg-slate-950/65 border border-slate-200 dark:border-slate-900/60 p-2.5 rounded-xl flex items-center gap-2.5 shadow-sm hover:border-indigo-500/30 transition-colors"
+                    >
+                      <span className="text-base shrink-0 select-none">🎯</span>
+                      <div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Days Done</div>
+                        <div className="text-sm font-black text-slate-900 dark:text-white leading-none mt-1">
+                          <AnimatedNumber value={globalProgress.completedDays} />
+                          <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px] ml-0.5">/30</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
 
                 {/* PART B — WEBGL LIQUID PROGRESS ORB CONTAINER */}
