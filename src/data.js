@@ -22,10 +22,10 @@ export const days = [
     genai: {
       topic: "What is an API call to an LLM?",
       details: [
-      "Client → request → model → response — the basic shape of every AI feature you'll ever build",
-      "Why apps call an API instead of running a model themselves (cost, hosting, maintenance)",
-      "Hands-on: make your very first API call (Anthropic Console or OpenAI Playground, no code needed yet)"
-    ],
+        "Client → request → model → response — the basic shape of every AI feature",
+        "Why apps call an API instead of running a model themselves",
+        "Hands-on: make your first API call (Anthropic Console or OpenAI Playground, no code needed)"
+      ],
       resource: { platform: "YouTube", channel: "Krish Naik", note: "Practical, code-first GenAI/API tutorials", url: "https://www.youtube.com/@krishnaik06" }
     },
     csfund: {
@@ -54,13 +54,13 @@ export const days = [
     webdev: "Advanced JS: promises & async/await",
     extratech: "Git branching",
     genai: {
-      topic: "Message format: system, user, assistant roles",
+      topic: "Message roles: system, user, assistant",
       details: [
-      "How a conversation is structured as a list of role-tagged messages, not free text",
-      "System prompt = behavior/persona instructions; user = the actual question; assistant = the model's prior replies",
-      "Hands-on: write a system prompt that changes how the same question gets answered"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Same channel — API fundamentals playlist", url: "https://www.youtube.com/@krishnaik06" }
+        "How a conversation is structured as role-tagged messages, not free text",
+        "System prompt = behavior instructions; user = the question; assistant = prior replies",
+        "Hands-on: write a system prompt that changes how the same question gets answered"
+      ],
+      resource: { platform: "Docs", channel: "Anthropic API Docs", note: "Official message format reference", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "OOPs: Inheritance",
@@ -90,11 +90,10 @@ export const days = [
     genai: {
       topic: "Key parameters: temperature, max_tokens, top_p",
       details: [
-      "Temperature controls randomness — low for factual tasks, higher for creative ones",
-      "max_tokens caps response length (and cost)",
-      "Hands-on: call the API with 3 different temperatures on the same prompt, compare outputs"
-    ],
-      resource: { platform: "Docs", channel: "Anthropic API Docs", note: "Official parameter reference", url: "https://docs.claude.com" }
+        "Temperature = randomness control; low for factual tasks, higher for creative ones",
+        "Hands-on: call the API at 3 different temperatures on the same prompt, compare outputs"
+      ],
+      resource: { platform: "Docs", channel: "Anthropic API Docs", note: "Parameter reference", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "OOPs: Polymorphism",
@@ -122,13 +121,13 @@ export const days = [
     webdev: "DOM APIs + Fetch API — build an interactive UI without a framework",
     extratech: "GitHub PR workflow",
     genai: {
-      topic: "API keys, authentication, rate limits & pricing",
+      topic: "API keys, auth, rate limits & pricing",
       details: [
-      "How API keys work, why they must never be exposed in frontend code",
-      "Rate limits — what happens when you exceed them, how to handle it gracefully",
-      "Token-based pricing — why counting tokens matters for cost control"
-    ],
-      resource: { platform: "Docs", channel: "Anthropic / OpenAI API Docs", note: "Official auth & pricing docs", url: "https://docs.claude.com" }
+        "Why API keys never belong in frontend code",
+        "What happens when you hit a rate limit, and how to handle it",
+        "Token-based pricing — why counting tokens matters for cost"
+      ],
+      resource: { platform: "Docs", channel: "Anthropic / OpenAI API Docs", note: "Auth & pricing docs", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "OOPs: Encapsulation & Abstraction",
@@ -156,13 +155,12 @@ export const days = [
     webdev: "Mini vanilla-JS project (Fetch-based app) + JS fundamentals recap",
     extratech: "Weekly recap: Git workflow end-to-end",
     genai: {
-      topic: "Phase 1 recap: draw the complete flow from memory",
+      topic: "Zero-shot vs few-shot prompting",
       details: [
-      "Draw (paper or whiteboard tool) the full request→response flow with no notes",
-      "Explain out loud: what happens between a user typing a message and seeing a reply",
-      "This diagram is the foundation for every phase that follows"
-    ],
-      resource: { platform: "Self-test", channel: "N/A", note: "No video — this is a recall exercise", url: "" }
+        "Zero-shot: just ask. Few-shot: show 2-3 examples first",
+        "Hands-on: send both versions via API for the same task, compare quality"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering (@engineerprompt)", note: "Applied prompting tutorials", url: "https://www.youtube.com/@engineerprompt" }
     },
     csfund: {
       topic: "OOPs: Full Revision",
@@ -192,12 +190,12 @@ export const days = [
     webdev: "React: setup + JSX",
     extratech: "Vector embeddings intro",
     genai: {
-      topic: "Zero-shot vs few-shot — inside real API calls",
+      topic: "Designing a system prompt for a real use case",
       details: [
-      "Zero-shot: just ask. Few-shot: show 2-3 examples in the prompt before the real question",
-      "Hands-on: send both versions via API for the same task, compare output quality"
-    ],
-      resource: { platform: "YouTube", channel: "Prompt Engineering (@engineerprompt)", note: "Application-focused prompting tutorials", url: "https://www.youtube.com/@engineerprompt" }
+        "Write a system prompt for a specific persona (e.g. support bot, code reviewer)",
+        "Test edge cases — does it stay on-task when asked something off-topic?"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering (@engineerprompt)", note: "System prompt design patterns", url: "https://www.youtube.com/@engineerprompt" }
     },
     csfund: {
       topic: "DBMS: Normalization (1NF–3NF)",
@@ -225,12 +223,12 @@ export const days = [
     webdev: "React: components & props",
     extratech: "Vector DB overview (Pinecone/FAISS)",
     genai: {
-      topic: "Designing a system prompt for a real app persona",
+      topic: "Multi-turn conversations & structured outputs",
       details: [
-      "Write a system prompt for a specific use case (e.g. a customer support bot, a code reviewer)",
-      "Test edge cases — does it stay in character when asked something off-topic?"
-    ],
-      resource: { platform: "YouTube", channel: "Prompt Engineering (@engineerprompt)", note: "System prompt design patterns", url: "https://www.youtube.com/@engineerprompt" }
+        "APIs are stateless — your app resends the growing message history each call",
+        "JSON mode / structured outputs — getting reliable, parseable data back instead of free text"
+      ],
+      resource: { platform: "Docs", channel: "Anthropic Docs", note: "Structured output / tool use basics", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "DBMS: Keys",
@@ -258,12 +256,12 @@ export const days = [
     webdev: "React: state & useState",
     extratech: "Chunking strategies for documents",
     genai: {
-      topic: "Multi-turn conversations: how history actually works",
+      topic: "Build a mini chatbot on the raw API",
       details: [
-      "APIs are stateless — YOUR app resends the full message history with every call",
-      "Hands-on: build a simple loop that appends each turn to a growing message list"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Conversation/session management in code", url: "https://www.youtube.com/@krishnaik06" }
+        "No framework — just an API key and a message-history loop",
+        "Wraps up everything from Phase 2 into one small working project"
+      ],
+      resource: { platform: "Self-project", channel: "N/A", note: "Apply Phase 2 hands-on", url: "" }
     },
     csfund: {
       topic: "DBMS: ACID properties",
@@ -290,12 +288,13 @@ export const days = [
     webdev: "React: useEffect, hooks",
     extratech: "RAG architecture overview",
     genai: {
-      topic: "Streaming responses",
+      topic: "The AI tool landscape — what each tool is actually for",
       details: [
-      "What streaming is and why chat apps use it (perceived speed, better UX)",
-      "Conceptual walkthrough of a streamed API response vs waiting for the full completion"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Streaming implementation walkthrough", url: "https://www.youtube.com/@krishnaik06" }
+        "ChatGPT, Claude, Gemini — general strengths and differences at a high level",
+        "Why staying tool-agnostic matters more than being loyal to one",
+        "Hands-on: give the same real task to 2 different AI tools, compare how they handle it"
+      ],
+      resource: { platform: "Self-exploration", channel: "N/A", note: "Best learned hands-on, not via a single video", url: "" }
     },
     csfund: {
       topic: "DBMS: Transactions & concurrency",
@@ -323,12 +322,12 @@ export const days = [
     webdev: "React: forms & events",
     extratech: "Docker: images vs containers",
     genai: {
-      topic: "Structured outputs: JSON mode & tool/function calling",
+      topic: "Everyday prompting habits for work",
       details: [
-      "Getting the model to return parseable data instead of free text",
-      "This is the same mechanism agents use to call real functions — foundation for Day 25"
-    ],
-      resource: { platform: "Docs + YouTube", channel: "Anthropic Docs / Krish Naik", note: "Tool use docs + hands-on example", url: "https://docs.claude.com" }
+        "Using AI well for: summarizing long docs, debugging error messages, drafting emails, explaining unfamiliar code",
+        "The habit that matters most: give context, state the goal clearly, iterate instead of expecting a perfect first answer"
+      ],
+      resource: { platform: "YouTube", channel: "Prompt Engineering (@engineerprompt)", note: "Practical everyday-use prompting", url: "https://www.youtube.com/@engineerprompt" }
     },
     csfund: {
       topic: "DBMS: Indexing",
@@ -355,12 +354,12 @@ export const days = [
     webdev: "React mini project",
     extratech: "Docker: Dockerfile basics",
     genai: {
-      topic: "Build a mini chatbot on the raw API",
+      topic: "Using AI to learn faster, without over-relying on it",
       details: [
-      "No framework — just you, an API key, and a loop",
-      "This is your first real integration project, keep the code for your portfolio"
-    ],
-      resource: { platform: "Self-project", channel: "N/A", note: "Apply everything from Phase 2 hands-on", url: "" }
+        "Ask AI to explain a concept, then explain it back in your own words to check you actually understood it",
+        "Always verify anything factual or code-related it gives you — treat it as a fast first draft, not a final answer"
+      ],
+      resource: { platform: "Self-reflection", channel: "N/A", note: "A habit to build, not a video to watch", url: "" }
     },
     csfund: {
       topic: "DBMS: Full Revision",
@@ -389,12 +388,12 @@ export const days = [
     webdev: "Node.js basics",
     extratech: "AWS: EC2 intro",
     genai: {
-      topic: "Embeddings via API — what the numbers mean",
+      topic: "AI coding assistants — the landscape",
       details: [
-      "Call an embedding endpoint, look at the actual vector output",
-      "Similar meaning → similar vectors — this is the whole trick behind semantic search"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Complete RAG playlist", url: "https://www.youtube.com/@krishnaik06" }
+        "GitHub Copilot, Cursor, Claude Code — what each does differently (inline suggestions vs full agentic coding)",
+        "These are increasingly expected knowledge in interviews and on the job, not optional extras"
+      ],
+      resource: { platform: "Docs", channel: "Claude Code Docs", note: "Official docs — overview and setup", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "OS: Process vs Thread",
@@ -421,12 +420,13 @@ export const days = [
     webdev: "Express.js setup",
     extratech: "AWS: S3 basics",
     genai: {
-      topic: "Vector databases: storing & querying embeddings",
+      topic: "Prompting AI coding assistants effectively",
       details: [
-      "Chroma vs FAISS vs Pinecone — pick one to use for your project",
-      "Hands-on: store 5 sample embeddings, query for the nearest match"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Vector DB setup walkthrough", url: "https://www.youtube.com/@krishnaik06" }
+        "Giving enough context (file structure, intent, constraints) vs vague one-line asks",
+        "Iterative refinement — treat the first output as a draft, not the final answer",
+        "Always review AI-written code critically before trusting it — never merge blind"
+      ],
+      resource: { platform: "Docs", channel: "Claude Code Docs", note: "Prompting/workflow best practices", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "OS: Scheduling algorithms",
@@ -453,12 +453,12 @@ export const days = [
     webdev: "REST API design principles",
     extratech: "System Design: LLD intro",
     genai: {
-      topic: "Chunking a real document",
+      topic: "Hands-on: use an AI coding assistant on a real task",
       details: [
-      "Take an actual PDF/text file, split it into chunks by hand first, then with code",
-      "Fixed-size vs overlap trade-offs — see the difference on a real document, not theory"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Document processing for RAG", url: "https://www.youtube.com/@krishnaik06" }
+        "Apply this to one of your actual DSA or Web Dev tasks from this month — not a toy example",
+        "Notice where it helps (boilerplate, explaining errors) and where you still need to think for yourself"
+      ],
+      resource: { platform: "Self-project", channel: "N/A", note: "Applied practice, real task from your own schedule", url: "" }
     },
     csfund: {
       topic: "OS: Memory management",
@@ -485,12 +485,12 @@ export const days = [
     webdev: "Building REST APIs (CRUD)",
     extratech: "System Design: caching basics",
     genai: {
-      topic: "The complete RAG flow, end to end",
+      topic: "What is RAG and why it matters",
       details: [
-      "Question → embed → search vector DB → retrieve top chunks → insert into prompt → call LLM API → return answer",
-      "Trace this flow through your own code line by line — this is the core skill this month builds toward"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Complete RAG Playlist", url: "https://www.youtube.com/playlist?list=PLZoTAELRMXVM8Pf4U67L4UuDRgV4TNX9D" }
+        "The problem it solves: models don't know your private data and have a knowledge cutoff",
+        "Why RAG is usually the right answer over fine-tuning for most real applications"
+      ],
+      resource: { platform: "YouTube", channel: "Krish Naik", note: "RAG concept overview", url: "https://www.youtube.com/@krishnaik06" }
     },
     csfund: {
       topic: "OS: Deadlocks",
@@ -517,12 +517,12 @@ export const days = [
     webdev: "Connecting frontend to backend API",
     extratech: "CI/CD: GitHub Actions basics",
     genai: {
-      topic: "Hybrid search & re-ranking",
+      topic: "Embeddings & vector search",
       details: [
-      "Combining keyword search (BM25) with vector search for better retrieval",
-      "Re-ranking retrieved chunks before sending them to the LLM"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Advanced retrieval techniques", url: "https://www.youtube.com/@krishnaik06" }
+        "What embeddings encode; similar meaning → similar vectors",
+        "Hands-on: call an embedding endpoint, look at the actual output"
+      ],
+      resource: { platform: "YouTube", channel: "Krish Naik", note: "Embeddings explained with code", url: "https://www.youtube.com/@krishnaik06" }
     },
     csfund: {
       topic: "OS: Paging & segmentation (deep dive)",
@@ -548,12 +548,12 @@ export const days = [
     webdev: "Auth basics (JWT) in API",
     extratech: "Weekly recap: cloud + system design LLD",
     genai: {
-      topic: "Evaluating your RAG pipeline",
+      topic: "The complete RAG flow, traced end to end",
       details: [
-      "Is it actually answering correctly, or confidently making things up?",
-      "Basic checks: does the answer come from the retrieved chunks, or from the model's general knowledge?"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "RAG evaluation basics", url: "https://www.youtube.com/@krishnaik06" }
+        "Question → embed → search vector DB → retrieve chunks → insert into prompt → call API → return answer",
+        "Draw this flow yourself before moving into the build phase"
+      ],
+      resource: { platform: "YouTube", channel: "Krish Naik", note: "Complete RAG Playlist", url: "https://www.youtube.com/playlist?list=PLZoTAELRMXVM8Pf4U67L4UuDRgV4TNX9D" }
     },
     csfund: {
       topic: "OS: Full Revision",
@@ -582,12 +582,12 @@ export const days = [
     webdev: "MERN: connect MongoDB",
     extratech: "System Design: HLD basics",
     genai: {
-      topic: "Architecture: how frontend, backend & API fit together",
+      topic: "Set up a simple RAG demo",
       details: [
-      "Where the API key lives (backend only, never frontend)",
-      "Draw your project's architecture before writing any code"
-    ],
-      resource: { platform: "Self-project", channel: "N/A", note: "Planning day for the build", url: "" }
+        "Pick the lightest stack that works: LangChain or LlamaIndex + a free LLM API + Chroma",
+        "Goal is a working demo, not a polished product"
+      ],
+      resource: { platform: "YouTube", channel: "Krish Naik", note: "Follow along with the RAG playlist", url: "https://www.youtube.com/@krishnaik06" }
     },
     csfund: {
       topic: "CN: OSI model",
@@ -613,11 +613,11 @@ export const days = [
     webdev: "MERN: full CRUD app",
     extratech: "System Design: load balancing",
     genai: {
-      topic: "Build the ingestion pipeline",
+      topic: "Ingest a real document",
       details: [
-      "Real code: documents → chunks → embeddings → vector store, as an actual runnable script"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Follow along with the RAG playlist", url: "https://www.youtube.com/@krishnaik06" }
+        "Take one actual PDF/text file, chunk it, embed it, store it — real code, not theory"
+      ],
+      resource: { platform: "YouTube", channel: "Krish Naik", note: "Document ingestion walkthrough", url: "https://www.youtube.com/@krishnaik06" }
     },
     csfund: {
       topic: "CN: TCP/IP model",
@@ -644,11 +644,11 @@ export const days = [
     webdev: "Deploy backend (Render/Railway)",
     extratech: "Finish + test RAG project",
     genai: {
-      topic: "Build the retrieval + generation endpoint",
+      topic: "Build retrieval + generation, connect it end to end",
       details: [
-      "A backend route that does the full RAG flow: takes a question, returns an answer"
-    ],
-      resource: { platform: "YouTube", channel: "Krish Naik", note: "Same playlist, backend integration section", url: "https://www.youtube.com/@krishnaik06" }
+        "A working function/route: takes a question, returns an answer grounded in your document"
+      ],
+      resource: { platform: "YouTube", channel: "Krish Naik", note: "Retrieval + generation integration", url: "https://www.youtube.com/@krishnaik06" }
     },
     csfund: {
       topic: "CN: HTTP/HTTPS, status codes",
@@ -675,11 +675,12 @@ export const days = [
     webdev: "Deploy frontend (Vercel/Netlify)",
     extratech: "Advanced prompting: structured outputs",
     genai: {
-      topic: "Connect it to a simple frontend",
+      topic: "Test it, see it work, note what you'd improve",
       details: [
-      "User types a question, sees the answer — doesn't need to be pretty, needs to work end to end"
-    ],
-      resource: { platform: "Self-project", channel: "N/A", note: "Reuse your Web Dev skills from this month", url: "" }
+        "Ask it questions your document actually answers, and ones it doesn't — see how it handles both",
+        "Write down 2-3 things you'd improve if you kept working on it (great interview talking points)"
+      ],
+      resource: { platform: "Self-project", channel: "N/A", note: "Wrap-up and reflection", url: "" }
     },
     csfund: {
       topic: "CN: DNS & load balancing",
@@ -706,12 +707,13 @@ export const days = [
     webdev: "Polish full-stack project (README, demo)",
     extratech: "System Design: HLD basics recap",
     genai: {
-      topic: "Tool/function calling — the real agent loop",
+      topic: "AI agents & tool-calling — the basics",
       details: [
-      "Model decides it needs a tool → your code runs the real function → result goes back to the model → model responds using that result",
-      "Hands-on: give the model access to one real function (e.g. a calculator or a search function)"
-    ],
-      resource: { platform: "Docs + YouTube", channel: "Anthropic Docs / Krish Naik", note: "Tool use / agent basics", url: "https://docs.claude.com" }
+        "The agent loop: model decides it needs a tool → your code runs the real function → result goes back to the model → model responds using it",
+        "Hands-on: give the model access to one simple function (e.g. a calculator) and watch the loop happen",
+        "Enough depth to explain agents confidently in an interview, not to build a complex multi-agent system"
+      ],
+      resource: { platform: "Docs", channel: "Anthropic Docs", note: "Tool use / agent basics", url: "https://docs.claude.com" }
     },
     csfund: {
       topic: "HLD basics",
@@ -739,13 +741,13 @@ export const days = [
     webdev: "Project walkthrough practice",
     extratech: "Polish RAG project for resume",
     genai: {
-      topic: "Error handling, cost control & polish",
+      topic: "Full recap — interview-ready",
       details: [
-      "Handle rate limits and API errors gracefully instead of crashing",
-      "Add basic cost awareness (token counting) — a small but interview-impressive detail",
-      "Write your project README and prepare a 2-minute spoken walkthrough of the complete flow"
-    ],
-      resource: { platform: "Self-project", channel: "N/A", note: "Final polish day", url: "" }
+        "Be able to explain, out loud, no notes: what is RAG and why use it, how prompt engineering shapes output, what an agent's tool-calling loop looks like",
+        "Walk through your own RAG demo end to end as if explaining it to an interviewer",
+        "This is the checkpoint — if any of the above feels shaky, that's your revision priority on Sep 28-29"
+      ],
+      resource: { platform: "Self-test", channel: "N/A", note: "Recall exercise, no new content", url: "" }
     },
     csfund: {
       topic: "Mock technical interview (mixed)",
@@ -992,19 +994,19 @@ export const interviewQuestions = {
 export const weekThemes = {
   week1: {
     title: "Week 1: Foundations",
-    desc: "Foundations — SQL joins/aggregates, DSA arrays/strings/hashing (revision + practice), Advanced JS, Git, OOPs | GenAI: How AI APIs work — requests, message roles, parameters, auth, the complete flow"
+    desc: "Foundations — SQL joins/aggregates, DSA arrays/strings/hashing (revision + practice), Advanced JS, Git, OOPs | GenAI: API foundations + practical prompt engineering — how requests work, roles, parameters, zero/few-shot, system prompts"
   },
   week2: {
     title: "Week 2: Building Depth",
-    desc: "Building Depth — SQL subqueries/window functions, DSA linked list/stack/queue/trees/graphs (revision + practice), React, Docker/Cloud, DBMS | GenAI: Prompting inside real API calls — system prompts, multi-turn history, streaming, structured outputs"
+    desc: "Building Depth — SQL subqueries/window functions, DSA linked list/stack/queue/trees/graphs (revision + practice), React, Docker/Cloud, DBMS | GenAI: AI tool landscape + coding assistants — using ChatGPT/Claude/Gemini well day-to-day, prompting Claude Code/Copilot/Cursor effectively"
   },
   week3: {
     title: "Week 3: Applying Skills",
-    desc: "Applying Skills — SQL optimization, DSA heaps/graphs-advanced/DP (revision + practice), Node/Express APIs, System Design LLD, OS | GenAI: RAG, the complete flow — embeddings, vector DBs, chunking, retrieval, evaluation"
+    desc: "Applying Skills — SQL optimization, DSA heaps/graphs-advanced/DP (revision + practice), Node/Express APIs, System Design LLD, OS | GenAI: RAG fundamentals — what it is, why it matters, embeddings, vector search, the complete flow"
   },
   week4: {
     title: "Week 4: Interview-Ready",
-    desc: "Interview-Ready — DSA company-wise sets + full mocks, SQL/Web Dev revision, MERN deployment, System Design HLD, CN, mock interviews | GenAI: Build a complete AI-integrated product — architecture, ingestion, retrieval endpoint, frontend, tool calling, polish"
+    desc: "Interview-Ready — DSA company-wise sets + full mocks, SQL/Web Dev revision, MERN deployment, System Design HLD, CN, mock interviews | GenAI: RAG integration + agents — build one working RAG demo, tool-calling basics, full interview-ready recap"
   }
 };
 
