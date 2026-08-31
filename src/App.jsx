@@ -1851,7 +1851,7 @@ export default function App() {
                           )}
 
                           {/* Row details flex */}
-                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
+                          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 w-full">
                             {/* Time & Badges */}
                             <div className="flex items-center justify-between md:justify-start gap-4 pl-2 shrink-0">
                               <span className={`text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-300 shrink-0 ${isChecked ? "line-through text-slate-400 dark:text-slate-600" : ""}`}>
@@ -1884,7 +1884,7 @@ export default function App() {
                             </div>
 
                             {/* Topic Details (PART A — Inline Editing) */}
-                            <div className="flex-1 pl-2 md:pl-0 flex items-center justify-between gap-2.5">
+                            <div className="flex-1 pl-2 md:pl-0 flex items-start justify-between gap-2.5">
                               <div className="flex-1 flex flex-col gap-4">
                                 {isEditingThisSlot ? (
                                   <div className="flex gap-2">
@@ -1917,15 +1917,26 @@ export default function App() {
                                     {focusTopicText}
                                   </p>
                                 ) : (
-                                  <div className="flex flex-col gap-3.5 w-full">
+                                  <div className="flex flex-col gap-3 w-full">
                                     {displayTopics.map((item, itemIdx) => {
                                       const isItemCurrent = item.sourceDate === selectedDate;
                                       return (
-                                        <div key={itemIdx} className="flex flex-col gap-2 w-full border-l-2 pl-3 border-slate-200 dark:border-slate-800/80 last:border-0 last:pb-0">
-                                          <div className="flex items-start gap-2.5 flex-wrap">
-                                            {!isItemCurrent && (
+                                        <div 
+                                          key={itemIdx} 
+                                          className={`flex flex-col gap-2.5 w-full p-3.5 rounded-xl border ${
+                                            isItemCurrent 
+                                              ? "bg-slate-50/40 dark:bg-slate-900/10 border-slate-200/50 dark:border-slate-800/40" 
+                                              : "bg-amber-50/15 dark:bg-amber-950/5 border-amber-200/20 dark:border-amber-950/10"
+                                          }`}
+                                        >
+                                          <div className="flex items-center gap-2.5 flex-wrap">
+                                            {!isItemCurrent ? (
                                               <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0 select-none shadow-sm dark:shadow-none">
                                                 Deferred from {item.sourceDate.split("-")[2]} Sep
+                                              </span>
+                                            ) : (
+                                              <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shrink-0 select-none shadow-sm dark:shadow-none">
+                                                Today's Topic
                                               </span>
                                             )}
                                             <p className={`text-sm leading-relaxed flex-1 ${
@@ -1938,7 +1949,7 @@ export default function App() {
                                           </div>
                                           
                                           {item.details && expandedRows[index] && (
-                                            <ul className="list-disc pl-5 mt-1 text-xs text-slate-600 dark:text-slate-350 flex flex-col gap-2 font-medium leading-relaxed">
+                                            <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-350 flex flex-col gap-2 font-medium leading-relaxed mt-1">
                                               {item.details.map((bullet, bIdx) => (
                                                 <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
                                               ))}
@@ -1946,7 +1957,7 @@ export default function App() {
                                           )}
                                           
                                           {item.resource && expandedRows[index] && (
-                                            <div className="mt-2.5 pt-2 border-t border-slate-105/50 dark:border-slate-800/40 flex flex-wrap items-center gap-2">
+                                            <div className="pt-2 border-t border-slate-100/50 dark:border-slate-800/40 flex flex-wrap items-center gap-2 mt-1">
                                               <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">
                                                 Reference Resource:
                                               </span>
@@ -1974,7 +1985,7 @@ export default function App() {
                               
                               {/* Edit & Expand Actions */}
                               {!isEditingThisSlot && !isBreak && (
-                                <div className="flex items-center gap-1.5 shrink-0 pl-2">
+                                <div className="flex items-center gap-1.5 shrink-0 pl-2 pt-1.5">
                                   {hasDetails && (
                                     <button
                                       onClick={() => toggleRowExpand(index)}
@@ -1997,7 +2008,7 @@ export default function App() {
 
                             {/* Action Checkbox & Defer Button */}
                             {!isBreak && completionKey && (
-                              <div className="flex items-center justify-end md:justify-center pr-1 shrink-0 pl-2 md:pl-0 gap-2">
+                              <div className="flex items-center justify-end md:justify-center pr-1 shrink-0 pl-2 md:pl-0 gap-2 pt-1.5">
                                 {!isChecked && getNextStudyDate(selectedDate) && (
                                   <button
                                     onClick={() => deferSlotToNextDay(selectedDate, slot.subject)}
