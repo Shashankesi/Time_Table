@@ -1010,145 +1010,140 @@ export const weekThemes = {
 
 export const practiceProblemsData = {
   "2026-09-01": [
-    { platform: "leetcode", id: "LC 53", title: "Maximum Subarray", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 189", title: "Rotate Array", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 238", title: "Product of Array Except Self", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 217", title: "Contains Duplicate", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 560", title: "Subarray Sum Equals K", difficulty: "Medium" },
-    { platform: "gfg", id: "GFG", title: "Kadane's Algorithm", difficulty: "Easy" }
+    { platform: "leetcode", id: "LC 53", number: 53, title: "Maximum Subarray", difficulty: "Medium", url: "https://leetcode.com/problems/maximum-subarray/" },
+    { platform: "leetcode", id: "LC 189", number: 189, title: "Rotate Array", difficulty: "Medium", url: "https://leetcode.com/problems/rotate-array/" },
+    { platform: "leetcode", id: "LC 238", number: 238, title: "Product of Array Except Self", difficulty: "Medium", url: "https://leetcode.com/problems/product-of-array-except-self/" },
+    { platform: "leetcode", id: "LC 217", number: 217, title: "Contains Duplicate", difficulty: "Easy", url: "https://leetcode.com/problems/contains-duplicate/" },
+    { platform: "leetcode", id: "LC 560", number: 560, title: "Subarray Sum Equals K", difficulty: "Medium", url: "https://leetcode.com/problems/subarray-sum-equals-k/" }
   ],
   "2026-09-02": [
-    { platform: "leetcode", id: "LC 3", title: "Longest Substring Without Repeating Characters", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 5", title: "Longest Palindromic Substring", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 242", title: "Valid Anagram", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 49", title: "Group Anagrams", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 28", title: "Find the Index of the First Occurrence in a String", difficulty: "Easy" },
-    { platform: "gfg", id: "GFG", title: "Rabin-Karp Pattern Search", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 3", number: 3, title: "Longest Substring Without Repeating Characters", difficulty: "Medium", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+    { platform: "leetcode", id: "LC 5", number: 5, title: "Longest Palindromic Substring", difficulty: "Medium", url: "https://leetcode.com/problems/longest-palindromic-substring/" },
+    { platform: "leetcode", id: "LC 242", number: 242, title: "Valid Anagram", difficulty: "Easy", url: "https://leetcode.com/problems/valid-anagram/" },
+    { platform: "leetcode", id: "LC 49", number: 49, title: "Group Anagrams", difficulty: "Medium", url: "https://leetcode.com/problems/group-anagrams/" },
+    { platform: "leetcode", id: "LC 28", number: 28, title: "Find the Index of the First Occurrence in a String", difficulty: "Easy", url: "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/" }
   ],
   "2026-09-03": [
-    { platform: "leetcode", id: "LC 11", title: "Container With Most Water", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 15", title: "3Sum", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 76", title: "Minimum Window Substring", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 239", title: "Sliding Window Maximum", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 904", title: "Fruit Into Baskets", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 167", title: "Two Sum II — Input Array Is Sorted", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 11", number: 11, title: "Container With Most Water", difficulty: "Medium", url: "https://leetcode.com/problems/container-with-most-water/" },
+    { platform: "leetcode", id: "LC 15", number: 15, title: "3Sum", difficulty: "Medium", url: "https://leetcode.com/problems/3sum/" },
+    { platform: "leetcode", id: "LC 167", number: 167, title: "Two Sum II — Input Array Is Sorted", difficulty: "Medium", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
+    { platform: "leetcode", id: "LC 283", number: 283, title: "Move Zeroes", difficulty: "Easy", url: "https://leetcode.com/problems/move-zeroes/" },
+    { platform: "leetcode", id: "LC 209", number: 209, title: "Minimum Size Subarray Sum", difficulty: "Medium", url: "https://leetcode.com/problems/minimum-size-subarray-sum/" },
+    { platform: "leetcode", id: "LC 904", number: 904, title: "Fruit Into Baskets", difficulty: "Medium", url: "https://leetcode.com/problems/fruit-into-baskets/" }
   ],
   "2026-09-04": [
-    { platform: "leetcode", id: "LC 1", title: "Two Sum", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 128", title: "Longest Consecutive Sequence", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 347", title: "Top K Frequent Elements", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 205", title: "Isomorphic Strings", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 380", title: "Insert Delete GetRandom O(1)", difficulty: "Medium" },
-    { platform: "gfg", id: "GFG", title: "Count Distinct Elements in Every Window", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 1", number: 1, title: "Two Sum", difficulty: "Easy", url: "https://leetcode.com/problems/two-sum/" },
+    { platform: "leetcode", id: "LC 128", number: 128, title: "Longest Consecutive Sequence", difficulty: "Medium", url: "https://leetcode.com/problems/longest-consecutive-sequence/" },
+    { platform: "leetcode", id: "LC 347", number: 347, title: "Top K Frequent Elements", difficulty: "Medium", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+    { platform: "leetcode", id: "LC 205", number: 205, title: "Isomorphic Strings", difficulty: "Easy", url: "https://leetcode.com/problems/isomorphic-strings/" },
+    { platform: "leetcode", id: "LC 380", number: 380, title: "Insert Delete GetRandom O(1)", difficulty: "Medium", url: "https://leetcode.com/problems/insert-delete-getrandom-o1/" }
   ],
   "2026-09-05": [
-    { platform: "leetcode", id: "LC 70", title: "Climbing Stairs", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 22", title: "Generate Parentheses", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 78", title: "Subsets", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 46", title: "Permutations", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 17", title: "Letter Combinations of a Phone Number", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 70", number: 70, title: "Climbing Stairs", difficulty: "Easy", url: "https://leetcode.com/problems/climbing-stairs/" },
+    { platform: "leetcode", id: "LC 22", number: 22, title: "Generate Parentheses", difficulty: "Medium", url: "https://leetcode.com/problems/generate-parentheses/" },
+    { platform: "leetcode", id: "LC 78", number: 78, title: "Subsets", difficulty: "Medium", url: "https://leetcode.com/problems/subsets/" },
+    { platform: "leetcode", id: "LC 46", number: 46, title: "Permutations", difficulty: "Medium", url: "https://leetcode.com/problems/permutations/" },
+    { platform: "leetcode", id: "LC 17", number: 17, title: "Letter Combinations of a Phone Number", difficulty: "Medium", url: "https://leetcode.com/problems/letter-combinations-of-a-phone-number/" }
   ],
   "2026-09-07": [
-    { platform: "leetcode", id: "LC 206", title: "Reverse Linked List", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 21", title: "Merge Two Sorted Lists", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 141", title: "Linked List Cycle", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 19", title: "Remove Nth Node From End of List", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 23", title: "Merge k Sorted Lists", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 138", title: "Copy List with Random Pointer", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 206", number: 206, title: "Reverse Linked List", difficulty: "Easy", url: "https://leetcode.com/problems/reverse-linked-list/" },
+    { platform: "leetcode", id: "LC 21", number: 21, title: "Merge Two Sorted Lists", difficulty: "Easy", url: "https://leetcode.com/problems/merge-two-sorted-lists/" },
+    { platform: "leetcode", id: "LC 141", number: 141, title: "Linked List Cycle", difficulty: "Easy", url: "https://leetcode.com/problems/linked-list-cycle/" },
+    { platform: "leetcode", id: "LC 19", number: 19, title: "Remove Nth Node From End of List", difficulty: "Medium", url: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/" },
+    { platform: "leetcode", id: "LC 2", number: 2, title: "Add Two Numbers", difficulty: "Medium", url: "https://leetcode.com/problems/add-two-numbers/" },
+    { platform: "leetcode", id: "LC 138", number: 138, title: "Copy List with Random Pointer", difficulty: "Medium", url: "https://leetcode.com/problems/copy-list-with-random-pointer/" }
   ],
   "2026-09-08": [
-    { platform: "leetcode", id: "LC 20", title: "Valid Parentheses", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 155", title: "Min Stack", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 739", title: "Daily Temperatures", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 496", title: "Next Greater Element I", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 84", title: "Largest Rectangle in Histogram", difficulty: "Hard" }
+    { platform: "leetcode", id: "LC 20", number: 20, title: "Valid Parentheses", difficulty: "Easy", url: "https://leetcode.com/problems/valid-parentheses/" },
+    { platform: "leetcode", id: "LC 155", number: 155, title: "Min Stack", difficulty: "Medium", url: "https://leetcode.com/problems/min-stack/" },
+    { platform: "leetcode", id: "LC 739", number: 739, title: "Daily Temperatures", difficulty: "Medium", url: "https://leetcode.com/problems/daily-temperatures/" },
+    { platform: "leetcode", id: "LC 496", number: 496, title: "Next Greater Element I", difficulty: "Easy", url: "https://leetcode.com/problems/next-greater-element-i/" },
+    { platform: "leetcode", id: "LC 150", number: 150, title: "Evaluate Reverse Polish Notation", difficulty: "Medium", url: "https://leetcode.com/problems/evaluate-reverse-polish-notation/" }
   ],
   "2026-09-09": [
-    { platform: "leetcode", id: "LC 232", title: "Implement Queue using Stacks", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 622", title: "Design Circular Queue", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 239", title: "Sliding Window Maximum", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 933", title: "Number of Recent Calls", difficulty: "Easy" },
-    { platform: "gfg", id: "GFG", title: "Circular Tour (Petrol Pump)", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 232", number: 232, title: "Implement Queue using Stacks", difficulty: "Easy", url: "https://leetcode.com/problems/implement-queue-using-stacks/" },
+    { platform: "leetcode", id: "LC 622", number: 622, title: "Design Circular Queue", difficulty: "Medium", url: "https://leetcode.com/problems/design-circular-queue/" },
+    { platform: "leetcode", id: "LC 933", number: 933, title: "Number of Recent Calls", difficulty: "Easy", url: "https://leetcode.com/problems/number-of-recent-calls/" },
+    { platform: "leetcode", id: "LC 225", number: 225, title: "Implement Stack using Queues", difficulty: "Easy", url: "https://leetcode.com/problems/implement-stack-using-queues/" }
   ],
   "2026-09-10": [
-    { platform: "leetcode", id: "LC 94", title: "Binary Tree Inorder Traversal", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 104", title: "Maximum Depth of Binary Tree", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 102", title: "Binary Tree Level Order Traversal", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 543", title: "Diameter of Binary Tree", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 236", title: "Lowest Common Ancestor of a Binary Tree", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 199", title: "Binary Tree Right View", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 94", number: 94, title: "Binary Tree Inorder Traversal", difficulty: "Easy", url: "https://leetcode.com/problems/binary-tree-inorder-traversal/" },
+    { platform: "leetcode", id: "LC 104", number: 104, title: "Maximum Depth of Binary Tree", difficulty: "Easy", url: "https://leetcode.com/problems/maximum-depth-of-binary-tree/" },
+    { platform: "leetcode", id: "LC 102", number: 102, title: "Binary Tree Level Order Traversal", difficulty: "Medium", url: "https://leetcode.com/problems/binary-tree-level-order-traversal/" },
+    { platform: "leetcode", id: "LC 543", number: 543, title: "Diameter of Binary Tree", difficulty: "Easy", url: "https://leetcode.com/problems/diameter-of-binary-tree/" },
+    { platform: "leetcode", id: "LC 236", number: 236, title: "Lowest Common Ancestor of a Binary Tree", difficulty: "Medium", url: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/" },
+    { platform: "leetcode", id: "LC 199", number: 199, title: "Binary Tree Right Side View", difficulty: "Medium", url: "https://leetcode.com/problems/binary-tree-right-side-view/" }
   ],
   "2026-09-11": [
-    { platform: "leetcode", id: "LC 98", title: "Validate Binary Search Tree", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 701", title: "Insert into a Binary Search Tree", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 230", title: "Kth Smallest Element in a BST", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 108", title: "Convert Sorted Array to Binary Search Tree", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 450", title: "Delete Node in a BST", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 98", number: 98, title: "Validate Binary Search Tree", difficulty: "Medium", url: "https://leetcode.com/problems/validate-binary-search-tree/" },
+    { platform: "leetcode", id: "LC 701", number: 701, title: "Insert into a Binary Search Tree", difficulty: "Medium", url: "https://leetcode.com/problems/insert-into-a-binary-search-tree/" },
+    { platform: "leetcode", id: "LC 230", number: 230, title: "Kth Smallest Element in a BST", difficulty: "Medium", url: "https://leetcode.com/problems/kth-smallest-element-in-a-bst/" },
+    { platform: "leetcode", id: "LC 108", number: 108, title: "Convert Sorted Array to Binary Search Tree", difficulty: "Easy", url: "https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/" },
+    { platform: "leetcode", id: "LC 450", number: 450, title: "Delete Node in a BST", difficulty: "Medium", url: "https://leetcode.com/problems/delete-node-in-a-bst/" }
   ],
   "2026-09-12": [
-    { platform: "leetcode", id: "LC 200", title: "Number of Islands", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 133", title: "Clone Graph", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 207", title: "Course Schedule", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 994", title: "Rotting Oranges", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 127", title: "Word Ladder", difficulty: "Hard" }
+    { platform: "leetcode", id: "LC 200", number: 200, title: "Number of Islands", difficulty: "Medium", url: "https://leetcode.com/problems/number-of-islands/" },
+    { platform: "leetcode", id: "LC 133", number: 133, title: "Clone Graph", difficulty: "Medium", url: "https://leetcode.com/problems/clone-graph/" },
+    { platform: "leetcode", id: "LC 207", number: 207, title: "Course Schedule", difficulty: "Medium", url: "https://leetcode.com/problems/course-schedule/" },
+    { platform: "leetcode", id: "LC 994", number: 994, title: "Rotting Oranges", difficulty: "Medium", url: "https://leetcode.com/problems/rotting-oranges/" },
+    { platform: "leetcode", id: "LC 130", number: 130, title: "Surrounded Regions", difficulty: "Medium", url: "https://leetcode.com/problems/surrounded-regions/" }
   ],
   "2026-09-14": [
-    { platform: "leetcode", id: "LC 215", title: "Kth Largest Element in an Array", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 347", title: "Top K Frequent Elements", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 23", title: "Merge k Sorted Lists", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 295", title: "Find Median from Data Stream", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 373", title: "Find K Pairs with Smallest Sums", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 215", number: 215, title: "Kth Largest Element in an Array", difficulty: "Medium", url: "https://leetcode.com/problems/kth-largest-element-in-an-array/" },
+    { platform: "leetcode", id: "LC 703", number: 703, title: "Kth Largest Element in a Stream", difficulty: "Easy", url: "https://leetcode.com/problems/kth-largest-element-in-a-stream/" },
+    { platform: "leetcode", id: "LC 347", number: 347, title: "Top K Frequent Elements", difficulty: "Medium", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+    { platform: "leetcode", id: "LC 692", number: 692, title: "Top K Frequent Words", difficulty: "Medium", url: "https://leetcode.com/problems/top-k-frequent-words/" },
+    { platform: "leetcode", id: "LC 373", number: 373, title: "Find K Pairs with Smallest Sums", difficulty: "Medium", url: "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/" }
   ],
   "2026-09-15": [
-    { platform: "leetcode", id: "LC 547", title: "Number of Provinces", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 684", title: "Redundant Connection", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 721", title: "Accounts Merge", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 1584", title: "Min Cost to Connect All Points", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 990", title: "Satisfiability of Equality Equations", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 547", number: 547, title: "Number of Provinces", difficulty: "Medium", url: "https://leetcode.com/problems/number-of-provinces/" },
+    { platform: "leetcode", id: "LC 684", number: 684, title: "Redundant Connection", difficulty: "Medium", url: "https://leetcode.com/problems/redundant-connection/" },
+    { platform: "leetcode", id: "LC 721", number: 721, title: "Accounts Merge", difficulty: "Medium", url: "https://leetcode.com/problems/accounts-merge/" },
+    { platform: "leetcode", id: "LC 1584", number: 1584, title: "Min Cost to Connect All Points", difficulty: "Medium", url: "https://leetcode.com/problems/min-cost-to-connect-all-points/" },
+    { platform: "leetcode", id: "LC 990", number: 990, title: "Satisfiability of Equality Equations", difficulty: "Medium", url: "https://leetcode.com/problems/satisfiability-of-equality-equations/" }
   ],
   "2026-09-16": [
-    { platform: "leetcode", id: "LC 743", title: "Network Delay Time", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 787", title: "Cheapest Flights Within K Stops", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 1631", title: "Path With Minimum Effort", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 778", title: "Swim in Rising Water", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 1514", title: "Path with Maximum Probability", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 743", number: 743, title: "Network Delay Time", difficulty: "Medium", url: "https://leetcode.com/problems/network-delay-time/" },
+    { platform: "leetcode", id: "LC 787", number: 787, title: "Cheapest Flights Within K Stops", difficulty: "Medium", url: "https://leetcode.com/problems/cheapest-flights-within-k-stops/" },
+    { platform: "leetcode", id: "LC 1631", number: 1631, title: "Path With Minimum Effort", difficulty: "Medium", url: "https://leetcode.com/problems/path-with-minimum-effort/" },
+    { platform: "leetcode", id: "LC 1514", number: 1514, title: "Path with Maximum Probability", difficulty: "Medium", url: "https://leetcode.com/problems/path-with-maximum-probability/" },
+    { platform: "leetcode", id: "LC 1976", number: 1976, title: "Number of Ways to Arrive at Destination", difficulty: "Medium", url: "https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/" }
   ],
   "2026-09-17": [
-    { platform: "leetcode", id: "LC 198", title: "House Robber", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 213", title: "House Robber II", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 746", title: "Min Cost Climbing Stairs", difficulty: "Easy" },
-    { platform: "leetcode", id: "LC 91", title: "Decode Ways", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 322", title: "Coin Change", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 198", number: 198, title: "House Robber", difficulty: "Medium", url: "https://leetcode.com/problems/house-robber/" },
+    { platform: "leetcode", id: "LC 213", number: 213, title: "House Robber II", difficulty: "Medium", url: "https://leetcode.com/problems/house-robber-ii/" },
+    { platform: "leetcode", id: "LC 746", number: 746, title: "Min Cost Climbing Stairs", difficulty: "Easy", url: "https://leetcode.com/problems/min-cost-climbing-stairs/" },
+    { platform: "leetcode", id: "LC 91", number: 91, title: "Decode Ways", difficulty: "Medium", url: "https://leetcode.com/problems/decode-ways/" },
+    { platform: "leetcode", id: "LC 322", number: 322, title: "Coin Change", difficulty: "Medium", url: "https://leetcode.com/problems/coin-change/" }
   ],
   "2026-09-18": [
-    { platform: "leetcode", id: "LC 416", title: "Partition Equal Subset Sum", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 494", title: "Target Sum", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 518", title: "Coin Change II", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 62", title: "Unique Paths", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 64", title: "Minimum Path Sum", difficulty: "Medium" },
-    { platform: "gfg", id: "GFG", title: "0/1 Knapsack Problem", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 416", number: 416, title: "Partition Equal Subset Sum", difficulty: "Medium", url: "https://leetcode.com/problems/partition-equal-subset-sum/" },
+    { platform: "leetcode", id: "LC 494", number: 494, title: "Target Sum", difficulty: "Medium", url: "https://leetcode.com/problems/target-sum/" },
+    { platform: "leetcode", id: "LC 518", number: 518, title: "Coin Change II", difficulty: "Medium", url: "https://leetcode.com/problems/coin-change-ii/" },
+    { platform: "leetcode", id: "LC 62", number: 62, title: "Unique Paths", difficulty: "Medium", url: "https://leetcode.com/problems/unique-paths/" },
+    { platform: "leetcode", id: "LC 64", number: 64, title: "Minimum Path Sum", difficulty: "Medium", url: "https://leetcode.com/problems/minimum-path-sum/" }
   ],
   "2026-09-19": [
-    { platform: "leetcode", id: "LC 1143", title: "Longest Common Subsequence", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 300", title: "Longest Increasing Subsequence", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 72", title: "Edit Distance", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 516", title: "Longest Palindromic Subsequence", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 115", title: "Distinct Subsequences", difficulty: "Hard" }
+    { platform: "leetcode", id: "LC 1143", number: 1143, title: "Longest Common Subsequence", difficulty: "Medium", url: "https://leetcode.com/problems/longest-common-subsequence/" },
+    { platform: "leetcode", id: "LC 300", number: 300, title: "Longest Increasing Subsequence", difficulty: "Medium", url: "https://leetcode.com/problems/longest-increasing-subsequence/" },
+    { platform: "leetcode", id: "LC 72", number: 72, title: "Edit Distance", difficulty: "Medium", url: "https://leetcode.com/problems/edit-distance/" },
+    { platform: "leetcode", id: "LC 516", number: 516, title: "Longest Palindromic Subsequence", difficulty: "Medium", url: "https://leetcode.com/problems/longest-palindromic-subsequence/" },
+    { platform: "leetcode", id: "LC 583", number: 583, title: "Delete Operation for Two Strings", difficulty: "Medium", url: "https://leetcode.com/problems/delete-operation-for-two-strings/" }
   ],
   "2026-09-21": [
-    { platform: "leetcode", id: "LC 55", title: "Jump Game", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 45", title: "Jump Game II", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 134", title: "Gas Station", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 56", title: "Merge Intervals", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 435", title: "Non-overlapping Intervals", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 621", title: "Task Scheduler", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 55", number: 55, title: "Jump Game", difficulty: "Medium", url: "https://leetcode.com/problems/jump-game/" },
+    { platform: "leetcode", id: "LC 45", number: 45, title: "Jump Game II", difficulty: "Medium", url: "https://leetcode.com/problems/jump-game-ii/" },
+    { platform: "leetcode", id: "LC 134", number: 134, title: "Gas Station", difficulty: "Medium", url: "https://leetcode.com/problems/gas-station/" },
+    { platform: "leetcode", id: "LC 56", number: 56, title: "Merge Intervals", difficulty: "Medium", url: "https://leetcode.com/problems/merge-intervals/" },
+    { platform: "leetcode", id: "LC 435", number: 435, title: "Non-overlapping Intervals", difficulty: "Medium", url: "https://leetcode.com/problems/non-overlapping-intervals/" },
+    { platform: "leetcode", id: "LC 621", number: 621, title: "Task Scheduler", difficulty: "Medium", url: "https://leetcode.com/problems/task-scheduler/" }
   ],
   "2026-09-22": [
-    { platform: "leetcode", id: "LC 51", title: "N-Queens", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 47", title: "Permutations II", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 90", title: "Subsets II", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 37", title: "Sudoku Solver", difficulty: "Hard" },
-    { platform: "leetcode", id: "LC 79", title: "Word Search", difficulty: "Medium" },
-    { platform: "leetcode", id: "LC 131", title: "Palindrome Partitioning", difficulty: "Medium" }
+    { platform: "leetcode", id: "LC 47", number: 47, title: "Permutations II", difficulty: "Medium", url: "https://leetcode.com/problems/permutations-ii/" },
+    { platform: "leetcode", id: "LC 90", number: 90, title: "Subsets II", difficulty: "Medium", url: "https://leetcode.com/problems/subsets-ii/" },
+    { platform: "leetcode", id: "LC 79", number: 79, title: "Word Search", difficulty: "Medium", url: "https://leetcode.com/problems/word-search/" },
+    { platform: "leetcode", id: "LC 131", number: 131, title: "Palindrome Partitioning", difficulty: "Medium", url: "https://leetcode.com/problems/palindrome-partitioning/" },
+    { platform: "leetcode", id: "LC 77", number: 77, title: "Combinations", difficulty: "Medium", url: "https://leetcode.com/problems/combinations/" },
+    { platform: "leetcode", id: "LC 216", number: 216, title: "Combination Sum III", difficulty: "Medium", url: "https://leetcode.com/problems/combination-sum-iii/" }
   ]
 };

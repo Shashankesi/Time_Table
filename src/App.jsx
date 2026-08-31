@@ -1004,6 +1004,7 @@ export default function App() {
   };
 
   const getProblemLink = (prob) => {
+    if (prob.url) return prob.url;
     const slug = prob.title.toLowerCase().trim()
       .replace(/[^a-z0-9\s-]/g, "")
       .replace(/\s+/g, "-");
@@ -1962,65 +1963,71 @@ export default function App() {
                               </ul>
                             </div>
                           ) : (
-                            practiceProblemsData[selectedDate].map((prob, idx) => {
-                              const isSolved = !!(solvedProblems[selectedDate]?.[prob.title]);
-                              
-                              let diffColor = "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-950/10";
-                              if (prob.difficulty === "Medium") {
-                                diffColor = "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-950/10";
-                              } else if (prob.difficulty === "Hard") {
-                                diffColor = "bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border-rose-200/50 dark:border-rose-950/10";
-                              }
+                            <>
+                              <div className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold px-1 select-none flex items-center gap-1.5 mb-1">
+                                <span>💡</span>
+                                <span>No Hard problems in this month's set — most placement rounds stay Easy/Medium.</span>
+                              </div>
+                              {practiceProblemsData[selectedDate].map((prob, idx) => {
+                                const isSolved = !!(solvedProblems[selectedDate]?.[prob.title]);
+                                
+                                let diffColor = "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-950/10";
+                                if (prob.difficulty === "Medium") {
+                                  diffColor = "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-950/10";
+                                } else if (prob.difficulty === "Hard") {
+                                  diffColor = "bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border-rose-200/50 dark:border-rose-950/10";
+                                }
 
-                              const link = getProblemLink(prob);
+                                const link = getProblemLink(prob);
 
-                              return (
-                                <div 
-                                  key={idx}
-                                  className={`p-3.5 rounded-xl border flex items-center justify-between gap-4 transition-all ${
-                                    isSolved 
-                                      ? "bg-emerald-50/10 dark:bg-emerald-950/5 border-emerald-200/20 dark:border-emerald-950/10 opacity-60" 
-                                      : "bg-white dark:bg-slate-950/30 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800"
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-3 flex-wrap">
-                                    {/* Difficulty Badge */}
-                                    <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md border shrink-0 ${diffColor}`}>
-                                      {prob.difficulty}
-                                    </span>
-                                    {/* Title & Number */}
-                                    <span className={`text-xs font-semibold leading-snug ${isSolved ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
-                                      {prob.id ? `${prob.id} — ` : ""}{prob.title}
-                                    </span>
+                                return (
+                                  <div 
+                                    key={idx}
+                                    className={`p-3.5 rounded-xl border flex items-center justify-between gap-4 transition-all ${
+                                      isSolved 
+                                        ? "bg-emerald-50/10 dark:bg-emerald-950/5 border-emerald-200/20 dark:border-emerald-950/10 opacity-60" 
+                                        : "bg-white dark:bg-slate-950/30 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800"
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-3 flex-wrap">
+                                      {/* Difficulty Badge */}
+                                      <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md border shrink-0 ${diffColor}`}>
+                                        {prob.difficulty}
+                                      </span>
+                                      {/* Title & Number */}
+                                      <span className={`text-xs font-semibold leading-snug ${isSolved ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
+                                        {prob.id ? `${prob.id} — ` : ""}{prob.title}
+                                      </span>
+                                    </div>
+
+                                    <div className="flex items-center gap-3 shrink-0">
+                                      {/* Link Icon */}
+                                      <a 
+                                        href={link} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="p-1 text-slate-400 hover:text-emerald-500 hover:scale-108 transition-all"
+                                        title={`Open ${prob.title} on ${prob.platform.toUpperCase()}`}
+                                      >
+                                        <Globe className="w-3.5 h-3.5" />
+                                      </a>
+                                      
+                                      {/* Solve checkbox */}
+                                      <button
+                                        onClick={() => toggleProblemSolve(selectedDate, prob.title)}
+                                        className={`w-6.5 h-6.5 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300 ${
+                                          isSolved
+                                            ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-sm"
+                                            : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent scale-100"
+                                        }`}
+                                      >
+                                        <Check className={`w-3.5 h-3.5 stroke-[3.5] transition-all duration-300 ${isSolved ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
+                                      </button>
+                                    </div>
                                   </div>
-
-                                  <div className="flex items-center gap-3 shrink-0">
-                                    {/* Link Icon */}
-                                    <a 
-                                      href={link} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="p-1 text-slate-400 hover:text-emerald-500 hover:scale-108 transition-all"
-                                      title={`Open ${prob.title} on ${prob.platform.toUpperCase()}`}
-                                    >
-                                      <Globe className="w-3.5 h-3.5" />
-                                    </a>
-                                    
-                                    {/* Solve checkbox */}
-                                    <button
-                                      onClick={() => toggleProblemSolve(selectedDate, prob.title)}
-                                      className={`w-6.5 h-6.5 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300 ${
-                                        isSolved
-                                          ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-sm"
-                                          : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent scale-100"
-                                      }`}
-                                    >
-                                      <Check className={`w-3.5 h-3.5 stroke-[3.5] transition-all duration-300 ${isSolved ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
-                                    </button>
-                                  </div>
-                                </div>
-                              );
-                            })
+                                );
+                              })}
+                            </>
                           )}
                         </div>
                       )}
