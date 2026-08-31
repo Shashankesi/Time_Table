@@ -8,6 +8,7 @@ import {
   Coffee, 
   Filter, 
   ChevronDown,
+  ArrowRight,
   User,
   Database,
   Globe,
@@ -341,6 +342,7 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState(() => getCachedValue("selectedDate", "2026-09-01"));
   const [completions, setCompletions] = useState(() => getCachedValue("completions", {}));
   const [customTopics, setCustomTopics] = useState(() => getCachedValue("customTopics", {}));
+  const [deferredSlots, setDeferredSlots] = useState(() => getCachedValue("deferredSlots", {}));
   const [solvedProblems, setSolvedProblems] = useState(() => getCachedValue("solvedProblems", {}));
   const [isPracticeOpen, setIsPracticeOpen] = useState(true);
   const [subjectFilter, setSubjectFilter] = useState(null); 
@@ -459,8 +461,10 @@ export default function App() {
   }, [selectedDate]);
 
   const getDayChecklistKeys = (day) => {
+    if (!day) return [];
+    let keys = [];
     if (day.type === "study") {
-      return [
+      keys = [
         { key: "sql", label: "SQL Database", subject: "sql" },
         { key: "dsa", label: "DSA (Part 1)", subject: "dsa" },
         { key: "dsa_2", label: "DSA (Part 2)", subject: "dsa" },
@@ -473,27 +477,30 @@ export default function App() {
         { key: "revision", label: "Daily Revision", subject: "revision" }
       ];
     } else if (day.type === "rest") {
-      return [
+      keys = [
         { key: "mock_test", label: "Complete Week Mock Test", subject: "aptitude" },
         { key: "review", label: "Review Weak Areas", subject: "revision" },
         { key: "recharge", label: "Rest and Recharge", subject: "revision" }
       ];
     } else if (day.type === "revision") {
-      return [
+      keys = [
         { key: "sql_rev", label: "SQL Revision (Window, Joins, Aggregates)", subject: "sql" },
         { key: "dsa_rev", label: "DSA Revision (Trees, Hashing, Lists)", subject: "dsa" },
         { key: "webdev_rev", label: "Web Dev & Resume updates", subject: "webdev" },
         { key: "csfund_rev", label: "CS Fundamentals Revision (OS, DBMS)", subject: "csfund" }
       ];
     } else if (day.type === "final") {
-      return [
+      keys = [
         { key: "sql_mock", label: "SQL Mock Interview Round", subject: "sql" },
         { key: "dsa_mock", label: "DSA Mock Interview Round", subject: "dsa" },
         { key: "webdev_mock", label: "Projects & Web-Dev Mock Round", subject: "webdev" },
         { key: "hr_mock", label: "HR & Behavioral Mock Round", subject: "hr" }
       ];
     }
-    return [];
+    return keys.filter(item => {
+      const isDeferred = deferredSlots[day.date]?.[item.subject];
+      return !isDeferred;
+    });
   };
 
   const getDayProgress = (dateStr) => {
@@ -750,11 +757,101 @@ export default function App() {
     });
   };
 
+  const getNextStudyDate = (currentDateStr) => {
+    const currentIndex = days.findIndex((d) => d.date === currentDateStr);
+    if (currentIndex !== -1 && currentIndex < days.length - 1) {
+      return days[currentIndex + 1].date;
+    }
+    return null;
+  };
+
+  const deferSlotToNextDay = (dateStr, subject) => {
+    const nextDate = getNextStudyDate(dateStr);
+    if (!nextDate) {
+      alert("No next day found in the schedule!");
+      return;
+    }
+    
+    setDeferredSlots((prev) => {
+      const updated = { ...prev };
+      
+      // 1. Defer the topic originally scheduled on this dateStr if it's currently on this date
+      if (!updated[dateStr]) updated[dateStr] = {};
+      updated[dateStr][subject] = nextDate;
+      
+      // 2. Also defer any topics that were previously deferred to this dateStr
+      for (const srcDate in updated) {
+        if (updated[srcDate]?.[subject] === dateStr) {
+          updated[srcDate][subject] = nextDate;
+        }
+      }
+      
+      localStorage.setItem("deferredSlots", JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const undoDeferral = (srcDate, subject) => {
+    setDeferredSlots((prev) => {
+      const updated = { ...prev };
+      if (updated[srcDate]) {
+        delete updated[srcDate][subject];
+        if (Object.keys(updated[srcDate]).length === 0) {
+          delete updated[srcDate];
+        }
+      }
+      localStorage.setItem("deferredSlots", JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const getDisplayTopicsForSlot = (dateStr, subject) => {
+    const list = [];
+    
+    // 1. Get the original scheduled topic for this dateStr.
+    // It is displayed on dateStr ONLY if it has not been deferred to another date.
+    const isDeferredFromHere = deferredSlots[dateStr]?.[subject];
+    if (!isDeferredFromHere) {
+      const dayData = days.find((d) => d.date === dateStr);
+      if (dayData && dayData[subject]) {
+        const rawData = customTopics[dateStr]?.[subject] || dayData[subject];
+        list.push({
+          sourceDate: dateStr,
+          isCurrent: true,
+          topic: rawData.topic || rawData,
+          details: rawData.details || null,
+          resource: rawData.resource || null
+        });
+      }
+    }
+    
+    // 2. Find any topics originally scheduled on other dates that have been deferred to this dateStr.
+    for (const srcDate in deferredSlots) {
+      if (srcDate !== dateStr && deferredSlots[srcDate]?.[subject] === dateStr) {
+        const dayData = days.find((d) => d.date === srcDate);
+        if (dayData && dayData[subject]) {
+          const rawData = customTopics[srcDate]?.[subject] || dayData[subject];
+          list.push({
+            sourceDate: srcDate,
+            isCurrent: false,
+            topic: rawData.topic || rawData,
+            details: rawData.details || null,
+            resource: rawData.resource || null
+          });
+        }
+      }
+    }
+    
+    return list;
+  };
+
   const handleResetProgress = () => {
     if (window.confirm("Are you sure you want to reset all progress data? This action cannot be undone.")) {
       setCompletions({});
       setCustomTopics({});
       setSolvedProblems({});
+      setDeferredSlots({});
+      localStorage.removeItem("deferredSlots");
     }
   };
 
@@ -1611,20 +1708,14 @@ export default function App() {
 
                       if (shouldHide) return null;
 
-                      // Topic
+                      // Topic details resolution (including deferred ones)
+                      const displayTopics = getDisplayTopicsForSlot(selectedDate, slot.subject);
+                      const hasDetails = displayTopics.some(item => !!item.details);
+                      
                       let slotData = customTopics[selectedDate]?.[slot.subject] || currentDayData[slot.subject];
                       let focusTopicText = "";
-                      let details = null;
-                      let resource = null;
-
                       if (slotData) {
-                        if (typeof slotData === "object" && slotData.topic) {
-                          focusTopicText = slotData.topic;
-                          details = slotData.details;
-                          resource = slotData.resource;
-                        } else {
-                          focusTopicText = slotData;
-                        }
+                        focusTopicText = typeof slotData === "object" && slotData.topic ? slotData.topic : slotData;
                       } else {
                         if (isBreak) {
                           focusTopicText = slot.label;
@@ -1655,6 +1746,44 @@ export default function App() {
                       const activeColor = darkMode ? meta.darkAccentColor : meta.accentColor;
 
                       const isEditingThisSlot = editingSlotIndex === index;
+
+                      // RENDER DEFERRED STATE IF ENTIRE ORIGINAL TOPIC WAS MOVED AND NO DEFERRED TOPICS ARE HERE
+                      if (displayTopics.length === 0 && !isBreak) {
+                        const targetDate = deferredSlots[selectedDate]?.[slot.subject];
+                        return (
+                          <div 
+                            key={index} 
+                            className="relative group bg-slate-50/50 dark:bg-slate-950/10 border border-slate-200/60 dark:border-slate-900 border-dashed rounded-2xl p-4 flex flex-col gap-3 opacity-70 animate-fadeIn"
+                          >
+                            <div className="absolute left-0 top-3.5 bottom-3.5 w-1 rounded-r-md bg-amber-500/30" />
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
+                              <div className="flex items-center gap-4 pl-2 shrink-0">
+                                <span className="text-[11px] font-mono font-bold tracking-tight px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-slate-400 dark:text-slate-600">
+                                  {slot.time}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  <div className={`text-[10px] font-extrabold uppercase tracking-wider py-1.5 px-3 rounded-xl border flex items-center gap-1.5 ${meta.bgClass} ${meta.borderClass} ${meta.textClass} grayscale opacity-50 shadow-none`}>
+                                    <IconComp className="w-3.5 h-3.5" />
+                                    <span>{slot.label}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="flex-1 pl-2 md:pl-0 flex items-center justify-between gap-2.5">
+                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-450 italic">
+                                  👉 Topic deferred to {targetDate ? targetDate.split("-")[2] + " Sep" : "next day"}
+                                </span>
+                                <button
+                                  onClick={() => undoDeferral(selectedDate, slot.subject)}
+                                  className="px-3.5 py-1.5 text-xs bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 font-extrabold rounded-xl border border-indigo-200/50 dark:border-indigo-950/20 hover:bg-indigo-100 transition-all flex items-center gap-1.5 shadow-sm"
+                                >
+                                  <RefreshCw className="w-3.5 h-3.5" />
+                                  Undo Move
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
 
                       return (
                         <div 
@@ -1717,45 +1846,98 @@ export default function App() {
                             </div>
 
                             {/* Topic Details (PART A — Inline Editing) */}
-                            <div className="flex-1 pl-2 md:pl-0 flex items-center gap-2.5">
-                              {isEditingThisSlot ? (
-                                <div className="flex-1 flex gap-2">
-                                  <input
-                                    type="text"
-                                    value={editVal}
-                                    onChange={(e) => setEditVal(e.target.value)}
-                                    onKeyDown={(e) => {
-                                      if (e.key === "Enter") saveCustomTopic(slot.subject);
-                                      if (e.key === "Escape") setEditingSlotIndex(null);
-                                    }}
-                                    className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
-                                    autoFocus
-                                  />
-                                  <button 
-                                    onClick={() => saveCustomTopic(slot.subject)}
-                                    className="px-3.5 py-1.5 text-xs bg-emerald-505 hover:bg-emerald-500 text-slate-950 font-extrabold rounded-xl border border-emerald-500 transition-all"
-                                  >
-                                    Save
-                                  </button>
-                                  <button 
-                                    onClick={() => setEditingSlotIndex(null)}
-                                    className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
-                                  >
-                                    Cancel
-                                  </button>
-                                </div>
-                              ) : (
-                                <>
-                                  <p className={`text-sm leading-relaxed flex-1 ${
-                                    isChecked 
-                                      ? "line-through text-slate-400 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
-                                      : isBreak 
-                                      ? "text-slate-500 dark:text-slate-500 italic text-[11px]" 
-                                      : "text-slate-800 dark:text-slate-200 font-medium"
-                                  }`}>
+                            <div className="flex-1 pl-2 md:pl-0 flex items-center justify-between gap-2.5">
+                              <div className="flex-1 flex flex-col gap-4">
+                                {isEditingThisSlot ? (
+                                  <div className="flex gap-2">
+                                    <input
+                                      type="text"
+                                      value={editVal}
+                                      onChange={(e) => setEditVal(e.target.value)}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") saveCustomTopic(slot.subject);
+                                        if (e.key === "Escape") setEditingSlotIndex(null);
+                                      }}
+                                      className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-1.5 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500"
+                                      autoFocus
+                                    />
+                                    <button 
+                                      onClick={() => saveCustomTopic(slot.subject)}
+                                      className="px-3.5 py-1.5 text-xs bg-emerald-505 hover:bg-emerald-500 text-slate-950 font-extrabold rounded-xl border border-emerald-500 transition-all"
+                                    >
+                                      Save
+                                    </button>
+                                    <button 
+                                      onClick={() => setEditingSlotIndex(null)}
+                                      className="px-3.5 py-1.5 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                ) : isBreak ? (
+                                  <p className="text-slate-500 dark:text-slate-500 italic text-[11px]">
                                     {focusTopicText}
                                   </p>
-                                  {details && (
+                                ) : (
+                                  <div className="flex flex-col gap-3.5 w-full">
+                                    {displayTopics.map((item, itemIdx) => {
+                                      const isItemCurrent = item.sourceDate === selectedDate;
+                                      return (
+                                        <div key={itemIdx} className="flex flex-col gap-2 w-full border-l-2 pl-3 border-slate-200 dark:border-slate-800/80 last:border-0 last:pb-0">
+                                          <div className="flex items-start gap-2.5 flex-wrap">
+                                            {!isItemCurrent && (
+                                              <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0 select-none shadow-sm dark:shadow-none">
+                                                Deferred from {item.sourceDate.split("-")[2]} Sep
+                                              </span>
+                                            )}
+                                            <p className={`text-sm leading-relaxed flex-1 ${
+                                              isChecked 
+                                                ? "line-through text-slate-400 dark:text-slate-400 decoration-slate-450 dark:decoration-slate-600 font-medium" 
+                                                : "text-slate-800 dark:text-slate-200 font-semibold"
+                                            }`}>
+                                              {item.topic}
+                                            </p>
+                                          </div>
+                                          
+                                          {item.details && expandedRows[index] && (
+                                            <ul className="list-disc pl-5 mt-1 text-xs text-slate-600 dark:text-slate-350 flex flex-col gap-2 font-medium leading-relaxed">
+                                              {item.details.map((bullet, bIdx) => (
+                                                <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
+                                              ))}
+                                            </ul>
+                                          )}
+                                          
+                                          {item.resource && expandedRows[index] && (
+                                            <div className="mt-2.5 pt-2 border-t border-slate-105/50 dark:border-slate-800/40 flex flex-wrap items-center gap-2">
+                                              <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">
+                                                Reference Resource:
+                                              </span>
+                                              <a
+                                                href={item.resource.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
+                                                title={item.resource.note}
+                                              >
+                                                <span className="bg-red-500/10 text-red-500 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
+                                                  {item.resource.platform}
+                                                </span>
+                                                <span>{item.resource.channel}</span>
+                                                <span className="text-slate-400 dark:text-slate-500 font-bold">({item.resource.note})</span>
+                                              </a>
+                                            </div>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                              
+                              {/* Edit & Expand Actions */}
+                              {!isEditingThisSlot && !isBreak && (
+                                <div className="flex items-center gap-1.5 shrink-0 pl-2">
+                                  {hasDetails && (
                                     <button
                                       onClick={() => toggleRowExpand(index)}
                                       className="p-1 text-slate-400 hover:text-emerald-500 transition-colors shrink-0"
@@ -1764,22 +1946,29 @@ export default function App() {
                                       <ChevronDown className={`w-4 h-4 transform transition-transform duration-355 ${expandedRows[index] ? "rotate-180" : ""}`} />
                                     </button>
                                   )}
-                                  {!isBreak && (
-                                    <button
-                                      onClick={() => startEditing(index, focusTopicText)}
-                                      className="p-1.5 text-slate-400 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
-                                      title="Edit custom topic"
-                                    >
-                                      <Edit2 className="w-3.5 h-3.5" />
-                                    </button>
-                                  )}
-                                </>
+                                  <button
+                                    onClick={() => startEditing(index, focusTopicText)}
+                                    className="p-1.5 text-slate-400 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                                    title="Edit custom topic"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
                               )}
                             </div>
 
-                            {/* Action Checkbox */}
+                            {/* Action Checkbox & Defer Button */}
                             {!isBreak && completionKey && (
-                              <div className="flex items-center justify-end md:justify-center pr-1 shrink-0 pl-2 md:pl-0">
+                              <div className="flex items-center justify-end md:justify-center pr-1 shrink-0 pl-2 md:pl-0 gap-2">
+                                {!isChecked && getNextStudyDate(selectedDate) && (
+                                  <button
+                                    onClick={() => deferSlotToNextDay(selectedDate, slot.subject)}
+                                    className="w-7 h-7 rounded-lg border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-all shadow-sm"
+                                    title="Move uncompleted topic to next day"
+                                  >
+                                    <ArrowRight className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
                                 <button
                                   onClick={() => toggleCompletion(selectedDate, completionKey)}
                                   className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
@@ -1787,43 +1976,13 @@ export default function App() {
                                       ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
                                       : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-transparent hover:border-slate-400 dark:hover:border-slate-500 scale-100 shadow-sm"
                                   }`}
+                                  title={isChecked ? "Mark as incomplete" : "Mark as completed"}
                                 >
                                   <Check className={`w-4 h-4 stroke-[3.5] transition-all duration-300 ${isChecked ? "scale-100 rotate-0" : "scale-0 rotate-12"}`} />
                                 </button>
                               </div>
                             )}
                           </div>
-
-                          {/* Collapsible Details Drawer */}
-                          {details && expandedRows[index] && (
-                            <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 w-full animate-fadeIn">
-                              <ul className="list-disc pl-5 text-xs text-slate-600 dark:text-slate-300 flex flex-col gap-2 font-semibold leading-relaxed">
-                                {details.map((bullet, bIdx) => (
-                                  <li key={bIdx} className="hover:text-slate-900 dark:hover:text-white transition-colors">{bullet}</li>
-                                ))}
-                              </ul>
-                              {resource && (
-                                <div className="mt-3.5 pt-3 border-t border-slate-200/50 dark:border-slate-900/50 flex flex-wrap items-center gap-2">
-                                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500 select-none">
-                                    Reference Resource:
-                                  </span>
-                                  <a
-                                    href={resource.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 font-extrabold hover:underline"
-                                    title={resource.note}
-                                  >
-                                    <span className="bg-red-500/10 text-red-500 text-[10px] font-black px-2 py-0.5 rounded border border-red-500/20">
-                                      {resource.platform}
-                                    </span>
-                                    <span>{resource.channel}</span>
-                                    <span className="text-slate-400 dark:text-slate-500 font-bold">({resource.note})</span>
-                                  </a>
-                                </div>
-                              )}
-                            </div>
-                          )}
                         </div>
                       );
                     })
