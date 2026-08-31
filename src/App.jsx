@@ -813,15 +813,34 @@ export default function App() {
     const isDeferredFromHere = deferredSlots[dateStr]?.[subject];
     if (!isDeferredFromHere) {
       const dayData = days.find((d) => d.date === dateStr);
-      if (dayData && dayData[subject]) {
+      if (dayData) {
         const rawData = customTopics[dateStr]?.[subject] || dayData[subject];
-        list.push({
-          sourceDate: dateStr,
-          isCurrent: true,
-          topic: rawData.topic || rawData,
-          details: rawData.details || null,
-          resource: rawData.resource || null
-        });
+        if (rawData) {
+          list.push({
+            sourceDate: dateStr,
+            isCurrent: true,
+            topic: rawData.topic || rawData,
+            details: rawData.details || null,
+            resource: rawData.resource || null
+          });
+        } else {
+          // Resolve fallback text when the schedule doesn't define it explicitly
+          let defaultTopicText = "Review and practice concepts.";
+          if (subject === "aptitude") {
+            defaultTopicText = "Practice aptitude test sheets, quantitative equations, and placement mock coding platforms (LeetCode/GFG).";
+          } else if (subject === "hr") {
+            defaultTopicText = "Prepare standard behavioral questions and refine your pitch answers.";
+          } else if (subject === "revision") {
+            defaultTopicText = "Self-review of all subjects covered today, document mistakes, and bookmark tough codes.";
+          }
+          list.push({
+            sourceDate: dateStr,
+            isCurrent: true,
+            topic: defaultTopicText,
+            details: null,
+            resource: null
+          });
+        }
       }
     }
     
@@ -829,15 +848,33 @@ export default function App() {
     for (const srcDate in deferredSlots) {
       if (srcDate !== dateStr && deferredSlots[srcDate]?.[subject] === dateStr) {
         const dayData = days.find((d) => d.date === srcDate);
-        if (dayData && dayData[subject]) {
+        if (dayData) {
           const rawData = customTopics[srcDate]?.[subject] || dayData[subject];
-          list.push({
-            sourceDate: srcDate,
-            isCurrent: false,
-            topic: rawData.topic || rawData,
-            details: rawData.details || null,
-            resource: rawData.resource || null
-          });
+          if (rawData) {
+            list.push({
+              sourceDate: srcDate,
+              isCurrent: false,
+              topic: rawData.topic || rawData,
+              details: rawData.details || null,
+              resource: rawData.resource || null
+            });
+          } else {
+            let defaultTopicText = "Review and practice concepts.";
+            if (subject === "aptitude") {
+              defaultTopicText = "Practice aptitude test sheets, quantitative equations, and placement mock coding platforms (LeetCode/GFG).";
+            } else if (subject === "hr") {
+              defaultTopicText = "Prepare standard behavioral questions and refine your pitch answers.";
+            } else if (subject === "revision") {
+              defaultTopicText = "Self-review of all subjects covered today, document mistakes, and bookmark tough codes.";
+            }
+            list.push({
+              sourceDate: srcDate,
+              isCurrent: false,
+              topic: defaultTopicText,
+              details: null,
+              resource: null
+            });
+          }
         }
       }
     }
@@ -1748,8 +1785,9 @@ export default function App() {
                       const isEditingThisSlot = editingSlotIndex === index;
 
                       // RENDER DEFERRED STATE IF ENTIRE ORIGINAL TOPIC WAS MOVED AND NO DEFERRED TOPICS ARE HERE
-                      if (displayTopics.length === 0 && !isBreak) {
-                        const targetDate = deferredSlots[selectedDate]?.[slot.subject];
+                      const isDeferredFromHere = deferredSlots[selectedDate]?.[slot.subject];
+                      if (isDeferredFromHere && displayTopics.length === 0 && !isBreak) {
+                        const targetDate = isDeferredFromHere;
                         return (
                           <div 
                             key={index} 
