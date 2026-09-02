@@ -1,17 +1,49 @@
-export const timeSlots = [
+export const weekdayTimeSlots = [
   { time: "9:00–10:30 AM", subject: "sql", label: "SQL" },
   { time: "10:30–12:00 PM", subject: "dsa", label: "DSA (Part 1)" },
   { time: "12:00–1:00 PM", subject: "break", label: "Lunch Break" },
-  { time: "1:00–1:30 PM", subject: "dsa", label: "DSA (Part 2)" },
-  { time: "1:30–3:00 PM", subject: "webdev", label: "Web Development" },
-  { time: "3:00–4:00 PM", subject: "extratech", label: "Extra Tech Skill" },
-  { time: "4:00–5:00 PM", subject: "genai", label: "GenAI / RAG / Prompt Engineering" },
-  { time: "5:00–6:00 PM", subject: "csfund", label: "CS Fundamentals" },
-  { time: "6:00–7:00 PM", subject: "aptitude", label: "Aptitude, Reasoning & Coding Practice" },
+  { time: "1:00–2:15 PM", subject: "dsa", label: "DSA (Part 2)" },
+  { time: "2:15–2:30 PM", subject: "break", label: "Short Break" },
+  { time: "2:30–4:30 PM", subject: "webdev", label: "Web Development" },
+  { time: "4:30–5:00 PM", subject: "extratech", label: "Extra Tech Skill" },
+  { time: "5:00–6:00 PM", subject: "genai", label: "GenAI / RAG / Prompt Engineering" },
+  { time: "6:00–7:00 PM", subject: "csfund", label: "CS Fundamentals" },
   { time: "7:00–7:30 PM", subject: "hr", label: "HR / Behavioral Prep" },
   { time: "7:30–8:30 PM", subject: "break", label: "Dinner Break" },
   { time: "8:30–9:00 PM", subject: "revision", label: "Daily Revision" }
 ];
+
+export const saturdayTimeSlots = [
+  { time: "9:00–10:30 AM", subject: "sql", label: "SQL" },
+  { time: "10:30–12:00 PM", subject: "dsa", label: "DSA (Part 1)" },
+  { time: "12:00–1:00 PM", subject: "break", label: "Lunch Break" },
+  { time: "1:00–2:00 PM", subject: "dsa", label: "DSA (Part 2)" },
+  { time: "2:00–2:15 PM", subject: "break", label: "Short Break" },
+  { time: "2:15–3:45 PM", subject: "webdev", label: "Web Development" },
+  { time: "3:45–4:15 PM", subject: "extratech", label: "Extra Tech Skill" },
+  { time: "4:15–5:15 PM", subject: "genai", label: "GenAI / RAG / Prompt Engineering" },
+  { time: "5:15–6:15 PM", subject: "csfund", label: "CS Fundamentals" },
+  { time: "6:15–7:30 PM", subject: "aptitude", label: "Aptitude & Reasoning — Extended Practice" },
+  { time: "7:30–8:30 PM", subject: "break", label: "Dinner Break" },
+  { time: "8:30–9:00 PM", subject: "revision", label: "Daily Revision" }
+];
+
+export const classDayTimeSlots = [
+  { time: "9:00 AM–1:00 PM", subject: "class", label: "Classes" },
+  { time: "1:00–1:30 PM", subject: "break", label: "Lunch Break" },
+  { time: "1:30–2:30 PM", subject: "sql", label: "SQL" },
+  { time: "2:30–4:15 PM", subject: "dsa", label: "DSA" },
+  { time: "4:15–5:00 PM", subject: "webdev", label: "Web Development" },
+  { time: "5:00–5:15 PM", subject: "extratech", label: "Extra Tech Skill" },
+  { time: "5:15–6:00 PM", subject: "genai", label: "GenAI / RAG / Prompt Engineering" },
+  { time: "6:00–6:45 PM", subject: "csfund", label: "CS Fundamentals" },
+  { time: "6:45–7:20 PM", subject: "hr", label: "HR / Behavioral Prep" },
+  { time: "7:20–7:30 PM", subject: "break", label: "Short Break" },
+  { time: "7:30–8:30 PM", subject: "break", label: "Dinner Break" },
+  { time: "8:30–9:00 PM", subject: "revision", label: "Daily Revision" }
+];
+
+export const timeSlots = weekdayTimeSlots;
 
 export const days = [
   { date: "2026-09-01", day: "Tue", type: "study", week: 1,
@@ -82,7 +114,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-03", day: "Thu", type: "study", week: 1,
+  { date: "2026-09-03", day: "Thu", type: "study", week: 1, classDay: true,
     sql: "INNER/LEFT/RIGHT JOIN",
     dsa: "Two-pointer & sliding window: revision + medium/hard practice set",
     webdev: "Advanced JS: event loop, call stack, microtasks vs macrotasks",
@@ -115,7 +147,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-04", day: "Fri", type: "study", week: 1,
+  { date: "2026-09-04", day: "Fri", type: "study", week: 1, classDay: true,
     sql: "FULL JOIN, Self Join",
     dsa: "Hashing/HashMap: revision + practice (frequency counting, grouping, subarray-sum problems)",
     webdev: "DOM APIs + Fetch API — build an interactive UI without a framework",
@@ -182,7 +214,7 @@ export const days = [
   },
 
   { date: "2026-09-06", day: "Sun", type: "rest",
-    note: "Full mock test — Week 1 (SQL, DSA arrays/strings/hashing/recursion, Advanced JS). GenAI: no test, just make sure you can explain tokens/context window/temperature simply." },
+    note: "Full mock test — Week 1 (SQL, DSA arrays/strings/hashing/recursion, Advanced JS). GenAI: no test, just make sure you can explain tokens/context window/temperature simply.\n\nAlso this week: a 2-hour full-length timed Aptitude & Reasoning mock — simulate real test conditions (strict timer, no lookups)." },
 
   { date: "2026-09-07", day: "Mon", type: "study", week: 2,
     sql: "Subqueries",
@@ -282,7 +314,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-10", day: "Thu", type: "study", week: 2,
+  { date: "2026-09-10", day: "Thu", type: "study", week: 2, classDay: true,
     sql: "Window functions (LEAD, LAG)",
     dsa: "Binary Trees: revision + practice (traversals, views, diameter, LCA)",
     webdev: "React: useEffect, hooks",
@@ -316,7 +348,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-11", day: "Fri", type: "study", week: 2,
+  { date: "2026-09-11", day: "Fri", type: "study", week: 2, classDay: true,
     sql: "CTEs (Common Table Expressions)",
     dsa: "BST + balanced trees: revision + practice (validate BST, insert/delete, AVL basics)",
     webdev: "React: forms & events",
@@ -380,7 +412,7 @@ export const days = [
   },
 
   { date: "2026-09-13", day: "Sun", type: "rest",
-    note: "Full mock test — Week 2 (SQL, DSA: linked list/stack/queue/trees/graphs, React basics). GenAI: review your prompt library, refine 3 weakest entries." },
+    note: "Full mock test — Week 2 (SQL, DSA: linked list/stack/queue/trees/graphs, React basics). GenAI: review your prompt library, refine 3 weakest entries.\n\nAlso this week: a 2-hour full-length timed Aptitude & Reasoning mock — simulate real test conditions (strict timer, no lookups)." },
 
   { date: "2026-09-14", day: "Mon", type: "study", week: 3,
     sql: "Query optimization basics",
@@ -479,7 +511,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-17", day: "Thu", type: "study", week: 3,
+  { date: "2026-09-17", day: "Thu", type: "study", week: 3, classDay: true,
     sql: "Real-world query writing",
     dsa: "DP (1D): revision + practice (climbing stairs, house robber, coin change)",
     webdev: "Building REST APIs (CRUD)",
@@ -511,7 +543,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-18", day: "Fri", type: "study", week: 3,
+  { date: "2026-09-18", day: "Fri", type: "study", week: 3, classDay: true,
     sql: "Real-world query writing (joins + agg)",
     dsa: "DP (2D / Knapsack): revision + practice (0/1 knapsack, unbounded knapsack, grid DP)",
     webdev: "Connecting frontend to backend API",
@@ -574,7 +606,7 @@ export const days = [
   },
 
   { date: "2026-09-20", day: "Sun", type: "rest",
-    note: "Full mock test — Week 3 (SQL, DSA: heaps/graphs advanced/DP, Node/Express/REST APIs). GenAI: if Phase 2/3 feels shaky, use today to patch gaps before starting the build week." },
+    note: "Full mock test — Week 3 (SQL, DSA: heaps/graphs advanced/DP, Node/Express/REST APIs). GenAI: if Phase 2/3 feels shaky, use today to patch gaps before starting the build week.\n\nAlso this week: a 2-hour full-length timed Aptitude & Reasoning mock — simulate real test conditions (strict timer, no lookups)." },
 
   { date: "2026-09-21", day: "Mon", type: "study", week: 4,
     sql: "Full SQL revision",
@@ -669,7 +701,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-24", day: "Thu", type: "study", week: 4,
+  { date: "2026-09-24", day: "Thu", type: "study", week: 4, classDay: true,
     sql: "SQL revision + flashcards",
     dsa: "Company-wise practice set 2 (top Microsoft/Flipkart problems, timed)",
     webdev: "Deploy frontend (Vercel/Netlify)",
@@ -701,7 +733,7 @@ export const days = [
     }
   },
 
-  { date: "2026-09-25", day: "Fri", type: "study", week: 4,
+  { date: "2026-09-25", day: "Fri", type: "study", week: 4, classDay: true,
     sql: "Mock SQL interview round",
     dsa: "Weak-topic focused revision — pick your 2-3 shakiest topics from the month and drill them",
     webdev: "Polish full-stack project (README, demo)",
@@ -768,7 +800,7 @@ export const days = [
   },
 
   { date: "2026-09-27", day: "Sun", type: "rest",
-    note: "Full mock test — Week 4 (SQL, DSA greedy/backtracking/company sets, MERN deployment). GenAI: run through your RAG project demo end-to-end once, unscripted." },
+    note: "Full mock test — Week 4 (SQL, DSA greedy/backtracking/company sets, MERN deployment). GenAI: run through your RAG project demo end-to-end once, unscripted.\n\nAlso this week: a 2-hour full-length timed Aptitude & Reasoning mock — simulate real test conditions (strict timer, no lookups)." },
 
   { date: "2026-09-28", day: "Mon", type: "revision",
     note: "Full revision day — SQL + DSA. For DSA: targeted practice on your weakest 2-3 topics only, not a full re-do." },

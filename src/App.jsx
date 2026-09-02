@@ -6,6 +6,7 @@ import {
   Award, 
   BookOpen, 
   Coffee, 
+  GraduationCap,
   Filter, 
   ChevronDown,
   ArrowRight,
@@ -43,7 +44,7 @@ import {
 } from "recharts";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { RoundedBox, ContactShadows, OrbitControls, Sparkles } from "@react-three/drei";
-import { timeSlots, days, interviewQuestions, weekThemes, practiceProblemsData } from "./data";
+import { weekdayTimeSlots, saturdayTimeSlots, classDayTimeSlots, timeSlots, days, interviewQuestions, weekThemes, practiceProblemsData } from "./data";
 
 // WebGL support detector
 const checkWebGLSupport = () => {
@@ -155,6 +156,72 @@ const subjectMetadata = {
     filledClass: "bg-slate-600 dark:bg-slate-500 text-white dark:text-slate-950 border-slate-600 dark:border-slate-500 hover:bg-slate-700 dark:hover:bg-slate-400",
     accentColor: "#475569",
     darkAccentColor: "#94a3b8"
+  },
+  aptitude_hr: {
+    name: "🧩🤝 Aptitude + HR",
+    icon: Award,
+    colorClass: "rose",
+    bgClass: "bg-gradient-to-r from-rose-50 to-amber-50 dark:from-rose-500/10 dark:to-yellow-500/10",
+    borderClass: "border-rose-200 dark:border-rose-500/20",
+    textClass: "text-rose-800 dark:text-rose-400",
+    filledClass: "bg-rose-600 dark:bg-rose-500 text-white dark:text-slate-950 border-rose-600 dark:border-rose-500 hover:bg-rose-700 dark:hover:bg-rose-400",
+    accentColor: "#e11d48",
+    darkAccentColor: "#f43f5e"
+  },
+  class: {
+    name: "🎓 Classes",
+    icon: GraduationCap,
+    colorClass: "indigo",
+    bgClass: "bg-indigo-50/50 dark:bg-indigo-950/20",
+    borderClass: "border-indigo-200/80 dark:border-indigo-900/50",
+    textClass: "text-indigo-600 dark:text-indigo-400",
+    filledClass: "bg-indigo-600 dark:bg-indigo-500 text-white dark:text-slate-950 border-indigo-600 dark:border-indigo-500",
+    accentColor: "#6366f1",
+    darkAccentColor: "#818cf8"
+  }
+};
+
+// Targeted behavioral prep prompts for the 8 Class Days (combining Aptitude + HR)
+const classDayHrPrompts = {
+  "2026-09-03": {
+    q: "Tell me about yourself.",
+    prompt: "Structure: Present role & MERN/GenAI focus → Past key project milestones → Future excitement for the role.",
+    tip: "Keep it under 90 seconds. Focus on hands-on building experience."
+  },
+  "2026-09-04": {
+    q: "Walk through your proudest engineering project.",
+    prompt: "STAR format: Problem solved, your architectural choices, and the single hardest technical bug you fixed.",
+    tip: "Explain why you chose the tech stack over simpler alternatives."
+  },
+  "2026-09-10": {
+    q: "Describe a challenge or conflict you faced in a group project.",
+    prompt: "Situation: Team disagreement or blocker in development → Action: Data-backed resolution → Result: Shipped on time.",
+    tip: "Emphasize listening, objective trade-offs, and zero finger-pointing."
+  },
+  "2026-09-11": {
+    q: "How do you handle tight deadlines or shifting project requirements?",
+    prompt: "Explain your triage process: Breaking down features into MVP, communicating blockers early, and ruthless prioritization.",
+    tip: "Share a real example of scoping down an edge feature to ensure core delivery."
+  },
+  "2026-09-17": {
+    q: "Why should we hire you over other candidates?",
+    prompt: "Direct value proposition: 'I bring hands-on full-stack engineering coupled with real RAG/GenAI pipeline implementation experience.'",
+    tip: "Align directly with what the team is currently building."
+  },
+  "2026-09-18": {
+    q: "Where do you see your engineering journey in 2–3 years?",
+    prompt: "Growth path: Deep technical mastery in distributed systems/AI integrations, contributing to core architecture, and mentoring juniors.",
+    tip: "Demonstrate steady ambition and commitment to technical depth."
+  },
+  "2026-09-24": {
+    q: "What is your greatest weakness and how are you actively improving it?",
+    prompt: "Honest technical weakness (e.g., wanting to prematurely optimize code) + proactive system (e.g., strict timeboxing & MVP milestones).",
+    tip: "Always show self-awareness followed immediately by the compensating habit."
+  },
+  "2026-09-25": {
+    q: "What thoughtful questions will you ask the engineering interviewer?",
+    prompt: "Prepare 2 high-signal questions: 1 on architecture/engineering trade-offs, 1 on sprint cycles and code review culture.",
+    tip: "Never say 'I have no questions' — asking insightful questions demonstrates engineering curiosity."
   }
 };
 
@@ -478,21 +545,47 @@ export default function App() {
     if (!day) return [];
     let keys = [];
     if (day.type === "study") {
-      keys = [
-        { key: "sql", label: "SQL Database", subject: "sql" },
-        { key: "dsa", label: "DSA (Part 1)", subject: "dsa" },
-        { key: "dsa_2", label: "DSA (Part 2)", subject: "dsa" },
-        { key: "webdev", label: "Web Development", subject: "webdev" },
-        { key: "extratech", label: "Extra Tech Skill", subject: "extratech" },
-        { key: "genai", label: "GenAI / RAG / Prompts", subject: "genai" },
-        { key: "csfund", label: "CS Fundamentals", subject: "csfund" },
-        { key: "aptitude", label: "Aptitude & Coding Practice", subject: "aptitude" },
-        { key: "hr", label: "HR / Behavioral Prep", subject: "hr" },
-        { key: "revision", label: "Daily Revision", subject: "revision" }
-      ];
+      if (day.classDay) {
+        keys = [
+          { key: "sql", label: "SQL Database", subject: "sql" },
+          { key: "dsa", label: "DSA", subject: "dsa" },
+          { key: "webdev", label: "Web Development", subject: "webdev" },
+          { key: "extratech", label: "Extra Tech Skill", subject: "extratech" },
+          { key: "genai", label: "GenAI / RAG / Prompts", subject: "genai" },
+          { key: "csfund", label: "CS Fundamentals", subject: "csfund" },
+          { key: "hr", label: "HR / Behavioral Prep", subject: "hr" },
+          { key: "revision", label: "Daily Revision", subject: "revision" }
+        ];
+      } else if (day.day === "Sat") {
+        keys = [
+          { key: "sql", label: "SQL Database", subject: "sql" },
+          { key: "dsa", label: "DSA (Part 1)", subject: "dsa" },
+          { key: "dsa_2", label: "DSA (Part 2)", subject: "dsa" },
+          { key: "webdev", label: "Web Development", subject: "webdev" },
+          { key: "extratech", label: "Extra Tech Skill", subject: "extratech" },
+          { key: "genai", label: "GenAI / RAG / Prompts", subject: "genai" },
+          { key: "csfund", label: "CS Fundamentals", subject: "csfund" },
+          { key: "aptitude", label: "Aptitude & Reasoning (Extended)", subject: "aptitude" },
+          { key: "revision", label: "Daily Revision", subject: "revision" }
+        ];
+      } else {
+        // Mon / Tue / Wed regular study days (no aptitude slot)
+        keys = [
+          { key: "sql", label: "SQL Database", subject: "sql" },
+          { key: "dsa", label: "DSA (Part 1)", subject: "dsa" },
+          { key: "dsa_2", label: "DSA (Part 2)", subject: "dsa" },
+          { key: "webdev", label: "Web Development", subject: "webdev" },
+          { key: "extratech", label: "Extra Tech Skill", subject: "extratech" },
+          { key: "genai", label: "GenAI / RAG / Prompts", subject: "genai" },
+          { key: "csfund", label: "CS Fundamentals", subject: "csfund" },
+          { key: "hr", label: "HR / Behavioral Prep", subject: "hr" },
+          { key: "revision", label: "Daily Revision", subject: "revision" }
+        ];
+      }
     } else if (day.type === "rest") {
       keys = [
         { key: "mock_test", label: "Complete Week Mock Test", subject: "aptitude" },
+        { key: "aptitude_mock", label: "2-Hour Timed Aptitude & Reasoning Mock", subject: "aptitude" },
         { key: "review", label: "Review Weak Areas", subject: "revision" },
         { key: "recharge", label: "Rest and Recharge", subject: "revision" }
       ];
@@ -524,7 +617,15 @@ export default function App() {
     const checklist = getDayChecklistKeys(day);
     const dayCompletions = completions[dateStr] || {};
     
-    const done = checklist.filter((item) => dayCompletions[item.key] === true).length;
+    const isItemDone = (key) => {
+      if (dayCompletions[key] === true) return true;
+      if (key === "aptitude_hr") {
+        return !!(dayCompletions.aptitude_hr || (dayCompletions.aptitude && dayCompletions.hr));
+      }
+      return false;
+    };
+
+    const done = checklist.filter((item) => isItemDone(item.key)).length;
     const total = checklist.length;
     const percentage = total > 0 ? Math.round((done / total) * 100) : 0;
 
@@ -538,9 +639,17 @@ export default function App() {
       const checklist = getDayChecklistKeys(day);
       const dayCompletions = completions[day.date] || {};
 
+      const isItemDone = (key) => {
+        if (dayCompletions[key] === true) return true;
+        if (key === "aptitude_hr") {
+          return !!(dayCompletions.aptitude_hr || (dayCompletions.aptitude && dayCompletions.hr));
+        }
+        return false;
+      };
+
       checklist.forEach((item) => {
         stats[day.week].total += 1;
-        if (dayCompletions[item.key] === true) {
+        if (isItemDone(item.key)) {
           stats[day.week].done += 1;
         }
       });
@@ -748,18 +857,41 @@ export default function App() {
       const dayCompletions = prev[dateStr] || {};
       const wasCompleted = getDayProgress(dateStr).percentage === 100;
       
+      let newDayCompletions = { ...dayCompletions };
+
+      if (itemKey === "aptitude_hr") {
+        const nextState = !(dayCompletions.aptitude_hr || (dayCompletions.aptitude && dayCompletions.hr));
+        newDayCompletions.aptitude_hr = nextState;
+        newDayCompletions.aptitude = nextState;
+        newDayCompletions.hr = nextState;
+      } else {
+        newDayCompletions[itemKey] = !dayCompletions[itemKey];
+        if (itemKey === "aptitude" || itemKey === "hr") {
+          const otherKey = itemKey === "aptitude" ? "hr" : "aptitude";
+          if (newDayCompletions[itemKey] && dayCompletions[otherKey]) {
+            newDayCompletions.aptitude_hr = true;
+          } else if (!newDayCompletions[itemKey]) {
+            newDayCompletions.aptitude_hr = false;
+          }
+        }
+      }
+
       const newCompletions = {
         ...prev,
-        [dateStr]: {
-          ...dayCompletions,
-          [itemKey]: !dayCompletions[itemKey]
-        }
+        [dateStr]: newDayCompletions
       };
 
       const day = days.find((d) => d.date === dateStr);
       const checklist = getDayChecklistKeys(day);
-      const updatedDayCompletions = newCompletions[dateStr] || {};
-      const done = checklist.filter((item) => updatedDayCompletions[item.key] === true).length;
+      const isItemDone = (key) => {
+        if (newDayCompletions[key] === true) return true;
+        if (key === "aptitude_hr") {
+          return !!(newDayCompletions.aptitude_hr || (newDayCompletions.aptitude && newDayCompletions.hr));
+        }
+        return false;
+      };
+
+      const done = checklist.filter((item) => isItemDone(item.key)).length;
       const total = checklist.length;
       const newPercentage = total > 0 ? Math.round((done / total) * 100) : 0;
 
@@ -985,8 +1117,18 @@ export default function App() {
       if (day.date.includes(query) || dateString.includes(query) || day.day.toLowerCase().includes(query)) {
         results.push({
           date: day.date,
-          title: `Day ${dayNum} — ${day.day}, Sept ${dayNum}`,
-          subtitle: day.type === "study" ? "Standard Study Timetable" : day.note,
+          title: `Day ${dayNum} — ${day.day}, Sept ${dayNum}${day.classDay ? " (Class Day)" : ""}`,
+          subtitle: day.classDay ? "Class Day Schedule (9 AM–1 PM Classes)" : day.type === "study" ? "Standard Study Timetable" : day.note,
+          subjectMatch: null
+        });
+        return;
+      }
+
+      if (day.classDay && "class".includes(query)) {
+        results.push({
+          date: day.date,
+          title: `Day ${dayNum} — ${day.day}, Sept ${dayNum} (Class Day)`,
+          subtitle: "Compressed Timetable (9 AM–1 PM Classes + Study)",
           subjectMatch: null
         });
         return;
@@ -1516,6 +1658,10 @@ export default function App() {
                     <span>Study</span>
                   </div>
                   <div className="flex items-center gap-1.5">
+                    <GraduationCap className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
+                    <span>Class (Thu/Fri)</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-md bg-indigo-100 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30"></span>
                     <span>Rest</span>
                   </div>
@@ -1552,6 +1698,9 @@ export default function App() {
                     typeStyles = isSelected 
                       ? "border-emerald-500 bg-white dark:bg-slate-900 shadow-[0_0_12px_rgba(16,185,129,0.2)] text-slate-900 dark:text-white font-bold" 
                       : "border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/30 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-900/50";
+                    if (day.classDay) {
+                      ChipIcon = GraduationCap;
+                    }
                   } else if (day.type === "rest") {
                     typeStyles = isSelected
                       ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950/45 shadow-[0_0_12px_rgba(129,140,248,0.3)] text-indigo-900 dark:text-indigo-100 font-bold"
@@ -1583,14 +1732,17 @@ export default function App() {
                           {day.day}
                         </span>
                         {ChipIcon ? (
-                          <ChipIcon className="w-3 h-3 opacity-90" />
+                          <ChipIcon className={`w-3 h-3 opacity-90 ${day.classDay ? "text-indigo-500 dark:text-indigo-400" : ""}`} />
                         ) : (
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 opacity-60"></span>
                         )}
                       </div>
 
-                      <div className="text-2xl font-black font-mono tracking-tight my-0.5 leading-none">
-                        {dayNum}
+                      <div className="flex items-center justify-center gap-1 my-0.5 leading-none">
+                        <span className="text-2xl font-black font-mono tracking-tight">{dayNum}</span>
+                        {day.classDay && (
+                          <GraduationCap className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" title="Class Day (9 AM–1 PM Classes)" />
+                        )}
                       </div>
 
                       <div className="relative w-5 h-5 flex items-center justify-center">
@@ -1674,16 +1826,34 @@ export default function App() {
 
                     <div className="flex items-center justify-between md:justify-end gap-6 shrink-0 pt-4 md:pt-0 border-t md:border-t-0 border-slate-200 dark:border-slate-900">
                       
-                      <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-xl border ${
+                      <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-xl border flex items-center gap-1.5 ${
                         currentDayData.type === "study" 
-                          ? "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800" 
+                          ? currentDayData.classDay 
+                            ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/30"
+                            : currentDayData.day === "Sat"
+                            ? "bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-500/30"
+                            : "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800" 
                           : currentDayData.type === "rest"
                           ? "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/20"
                           : currentDayData.type === "revision"
                           ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20"
                           : "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20"
                       }`}>
-                        {currentDayData.type === "study" ? "Study Day" : currentDayData.type === "rest" ? "Rest & Mock" : currentDayData.type === "revision" ? "Full Revision" : "Final Mock Round"}
+                        {currentDayData.type === "study" ? (
+                          currentDayData.classDay ? (
+                            <>
+                              <GraduationCap className="w-3.5 h-3.5" />
+                              <span>Class Day (Thu/Fri)</span>
+                            </>
+                          ) : currentDayData.day === "Sat" ? (
+                            <>
+                              <Sparkles className="w-3.5 h-3.5 text-purple-500" />
+                              <span>Saturday (Aptitude Focus)</span>
+                            </>
+                          ) : (
+                            "Study Day (Mon–Wed)"
+                          )
+                        ) : currentDayData.type === "rest" ? "Rest & Mock" : currentDayData.type === "revision" ? "Full Revision" : "Final Mock Round"}
                       </span>
 
                       <div 
@@ -1796,13 +1966,22 @@ export default function App() {
                   className="flex flex-col gap-3.5 animate-flipIn"
                 >
                   {currentDayData.type === "study" ? (
-                    timeSlots.map((slot, index) => {
+                    (currentDayData.classDay 
+                      ? classDayTimeSlots 
+                      : currentDayData.day === "Sat" 
+                      ? saturdayTimeSlots 
+                      : weekdayTimeSlots
+                    ).map((slot, index) => {
                       const isBreak = slot.subject === "break";
+                      const isClass = slot.subject === "class";
+                      const isAptitudeHr = slot.subject === "aptitude_hr";
+                      const isQuietRow = isBreak || isClass;
+                      const isClassDayHr = slot.subject === "hr" && currentDayData.classDay && !!classDayHrPrompts[selectedDate];
                       
                       let completionKey = null;
                       if (slot.subject === "sql") completionKey = "sql";
                       else if (slot.subject === "dsa") {
-                        completionKey = index === 1 ? "dsa" : "dsa_2";
+                        completionKey = (currentDayData.classDay || index === 1) ? "dsa" : "dsa_2";
                       }
                       else if (slot.subject === "webdev") completionKey = "webdev";
                       else if (slot.subject === "extratech") completionKey = "extratech";
@@ -1810,19 +1989,24 @@ export default function App() {
                       else if (slot.subject === "csfund") completionKey = "csfund";
                       else if (slot.subject === "aptitude") completionKey = "aptitude";
                       else if (slot.subject === "hr") completionKey = "hr";
+                      else if (slot.subject === "aptitude_hr") completionKey = "aptitude_hr";
                       else if (slot.subject === "revision") completionKey = "revision";
 
-                      const isChecked = completionKey ? !!(completions[selectedDate]?.[completionKey]) : false;
+                      const isChecked = completionKey ? (
+                        completionKey === "aptitude_hr"
+                          ? !!(completions[selectedDate]?.aptitude_hr || (completions[selectedDate]?.aptitude && completions[selectedDate]?.hr))
+                          : !!(completions[selectedDate]?.[completionKey])
+                      ) : false;
                       
                       let isMatch = false;
                       let shouldDim = false;
                       let shouldHide = false;
 
                       if (subjectFilter) {
-                        isMatch = slot.subject === subjectFilter;
+                        isMatch = slot.subject === subjectFilter || (isAptitudeHr && (subjectFilter === "aptitude" || subjectFilter === "hr"));
                         if (!isMatch) {
                           shouldDim = true;
-                          if (filterMode === "isolate" && !isBreak) {
+                          if (filterMode === "isolate" && !isQuietRow) {
                             shouldHide = true;
                           }
                         }
@@ -1831,8 +2015,8 @@ export default function App() {
                       if (shouldHide) return null;
 
                       // Topic details resolution (including deferred ones)
-                      const displayTopics = getDisplayTopicsForSlot(selectedDate, slot.subject);
-                      const hasDetails = displayTopics.some(item => !!item.details);
+                      const displayTopics = isQuietRow ? [] : getDisplayTopicsForSlot(selectedDate, slot.subject);
+                      const hasDetails = displayTopics.some(item => !!item.details) || (isAptitudeHr && !!currentDayData.aptitude?.details) || isClassDayHr;
                       
                       let slotData = customTopics[selectedDate]?.[slot.subject] || currentDayData[slot.subject];
                       let focusTopicText = "";
@@ -1841,9 +2025,15 @@ export default function App() {
                       } else {
                         if (isBreak) {
                           focusTopicText = slot.label;
+                        } else if (isClass) {
+                          focusTopicText = slot.label;
+                        } else if (isClassDayHr) {
+                          focusTopicText = classDayHrPrompts[selectedDate]?.q || "HR / Behavioral Prep";
+                        } else if (isAptitudeHr) {
+                          focusTopicText = "Aptitude + HR (Combined Focus)";
                         } else {
                           if (slot.subject === "aptitude") {
-                            focusTopicText = "Practice aptitude test sheets, quantitative equations, and placement mock coding platforms (LeetCode/GFG).";
+                            focusTopicText = "Aptitude & Reasoning — Extended Practice (Quantitative, Logical, Placement mock test sets).";
                           } else if (slot.subject === "hr") {
                             focusTopicText = "Prepare standard behavioral questions and refine your pitch answers.";
                           } else if (slot.subject === "revision") {
@@ -1871,7 +2061,7 @@ export default function App() {
 
                       // RENDER DEFERRED STATE IF ENTIRE ORIGINAL TOPIC WAS MOVED AND NO DEFERRED TOPICS ARE HERE
                       const isDeferredFromHere = deferredSlots[selectedDate]?.[slot.subject];
-                      if (isDeferredFromHere && displayTopics.length === 0 && !isBreak) {
+                      if (isDeferredFromHere && displayTopics.length === 0 && !isQuietRow) {
                         const targetDate = isDeferredFromHere;
                         return (
                           <div 
@@ -1914,6 +2104,8 @@ export default function App() {
                           className={`relative group bg-white/70 dark:bg-slate-900/30 border rounded-2xl p-4.5 flex flex-col gap-4.5 transition-all duration-300 ${
                             isBreak 
                               ? "bg-slate-100/50 dark:bg-slate-950/20 text-slate-500 dark:text-slate-500 border-slate-200/80 dark:border-slate-900/50 border-dashed" 
+                              : isClass
+                              ? "bg-indigo-50/20 dark:bg-indigo-950/15 text-indigo-700 dark:text-indigo-400 border-indigo-200/60 dark:border-indigo-900/40 border-dashed"
                               : isChecked 
                               ? "bg-emerald-50/20 dark:bg-emerald-950/5 border-emerald-200/40 dark:border-emerald-950/15 opacity-55" 
                               : "border-slate-200 dark:border-slate-900 hover:bg-white dark:hover:bg-slate-900/55 hover:border-slate-300 dark:hover:border-slate-800 shadow-sm"
@@ -1928,7 +2120,7 @@ export default function App() {
                           }`}
                         >
                           {/* Accent left border */}
-                          {!isBreak && (
+                          {!isQuietRow && (
                             <div 
                               className="absolute left-0 top-4 bottom-4 w-1.5 rounded-r-md transition-colors duration-300"
                               style={{ backgroundColor: activeColor }}
@@ -1948,6 +2140,14 @@ export default function App() {
                                   <Coffee className="w-3.5 h-3.5" />
                                   <span className="text-[10px] font-extrabold uppercase tracking-wider">{slot.label}</span>
                                 </div>
+                              ) : isClass ? (
+                                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 select-none">
+                                  <GraduationCap className="w-4 h-4 shrink-0" />
+                                  <span className="text-[10px] font-extrabold uppercase tracking-wider">{slot.label}</span>
+                                  <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 hidden sm:inline">
+                                    College / Academy Lectures (Blocked Period)
+                                  </span>
+                                </div>
                               ) : (
                                 <div className="flex items-center gap-2">
                                   <div 
@@ -1964,20 +2164,30 @@ export default function App() {
                                        parseInt(selectedDate.split("-")[2]) <= 19 ? "RAG Arch." : "Build"}
                                     </div>
                                   )}
+                                  {slot.subject === "aptitude" && currentDayData.day === "Sat" && (
+                                    <div className="text-[9px] font-black uppercase tracking-wider py-1 px-2.5 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/25 shrink-0 select-none shadow-sm dark:shadow-none hidden sm:inline-flex items-center gap-1">
+                                      <span>⚡ 75m Extended Practice</span>
+                                    </div>
+                                  )}
+                                  {isClassDayHr && (
+                                    <div className="text-[9px] font-black uppercase tracking-wider py-1 px-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/25 shrink-0 select-none shadow-sm dark:shadow-none hidden sm:inline-flex items-center gap-1">
+                                      <span>💼 35m STAR Prompt</span>
+                                    </div>
+                                  )}
                                 </div>
                               )}
                             </div>
 
                             {/* Right: Actions Container */}
-                            {!isBreak && (
+                            {!isQuietRow && (
                               <div className="flex items-center gap-3 shrink-0">
                                 {/* Edit & Expand Actions */}
-                                {!isEditingThisSlot && (
+                                {!isEditingThisSlot && !isAptitudeHr && (
                                   <div className="flex items-center gap-1.5">
                                     {hasDetails && (
                                       <button
                                         onClick={() => toggleRowExpand(index)}
-                                        className="p-1.5 text-slate-455 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-colors shrink-0"
+                                        className="p-1.5 text-slate-455 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-colors shrink-0 cursor-pointer"
                                         title="Toggle study details"
                                       >
                                         <ChevronDown className={`w-4 h-4 transform transition-transform duration-355 ${expandedRows[index] ? "rotate-180" : ""}`} />
@@ -1985,7 +2195,7 @@ export default function App() {
                                     )}
                                     <button
                                       onClick={() => startEditing(index, focusTopicText)}
-                                      className="p-1.5 text-slate-455 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 opacity-0 group-hover:opacity-100 transition-all rounded-lg shrink-0"
+                                      className="p-1.5 text-slate-455 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 opacity-0 group-hover:opacity-100 transition-all rounded-lg shrink-0 cursor-pointer"
                                       title="Edit custom topic"
                                     >
                                       <Edit2 className="w-3.5 h-3.5" />
@@ -1996,10 +2206,10 @@ export default function App() {
                                 {/* Checkbox & Defer Buttons */}
                                 {completionKey && (
                                   <div className="flex items-center gap-2">
-                                    {!isChecked && getNextStudyDate(selectedDate) && (
+                                    {!isChecked && !isAptitudeHr && getNextStudyDate(selectedDate) && (
                                       <button
                                         onClick={() => deferSlotToNextDay(selectedDate, slot.subject)}
-                                        className="w-7 h-7 rounded-lg border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-all shadow-sm"
+                                        className="w-7 h-7 rounded-lg border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-all shadow-sm cursor-pointer"
                                         title="Move uncompleted topic to next day"
                                       >
                                         <ArrowRight className="w-3.5 h-3.5" />
@@ -2007,7 +2217,7 @@ export default function App() {
                                     )}
                                     <button
                                       onClick={() => handleCheckboxClick(selectedDate, completionKey, slot.time, slot.label, isChecked)}
-                                      className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 ${
+                                      className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-all duration-300 cursor-pointer ${
                                         isChecked
                                           ? "bg-emerald-500 border-emerald-500 text-slate-950 scale-108 shadow-[1px_2px_5px_rgba(16,185,129,0.35),_inset_1.5px_1.5px_0px_rgba(255,255,255,0.4)]"
                                           : !isChecked && isSlotFuture(selectedDate, slot.time)
@@ -2037,9 +2247,133 @@ export default function App() {
                           </div>
 
                           {/* Row 2: Details Row (Full Width!) */}
-                          {(!isBreak && (isEditingThisSlot || displayTopics.length > 0)) && (
+                          {(!isQuietRow && (isEditingThisSlot || isClassDayHr || isAptitudeHr || displayTopics.length > 0)) && (
                             <div className="w-full border-t border-slate-100 dark:border-slate-900/60 pt-4 pl-2.5 pr-2.5 animate-fadeIn">
-                              {isEditingThisSlot ? (
+                              {isClassDayHr ? (
+                                <div className="flex flex-col gap-2.5 p-4.5 rounded-2xl border bg-amber-50/15 dark:bg-amber-950/10 border-amber-200/40 dark:border-amber-950/20 w-full animate-fadeIn">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0 select-none">
+                                      🤝 Behavioral Question & Strategy (35m)
+                                    </span>
+                                    <span className="text-[9px] font-extrabold text-slate-400 dark:text-slate-500">
+                                      Framework: STAR Method
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <p className={`text-sm leading-relaxed font-bold ${isChecked ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
+                                      "{classDayHrPrompts[selectedDate]?.q || "Tell me about a key project you led or built."}"
+                                    </p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-normal font-medium">
+                                      {classDayHrPrompts[selectedDate]?.prompt || "Focus on STAR format: Situation, Task, Action taken, and Measurable Result."}
+                                    </p>
+                                  </div>
+                                  {classDayHrPrompts[selectedDate]?.tip && (
+                                    <div className="pt-2.5 border-t border-slate-200/50 dark:border-slate-800/40 flex items-start gap-1.5 mt-auto">
+                                      <span className="text-[9px] uppercase tracking-wider font-extrabold text-amber-600 dark:text-amber-400 shrink-0">💡 Strategy:</span>
+                                      <span className="text-[11px] text-slate-600 dark:text-slate-400 italic leading-snug">
+                                        {classDayHrPrompts[selectedDate].tip}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              ) : isAptitudeHr ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 w-full">
+                                  {/* Aptitude Focus Half */}
+                                  <div className={`flex flex-col gap-2.5 p-4 rounded-2xl border transition-all ${
+                                    completions[selectedDate]?.aptitude 
+                                      ? "bg-rose-50/10 dark:bg-rose-950/5 border-rose-200/30 dark:border-rose-950/20 opacity-70" 
+                                      : "bg-slate-50/60 dark:bg-slate-900/20 border-slate-200/60 dark:border-slate-800/50"
+                                  }`}>
+                                    <div className="flex items-center justify-between gap-2">
+                                      <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 shrink-0 select-none">
+                                        🧩 Aptitude Focus (15m)
+                                      </span>
+                                      <button
+                                        onClick={() => toggleCompletion(selectedDate, "aptitude")}
+                                        className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border transition-all flex items-center gap-1 cursor-pointer ${
+                                          completions[selectedDate]?.aptitude
+                                            ? "bg-rose-500 text-white border-rose-500 shadow-sm"
+                                            : "border-slate-300 dark:border-slate-700 text-slate-500 hover:border-rose-400"
+                                        }`}
+                                        title="Toggle Aptitude task done"
+                                      >
+                                        <Check className="w-3 h-3" />
+                                        <span>{completions[selectedDate]?.aptitude ? "Done" : "Mark"}</span>
+                                      </button>
+                                    </div>
+
+                                    <p className={`text-xs leading-relaxed font-bold ${completions[selectedDate]?.aptitude ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
+                                      {currentDayData.aptitude?.topic || "Quant & Logical Practice"}
+                                    </p>
+
+                                    {currentDayData.aptitude?.details && (
+                                      <ul className="list-disc pl-4 text-[11px] text-slate-600 dark:text-slate-400 flex flex-col gap-1 font-medium leading-relaxed">
+                                        {currentDayData.aptitude.details.map((bullet, bIdx) => (
+                                          <li key={bIdx}>{bullet}</li>
+                                        ))}
+                                      </ul>
+                                    )}
+
+                                    {currentDayData.aptitude?.resource && (
+                                      <div className="pt-2 border-t border-slate-200/50 dark:border-slate-800/40 flex items-center gap-2 mt-auto">
+                                        <span className="text-[8px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-slate-500">Resource:</span>
+                                        <a
+                                          href={currentDayData.aptitude.resource.url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1"
+                                        >
+                                          <span>{currentDayData.aptitude.resource.channel}</span>
+                                          <span className="text-slate-400 text-[10px]">({currentDayData.aptitude.resource.note})</span>
+                                        </a>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* HR Behavioral Half */}
+                                  <div className={`flex flex-col gap-2.5 p-4 rounded-2xl border transition-all ${
+                                    completions[selectedDate]?.hr 
+                                      ? "bg-amber-50/10 dark:bg-amber-950/5 border-amber-200/30 dark:border-amber-950/20 opacity-70" 
+                                      : "bg-slate-50/60 dark:bg-slate-900/20 border-slate-200/60 dark:border-slate-800/50"
+                                  }`}>
+                                    <div className="flex items-center justify-between gap-2">
+                                      <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0 select-none">
+                                        🤝 HR / Behavioral (15m)
+                                      </span>
+                                      <button
+                                        onClick={() => toggleCompletion(selectedDate, "hr")}
+                                        className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border transition-all flex items-center gap-1 cursor-pointer ${
+                                          completions[selectedDate]?.hr
+                                            ? "bg-amber-500 text-white border-amber-500 shadow-sm"
+                                            : "border-slate-300 dark:border-slate-700 text-slate-500 hover:border-amber-400"
+                                        }`}
+                                        title="Toggle HR prompt done"
+                                      >
+                                        <Check className="w-3 h-3" />
+                                        <span>{completions[selectedDate]?.hr ? "Done" : "Mark"}</span>
+                                      </button>
+                                    </div>
+
+                                    <div>
+                                      <p className={`text-xs leading-relaxed font-bold ${completions[selectedDate]?.hr ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}>
+                                        "{classDayHrPrompts[selectedDate]?.q || "Tell me about a key project you led or built."}"
+                                      </p>
+                                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-normal font-medium">
+                                        {classDayHrPrompts[selectedDate]?.prompt || "Focus on STAR format: Situation, Task, Action taken, and Measurable Result."}
+                                      </p>
+                                    </div>
+
+                                    {classDayHrPrompts[selectedDate]?.tip && (
+                                      <div className="pt-2 border-t border-slate-200/50 dark:border-slate-800/40 flex items-start gap-1.5 mt-auto">
+                                        <span className="text-[9px] uppercase tracking-wider font-extrabold text-amber-600 dark:text-amber-400 shrink-0">💡 Strategy:</span>
+                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 italic leading-snug">
+                                          {classDayHrPrompts[selectedDate].tip}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              ) : isEditingThisSlot ? (
                                 <div className="flex gap-2 w-full max-w-2xl">
                                   <input
                                     type="text"
@@ -2054,13 +2388,13 @@ export default function App() {
                                   />
                                   <button 
                                     onClick={() => saveCustomTopic(slot.subject)}
-                                    className="px-4 py-2 text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-955 font-extrabold rounded-xl border border-emerald-500 transition-all shadow-sm"
+                                    className="px-4 py-2 text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-955 font-extrabold rounded-xl border border-emerald-500 transition-all shadow-sm cursor-pointer"
                                   >
                                     Save
                                   </button>
                                   <button 
                                     onClick={() => setEditingSlotIndex(null)}
-                                    className="px-4 py-2 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all"
+                                    className="px-4 py-2 text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-extrabold rounded-xl transition-all cursor-pointer"
                                   >
                                     Cancel
                                   </button>
@@ -2084,9 +2418,9 @@ export default function App() {
                                               Deferred from {item.sourceDate.split("-")[2]} Sep
                                             </span>
                                           ) : (
-                                            <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-450 border border-slate-200 dark:border-slate-700 shrink-0 select-none shadow-sm dark:shadow-none">
+                                            <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-455 border border-slate-200 dark:border-slate-700 shrink-0 select-none shadow-sm dark:shadow-none">
                                               Today's Topic
-                                              </span>
+                                            </span>
                                           )}
                                           <p className={`text-sm leading-relaxed flex-1 ${
                                             isChecked 
