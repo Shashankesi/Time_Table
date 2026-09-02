@@ -1847,7 +1847,7 @@ export default function App() {
                             </>
                           ) : currentDayData.day === "Sat" ? (
                             <>
-                              <Sparkles className="w-3.5 h-3.5 text-purple-500" />
+                              <SparklesIcon className="w-3.5 h-3.5 text-purple-500" />
                               <span>Saturday (Aptitude Focus)</span>
                             </>
                           ) : (
